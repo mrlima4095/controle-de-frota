@@ -34,7 +34,7 @@
                         <label>Senha<input type="password" name="senha" placeholder="Sua senha" required></label>
                         <button type="submit">Entrar na plataforma</button>
                     </form>
-                    <p class="form-footer">Ainda não tem uma conta? <a href="cadastro-pessoa.php">Cadastre-se</a></p>
+                    <p class="form-footer">Ainda não tem uma conta? <a href="registro.php">Cadastre-se</a></p>
                 </div>
             </section>
         </main>
