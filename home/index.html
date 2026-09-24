@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Frota em dia: controle simples, inteligente e centralizado para sua operação." />
+    <title>Rota Certa | Controle de Frota</title>
+    <style>
+      :root {
+        --ink: #132126;
+        --muted: #617176;
+        --line: #d9e1df;
+        --paper: #f6f7f3;
+        --white: #ffffff;
+        --green: #0d6b52;
+        --green-deep: #064938;
+        --lime: #c9ee75;
+        --orange: #f1a94c;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      a { color: inherit; text-decoration: none; }
+      .container { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        color: var(--green);
+        font-size: 0.74rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .eyebrow::before { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); content: ""; }
+
+      header { padding: 22px 0; }
+      .nav { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+      .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 850; font-size: 1.08rem; letter-spacing: -0.04em; }
+      .brand-mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 10px;
+        color: var(--white);
+        background: var(--green);
+      }
+      .nav-links { display: flex; align-items: center; gap: 27px; color: var(--muted); font-size: 0.9rem; font-weight: 650; }
+      .nav-links a:hover { color: var(--green); }
+      .login { color: var(--green); font-weight: 800; }
+      .button {
+        display: inline-flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 0 19px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        font-size: 0.92rem;
+        font-weight: 800;
+        transition: transform .2s ease, background .2s ease;
+      }
+      .button:hover { transform: translateY(-2px); }
+      .button-primary { color: var(--white); background: var(--green); box-shadow: 0 9px 20px rgba(13, 107, 82, .18); }
+      .button-primary:hover { background: var(--green-deep); }
+      .button-light { color: var(--ink); border-color: var(--line); background: var(--white); }
+      .button-light:hover { border-color: var(--green); }
+
+      .hero { position: relative; overflow: hidden; padding: 70px 0 84px; }
+      .hero::after {
+        position: absolute;
+        z-index: -1;
+        top: -210px;
+        right: -170px;
+        width: 600px;
+        height: 600px;
+        border: 1px solid rgba(13, 107, 82, .11);
+        border-radius: 50%;
+        box-shadow: 0 0 0 58px rgba(13, 107, 82, .035), 0 0 0 116px rgba(13, 107, 82, .025);
+        content: "";
+      }
+      .hero-grid { display: grid; grid-template-columns: minmax(0, .94fr) minmax(430px, 1.06fr); align-items: center; gap: 66px; }
+      h1 { max-width: 670px; margin: 18px 0 21px; font-size: clamp(2.65rem, 5vw, 4.8rem); line-height: .99; letter-spacing: -0.07em; }
+      h1 span { color: var(--green); }
+      .hero-copy { max-width: 535px; margin: 0; color: var(--muted); font-size: 1.07rem; line-height: 1.65; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 31px; }
+      .trust { display: flex; align-items: center; gap: 11px; margin-top: 29px; color: var(--muted); font-size: .84rem; }
+      .avatars { display: flex; }
+      .avatars i { display: block; width: 24px; height: 24px; margin-left: -6px; border: 2px solid var(--paper); border-radius: 50%; }
+      .avatars i:first-child { margin-left: 0; background: #d89268; }
+      .avatars i:nth-child(2) { background: #688fa7; }
+      .avatars i:nth-child(3) { background: #725c42; }
+
+      .dashboard { position: relative; padding: 17px; border: 1px solid rgba(19, 33, 38, .09); border-radius: 17px; background: var(--white); box-shadow: 0 24px 50px rgba(20, 43, 40, .13); transform: rotate(1.3deg); }
+      .dash-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid #edf0ee; }
+      .dash-title { font-size: .75rem; font-weight: 800; }
+      .status { padding: 5px 8px; border-radius: 20px; color: var(--green); background: #e4f5dc; font-size: .62rem; font-weight: 800; }
+      .dash-body { display: grid; grid-template-columns: 1.2fr .8fr; gap: 13px; padding-top: 14px; }
+      .map { position: relative; min-height: 222px; overflow: hidden; border-radius: 11px; background: #e5ede5; }
+      .roads { position: absolute; inset: 0; opacity: .58; background: linear-gradient(45deg, transparent 43%, #fff 44% 47%, transparent 48%), linear-gradient(135deg, transparent 34%, #fff 35% 38%, transparent 39%), linear-gradient(72deg, transparent 51%, #c4d2c7 52% 55%, transparent 56%); background-size: 150px 130px, 190px 170px, 130px 150px; }
+      .route { position: absolute; top: 47px; left: 47px; width: 150px; height: 102px; border: 4px solid var(--green); border-right-color: transparent; border-radius: 60% 35% 50% 30%; transform: rotate(-15deg); }
+      .pin { position: absolute; width: 13px; height: 13px; border: 3px solid var(--white); border-radius: 50%; background: var(--orange); box-shadow: 0 2px 7px rgba(0,0,0,.22); }
+      .pin.one { top: 48px; left: 57px; }.pin.two { right: 38px; bottom: 52px; background: var(--green); }
+      .metrics { display: grid; gap: 10px; }
+      .metric { padding: 13px; border: 1px solid #edf0ee; border-radius: 10px; }
+      .metric small { display: block; color: var(--muted); font-size: .63rem; font-weight: 700; }
+      .metric strong { display: block; margin-top: 5px; font-size: 1.16rem; letter-spacing: -.04em; }
+      .metric b { color: var(--green); font-size: .65rem; }
+      .vehicle { display: flex; align-items: center; gap: 9px; padding-top: 13px; }
+      .vehicle-icon { padding: 8px; border-radius: 7px; color: var(--green); background: #e7f2e7; }
+      .vehicle small { display: block; color: var(--muted); font-size: .6rem; }.vehicle strong { font-size: .72rem; }
+      .floating-card { position: absolute; right: -35px; bottom: -27px; display: flex; align-items: center; gap: 9px; padding: 12px 15px; border-radius: 10px; background: var(--ink); color: var(--white); box-shadow: 0 12px 24px rgba(19,33,38,.2); transform: rotate(-3deg); }
+      .floating-card svg { color: var(--lime); }.floating-card small { display: block; color: #a9b9b8; font-size: .61rem; }.floating-card strong { font-size: .75rem; }
+
+      .band { background: var(--green-deep); color: var(--white); }
+      .band-inner { display: grid; grid-template-columns: repeat(3, 1fr); }
+      .band-item { display: flex; align-items: center; gap: 13px; padding: 25px 30px; border-right: 1px solid rgba(255,255,255,.13); }
+      .band-item:last-child { border: 0; }.band-icon { color: var(--lime); }.band-item strong { display: block; font-size: .82rem; }.band-item span { color: #aac3bc; font-size: .72rem; }
+
+      .features { padding: 96px 0; }.section-heading { max-width: 580px; }.section-heading h2 { margin: 13px 0 0; font-size: clamp(2rem, 3.7vw, 3.25rem); line-height: 1.05; letter-spacing: -.06em; }.section-heading p { color: var(--muted); line-height: 1.6; }
+      .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; margin-top: 40px; }.feature-card { padding: 26px; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }.feature-card svg { color: var(--green); }.feature-card h3 { margin: 20px 0 9px; font-size: 1.05rem; letter-spacing: -.03em; }.feature-card p { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.6; }
+      .cta { padding: 0 0 85px; }.cta-box { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 47px 56px; overflow: hidden; border-radius: 15px; background: var(--lime); }.cta-box h2 { max-width: 550px; margin: 10px 0 0; font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.02; letter-spacing: -.06em; }.cta-box .eyebrow { color: var(--green-deep); }.cta-box .eyebrow::before { background: var(--green); }.cta-box .button { flex: none; color: var(--white); background: var(--green-deep); }
+      footer { padding: 27px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .78rem; }.footer-inner { display: flex; justify-content: space-between; gap: 18px; }.footer-inner a { color: var(--green); font-weight: 750; }
+
+      @media (max-width: 850px) { .nav-links { display: none; }.hero { padding-top: 42px; }.hero-grid { grid-template-columns: 1fr; gap: 52px; }.dashboard { width: min(490px, calc(100% - 20px); margin: 0 auto; }.band-inner { grid-template-columns: 1fr; }.band-item { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.13); }.cards { grid-template-columns: 1fr; }.cta-box { align-items: flex-start; flex-direction: column; padding: 37px 30px; } }
+      @media (max-width: 480px) { .container { width: min(100% - 30px, 1160px); }.nav .button { display: none; } h1 { font-size: 2.7rem; }.dash-body { grid-template-columns: 1fr; }.metrics { grid-template-columns: repeat(2, 1fr); }.metric:last-child { display: none; }.floating-card { right: -4px; }.features { padding: 72px 0; }.footer-inner { align-items: flex-start; flex-direction: column; } }
+    </style>
+  </head>
+  <body>
+    <header class="container">
+      <nav class="nav" aria-label="Navegação principal">
+        <a class="brand" href="#inicio" aria-label="Rota Certa, início"><span class="brand-mark">↗</span>rota certa</a>
+        <div class="nav-links"><a href="#recursos">Recursos</a><a href="#como-funciona">Como funciona</a><a href="#empresa">Para empresas</a></div>
+        <a class="login" href="#cadastro">Entrar</a>
+        <a class="button button-primary" href="#cadastro">Criar minha conta</a>
+      </nav>
+    </header>
+
+    <main id="inicio">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Gestão de frota simplificada</p>
+            <h1>Sua frota no rumo <span>certo.</span></h1>
+            <p class="hero-copy">Organize veículos, acompanhe manutenções e tome decisões melhores. Tudo em um só lugar, sem planilhas que nunca acabam.</p>
+            <div class="hero-actions" id="cadastro">
+              <a class="button button-primary" href="#empresa">Começar agora <span aria-hidden="true">→</span></a>
+              <a class="button button-light" href="#recursos">Conhecer a plataforma</a>
+            </div>
+            <div class="trust"><span class="avatars" aria-hidden="true"><i></i><i></i><i></i></span><span>Feito para quem faz a operação acontecer.</span></div>
+          </div>
+          <div class="dashboard" aria-label="Prévia do painel de controle de frota">
+            <div class="dash-top"><span class="dash-title">Visão geral da frota</span><span class="status">● Tudo em ordem</span></div>
+            <div class="dash-body">
+              <div class="map"><div class="roads"></div><div class="route"></div><i class="pin one"></i><i class="pin two"></i></div>
+              <div class="metrics"><div class="metric"><small>VEÍCULOS ATIVOS</small><strong>24 <b>+3 este mês</b></strong></div><div class="metric"><small>EM ROTA AGORA</small><strong>18 <b>75% da frota</b></strong></div><div class="metric"><small>MANUTENÇÕES</small><strong>02 <b>próximas</b></strong></div></div>
+            </div>
+            <div class="vehicle"><span class="vehicle-icon">▰</span><span><small>EM TRÂNSITO</small><strong>ABC-1D23 · Mercedes Atego</strong></span></div>
+            <div class="floating-card"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12h18M12 3v18"/></svg><span><small>ECONOMIA NO MÊS</small><strong>R$ 8.420,00</strong></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="como-funciona"><div class="container band-inner"><div class="band-item"><span class="band-icon">◉</span><span><strong>Controle em tempo real</strong><span>Saiba onde sua operação está.</span></span></div><div class="band-item"><span class="band-icon">▣</span><span><strong>Manutenção previsível</strong><span>Evite paradas e custos inesperados.</span></span></div><div class="band-item"><span class="band-icon">⌁</span><span><strong>Dados que orientam</strong><span>Decisões mais seguras todo dia.</span></span></div></div></section>
+
+      <section class="features container" id="recursos">
+        <div class="section-heading"><p class="eyebrow">Feito para a sua rotina</p><h2>Menos burocracia. Mais estrada.</h2><p>Uma plataforma clara para centralizar as informações que movem o seu negócio.</p></div>
+        <div class="cards">
+          <article class="feature-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M7 15h.01M11 15h.01M15 15h.01M7 10h10"/></svg><h3>Cadastro organizado</h3><p>Reúna veículos, documentos e dados importantes em uma base simples de consultar.</p></article>
+          <article class="feature-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 9v4l3 2M12 3V1M4.2 5.2 2.8 3.8"/></svg><h3>Alertas no momento certo</h3><p>Não deixe prazos, revisões ou vencimentos passarem despercebidos.</p></article>
+          <article class="feature-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-4 3 2 5-6"/></svg><h3>Visão para decidir</h3><p>Acompanhe indicadores da frota e transforme dados em economia para a empresa.</p></article>
+        </div>
+      </section>
+
+      <section class="cta container" id="empresa"><div class="cta-box"><div><p class="eyebrow">Para empresas</p><h2>Pronto para colocar sua frota em movimento?</h2></div><a class="button" href="#cadastro">Cadastrar minha empresa <span aria-hidden="true">→</span></a></div></section>
+    </main>
+    <footer><div class="container footer-inner"><span>© 2026 Rota Certa. Gestão que acompanha.</span><a href="#inicio">Voltar ao início ↑</a></div></footer>
+  </body>
+</html>
