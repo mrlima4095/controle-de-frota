@@ -15,9 +15,9 @@
               --line: #d9e1df;
               --paper: #f6f7f3;
               --white: #ffffff;
-              --green: #0d6b52;
-              --green-deep: #064938;
-              --lime: #c9ee75;
+              --green: #078d65;
+              --green-deep: #006746;
+              --lime: #d9fb80;
               --orange: #f1a94c;
             }
 
@@ -103,26 +103,20 @@
             .avatars i:nth-child(2) { background: #688fa7; }
             .avatars i:nth-child(3) { background: #725c42; }
 
-            .dashboard { position: relative; padding: 17px; border: 1px solid rgba(19, 33, 38, .09); border-radius: 17px; background: var(--white); box-shadow: 0 24px 50px rgba(20, 43, 40, .13); transform: rotate(1.3deg); }
+            .dashboard { padding: 17px; border: 1px solid rgba(19, 33, 38, .09); border-radius: 17px; background: var(--white); box-shadow: 0 24px 50px rgba(20, 43, 40, .13); transform: rotate(1.3deg); }
             .dash-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid #edf0ee; }
             .dash-title { font-size: .75rem; font-weight: 800; }
-            .status { padding: 5px 8px; border-radius: 20px; color: var(--green); background: #e4f5dc; font-size: .62rem; font-weight: 800; }
-            .dash-body { display: grid; grid-template-columns: 1.2fr .8fr; gap: 13px; padding-top: 14px; }
-            .map { position: relative; min-height: 222px; overflow: hidden; border-radius: 11px; background: #e5ede5; }
-            .roads { position: absolute; inset: 0; opacity: .58; background: linear-gradient(45deg, transparent 43%, #fff 44% 47%, transparent 48%), linear-gradient(135deg, transparent 34%, #fff 35% 38%, transparent 39%), linear-gradient(72deg, transparent 51%, #c4d2c7 52% 55%, transparent 56%); background-size: 150px 130px, 190px 170px, 130px 150px; }
-            .route { position: absolute; top: 47px; left: 47px; width: 150px; height: 102px; border: 4px solid var(--green); border-right-color: transparent; border-radius: 60% 35% 50% 30%; transform: rotate(-15deg); }
-            .pin { position: absolute; width: 13px; height: 13px; border: 3px solid var(--white); border-radius: 50%; background: var(--orange); box-shadow: 0 2px 7px rgba(0,0,0,.22); }
-            .pin.one { top: 48px; left: 57px; }.pin.two { right: 38px; bottom: 52px; background: var(--green); }
-            .metrics { display: grid; gap: 10px; }
-            .metric { padding: 13px; border: 1px solid #edf0ee; border-radius: 10px; }
-            .metric small { display: block; color: var(--muted); font-size: .63rem; font-weight: 700; }
-            .metric strong { display: block; margin-top: 5px; font-size: 1.16rem; letter-spacing: -.04em; }
-            .metric b { color: var(--green); font-size: .65rem; }
-            .vehicle { display: flex; align-items: center; gap: 9px; padding-top: 13px; }
-            .vehicle-icon { padding: 8px; border-radius: 7px; color: var(--green); background: #e7f2e7; }
-            .vehicle small { display: block; color: var(--muted); font-size: .6rem; }.vehicle strong { font-size: .72rem; }
-            .floating-card { position: absolute; right: -35px; bottom: -27px; display: flex; align-items: center; gap: 9px; padding: 12px 15px; border-radius: 10px; background: var(--ink); color: var(--white); box-shadow: 0 12px 24px rgba(19,33,38,.2); transform: rotate(-3deg); }
-            .floating-card svg { color: var(--lime); }.floating-card small { display: block; color: #a9b9b8; font-size: .61rem; }.floating-card strong { font-size: .75rem; }
+            .date { color: var(--muted); font-size: .68rem; font-weight: 700; }
+            .schedule-highlight { display: flex; align-items: center; justify-content: space-between; margin: 15px 0 11px; padding: 18px; border-radius: 11px; color: var(--white); background: var(--green); }
+            .schedule-highlight small { display: block; color: #d9fff1; font-size: .64rem; font-weight: 700; letter-spacing: .08em; }
+            .schedule-highlight strong { display: block; margin-top: 5px; font-size: 1.32rem; letter-spacing: -.05em; }
+            .schedule-count { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; color: var(--green-deep); background: var(--lime); font-size: 1.1rem; font-weight: 850; }
+            .task-list { display: grid; gap: 3px; }
+            .task { display: grid; grid-template-columns: 35px 1fr auto; align-items: center; gap: 10px; padding: 11px 4px; border-bottom: 1px solid #edf0ee; }
+            .task:last-child { border-bottom: 0; }
+            .task-icon { display: grid; width: 31px; height: 31px; place-items: center; border-radius: 8px; color: var(--green); background: #e0f7ed; font-size: .88rem; }
+            .task-info strong { display: block; font-size: .72rem; }.task-info small { display: block; margin-top: 3px; color: var(--muted); font-size: .62rem; }
+            .task time { color: var(--green); font-size: .67rem; font-weight: 850; }
 
             .band { background: var(--green-deep); color: var(--white); }
             .band-inner { display: grid; grid-template-columns: repeat(3, 1fr); }
@@ -135,7 +129,7 @@
             footer { padding: 27px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .78rem; }.footer-inner { display: flex; justify-content: space-between; gap: 18px; }.footer-inner a { color: var(--green); font-weight: 750; }
 
             @media (max-width: 850px) { .nav-links { display: none; }.hero { padding-top: 42px; }.hero-grid { grid-template-columns: 1fr; gap: 52px; }.dashboard { width: min(490px, calc(100% - 20px); margin: 0 auto; }.band-inner { grid-template-columns: 1fr; }.band-item { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.13); }.cards { grid-template-columns: 1fr; }.cta-box { align-items: flex-start; flex-direction: column; padding: 37px 30px; } }
-            @media (max-width: 480px) { .container { width: min(100% - 30px, 1160px); }.nav .button { display: none; } h1 { font-size: 2.7rem; }.dash-body { grid-template-columns: 1fr; }.metrics { grid-template-columns: repeat(2, 1fr); }.metric:last-child { display: none; }.floating-card { right: -4px; }.features { padding: 72px 0; }.footer-inner { align-items: flex-start; flex-direction: column; } }
+            @media (max-width: 480px) { .container { width: min(100% - 30px, 1160px); }.nav .button { display: none; } h1 { font-size: 2.7rem; }.features { padding: 72px 0; }.footer-inner { align-items: flex-start; flex-direction: column; } }
         </style>
     </head>
     <body>
@@ -191,53 +185,29 @@
                         aria-label="Prévia do painel de controle de frota"
                     >
                         <div class="dash-top">
-                            <span class="dash-title">Operação em movimento</span
-                            ><span class="status">● Tudo em ordem</span>
+                            <span class="dash-title">Agenda da frota</span>
+                            <span class="date">Hoje, 24 set.</span>
                         </div>
-                        <div class="dash-body">
-                            <div class="map">
-                                <div class="roads"></div>
-                                <div class="route"></div>
-                                <i class="pin one"></i><i class="pin two"></i>
+                        <div class="schedule-highlight">
+                            <span><small>PRÓXIMAS ATIVIDADES</small><strong>Sua frota em dia</strong></span>
+                            <span class="schedule-count">3</span>
+                        </div>
+                        <div class="task-list">
+                            <div class="task">
+                                <span class="task-icon">✓</span>
+                                <span class="task-info"><strong>Revisão preventiva</strong><small>Fiat Strada · Rota Sul</small></span>
+                                <time>09:30</time>
                             </div>
-                            <div class="metrics">
-                                <div class="metric">
-                                    <small>VEÍCULOS ATIVOS</small
-                                    ><strong>24 <b>+3 este mês</b></strong>
-                                </div>
-                                <div class="metric">
-                                    <small>EM ROTA AGORA</small
-                                    ><strong>18 <b>75% da frota</b></strong>
-                                </div>
-                                <div class="metric">
-                                    <small>MANUTENÇÕES</small
-                                    ><strong>02 <b>próximas</b></strong>
-                                </div>
+                            <div class="task">
+                                <span class="task-icon">▤</span>
+                                <span class="task-info"><strong>Renovação de documento</strong><small>Van 03 · Administrativo</small></span>
+                                <time>11:00</time>
                             </div>
-                        </div>
-                        <div class="vehicle">
-                            <span class="vehicle-icon">▰</span
-                            ><span
-                                ><small>EM TRÂNSITO</small
-                                ><strong
-                                    >ABC-1D23 · Mercedes Atego</strong
-                                ></span
-                            >
-                        </div>
-                        <div class="floating-card">
-                            <svg
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2.5"
-                            >
-                                <path d="M3 12h18M12 3v18" /></svg
-                            ><span
-                                ><small>ECONOMIA NO MÊS</small
-                                ><strong>R$ 8.420,00</strong></span
-                            >
+                            <div class="task">
+                                <span class="task-icon">◌</span>
+                                <span class="task-info"><strong>Abastecimento programado</strong><small>Carro 08 · Base Central</small></span>
+                                <time>14:15</time>
+                            </div>
                         </div>
                     </div>
                 </div>
