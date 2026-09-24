@@ -9,6 +9,12 @@
     <h1>Controle de Frota</h1>
     <p>Controle suas frotas</h1>
     <br>
-	<buttton>Login</button>   
+	<button>Login</button>
+    <button>Cadastrar</button>
+    <h2></h2>
+
+    <footer>
+        <h3>Sobre nós</h3>
+    </footer>
 </body>
 </html>
