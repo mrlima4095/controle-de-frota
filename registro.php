@@ -7,7 +7,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Crie sua conta pessoal no DriveHub.">
-        <link rel="stylesheet" href="auth.css">
+        <link rel="stylesheet" href="static/css/auth.css">
         <title>Criar conta | DriveHub</title>
     </head>
     <body>
