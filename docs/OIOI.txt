@@ -1,0 +1,49 @@
+Controle de Frota BANCO DE DADOS 
+
+Entidades:
+- Departamento
+- Usuário
+- Motorista
+- Percurso
+- Abastecimento
+- Cliente
+- Veículo
+- Multa
+- Reserva
+- Manutenção
+
+Relacionamentos:
+
+Departamento ⟶ Veículo
+Departamento ⟶ Motorista 
+Motorista ⟶ Usuário
+Motorista ⟶ Percurso
+Veículo ⟶ Percurso 
+Veículo ⟶ Reserva 
+Cliente ⟶ Reserva 
+Motorista ⟶ Reserva 
+Veículo ⟶ Manutenção
+Veículo ⟶ Abastecimento 
+Motorista ⟶ Abastecimento
+Veículo ⟶ Multa 
+Motorista ⟶ Multa 
+Cliente ⟶ Multa 
+
+Relacionamentos e cardinalidades:
+
+---------------------------------------------------------------------
+| Entidade A	Relacionamento	Entidade B	Cardinalidade (A → B)
+---------------------------------------------------------------------
+| Departamento	possui	         Veículo	1:N
+| Departamento	lota	         Motorista	1:N (opcional)
+| Motorista	tem acesso como	 Usuário	1:0..1
+| Motorista	realiza	         Percurso	1:N
+| Veículo	é usado em	 Percurso	1:N
+| Veículo	        é reservado em	Reserva	1:N
+| Cliente	        faz	Reserva	1:N
+| Motorista	conduz (opcional)	Reserva	1:0..N
+| Veículo	        recebe	Manutenção	1:N
+| Veículo	        recebe	Abastecimento	1:N
+| Motorista	realiza	Abastecimento	1:0..N
+| Veículo	        recebe	Multa	1:N
+| Motorista ou Cliente	responde por	Multa	1:0..N (exclusivo)

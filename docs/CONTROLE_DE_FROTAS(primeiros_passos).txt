@@ -1,0 +1,30 @@
+Levantamento de requisitos - CONTROLE DE FROTA 
+
+ENTIDADES
+- Usuário (login, perfil de acesso)
+- Motorista (funcionário)
+- Cliente (externo)
+- Veículo (com finalidade: interno/locação/ambos)
+- Percurso (uso interno)
+- Reserva/Locação (uso externo)
+- Manutenção
+- Abastecimento
+- Multa (vinculada a motorista OU cliente)
+- Departamento
+
+TELAS
+- Login
+- Home / Menu
+- Painel de Admin
+- Cadastro de Usuário
+- Cadastro de Motorista
+- Cadastro de Cliente
+- Cadastro de Veículo
+- Cadastro de Manutenção
+- Cadastro de Abastecimento
+- Cadastro de Multa
+- Registro de Percurso (interno)
+- Reserva/Locação (externo)
+- Histórico de Percursos
+- Histórico de Locações
+- Relatórios (frota, custos, locações)

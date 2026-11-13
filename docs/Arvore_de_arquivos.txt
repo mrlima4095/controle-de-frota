@@ -1,0 +1,84 @@
+Árvore de arquivos 
+
+controle-frota/
+│
+├── config/
+│   ├── database.php            # conexão PDO com o banco (host, user, senha)
+│   └── config.php              # constantes gerais (URL base, timezone, etc.)
+│
+├── public/                     # ÚNICA pasta exposta ao navegador (document root)
+│   ├── index.php               # ponto de entrada / roteador principal
+│   ├── login.php
+│   ├── logout.php
+│   ├── css/
+│   ├── js/
+│   └── assets/
+│       └── img/
+│
+├── src/
+│   ├── models/                 # uma classe por entidade, com métodos de acesso ao banco
+│   │   ├── Usuario.php
+│   │   ├── Motorista.php
+│   │   ├── Cliente.php
+│   │   ├── Veiculo.php
+│   │   ├── Percurso.php
+│   │   ├── Reserva.php
+│   │   ├── Manutencao.php
+│   │   ├── Abastecimento.php
+│   │   ├── Multa.php
+│   │   └── Departamento.php
+│   │
+│   ├── controllers/            # lógica de negócio: recebe requisição, chama model, decide view
+│   │   ├── AuthController.php
+│   │   ├── UsuarioController.php
+│   │   ├── MotoristaController.php
+│   │   ├── ClienteController.php
+│   │   ├── VeiculoController.php
+│   │   ├── PercursoController.php
+│   │   ├── ReservaController.php
+│   │   ├── ManutencaoController.php
+│   │   ├── AbastecimentoController.php
+│   │   ├── MultaController.php
+│   │   └── RelatorioController.php
+│   │
+│   ├── views/                  # telas (HTML + PHP), organizadas por módulo
+│   │   ├── layout/
+│   │   │   ├── header.php
+│   │   │   ├── footer.php
+│   │   │   └── menu.php
+│   │   ├── auth/
+│   │   │   └── login.php
+│   │   ├── usuarios/
+│   │   ├── motoristas/
+│   │   │   ├── listar.php
+│   │   │   ├── cadastrar.php
+│   │   │   └── editar.php
+│   │   ├── clientes/
+│   │   │   ├── listar.php
+│   │   │   ├── cadastrar.php
+│   │   │   └── editar.php
+│   │   ├── veiculos/
+│   │   ├── percursos/
+│   │   │   ├── registrar.php
+│   │   │   └── historico.php
+│   │   ├── reservas/
+│   │   │   ├── nova.php
+│   │   │   └── historico.php
+│   │   ├── manutencoes/
+│   │   ├── abastecimentos/
+│   │   ├── multas/
+│   │   ├── departamentos/
+│   │   └── relatorios/
+│   │
+│   └── helpers/                # funções auxiliares reutilizáveis
+│       ├── validacoes.php      # validar CPF/CNPJ, CNH, datas, etc.
+│       └── sessao.php          # controle de sessão/autenticação
+│
+├── database/
+│   ├── modelo_conceitual.png   # DER
+│   ├── modelo_logico.png
+│   ├── script_fisico.sql       # CREATE TABLE + constraints
+│   └── dados_teste.sql         # INSERTs de exemplo
+│
+└── docs/
+    └── documentacao.docx       # relatório do trabalho (requisitos, prints, justificativas)
