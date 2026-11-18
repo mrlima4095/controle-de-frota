@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modelo>
+  <entidade id="1" nome="Departamento">
+    <atributo id="1" nome="id_departamento" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="2" nome="nome" tipo="VARCHAR(100)" obrigatorio="true"/>
+    <atributo id="3" nome="responsavel" tipo="VARCHAR(100)"/>
+    <atributo id="4" nome="ativo" tipo="BOOLEAN"/>
+    <atributo id="5" nome="data_criacao" tipo="TIMESTAMP"/>
+  </entidade>
+
+  <entidade id="2" nome="Usuario">
+    <atributo id="6" nome="id_usr" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="7" nome="nome" tipo="VARCHAR(100)" obrigatorio="true"/>
+    <atributo id="8" nome="email" tipo="VARCHAR(100)" obrigatorio="true" unico="true"/>
+    <atributo id="9" nome="senha" tipo="VARCHAR(255)" obrigatorio="true"/>
+    <atributo id="10" nome="perfil" tipo="ENUM"/>
+    <atributo id="11" nome="ativo" tipo="BOOLEAN"/>
+    <atributo id="12" nome="data_criacao" tipo="TIMESTAMP"/>
+    <atributo id="13" nome="ultima_consessao" tipo="TIMESTAMP"/>
+  </entidade>
+
+  <entidade id="3" nome="Cliente">
+    <atributo id="14" nome="id_cli" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="15" nome="nome" tipo="VARCHAR(150)" obrigatorio="true"/>
+    <atributo id="16" nome="cnpj_cpf" tipo="VARCHAR(18)"/>
+    <atributo id="17" nome="ie_rg" tipo="VARCHAR(20)"/>
+    <atributo id="18" nome="telefone" tipo="VARCHAR(20)"/>
+    <atributo id="19" nome="email" tipo="VARCHAR(100)"/>
+    <atributo id="20" nome="uf" tipo="CHAR(2)"/>
+    <atributo id="21" nome="cidade" tipo="VARCHAR(100)"/>
+    <atributo id="22" nome="ativo" tipo="BOOLEAN"/>
+    <atributo id="23" nome="data_criacao" tipo="TIMESTAMP"/>
+  </entidade>
+
+  <entidade id="4" nome="Motorista">
+    <atributo id="24" nome="id_mot" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="25" nome="nome" tipo="VARCHAR(150)" obrigatorio="true"/>
+    <atributo id="26" nome="cpf" tipo="VARCHAR(14)" obrigatorio="true" unico="true"/>
+    <atributo id="27" nome="cnh" tipo="VARCHAR(20)"/>
+    <atributo id="28" nome="validade_cnh" tipo="DATE"/>
+    <atributo id="29" nome="telefone" tipo="VARCHAR(20)"/>
+    <atributo id="30" nome="email" tipo="VARCHAR(100)"/>
+    <atributo id="31" nome="uf" tipo="CHAR(2)"/>
+    <atributo id="32" nome="cidade" tipo="VARCHAR(100)"/>
+    <atributo id="33" nome="ativo" tipo="BOOLEAN"/>
+    <atributo id="34" nome="data_criacao" tipo="TIMESTAMP"/>
+  </entidade>
+
+  <entidade id="5" nome="Veiculo">
+    <atributo id="35" nome="id_vei" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="36" nome="placa" tipo="VARCHAR(8)" obrigatorio="true" unico="true"/>
+    <atributo id="37" nome="marca" tipo="VARCHAR(50)"/>
+    <atributo id="38" nome="modelo" tipo="VARCHAR(50)"/>
+    <atributo id="39" nome="ano_fabricacao" tipo="INT"/>
+    <atributo id="40" nome="ano_modelo" tipo="INT"/>
+    <atributo id="41" nome="cor" tipo="VARCHAR(30)"/>
+    <atributo id="42" nome="tipo" tipo="ENUM"/>
+    <atributo id="43" nome="chassi" tipo="VARCHAR(17)"/>
+    <atributo id="44" nome="combustivel" tipo="ENUM"/>
+    <atributo id="45" nome="capacidade" tipo="INT"/>
+    <atributo id="46" nome="quilometragem_inicial" tipo="INT"/>
+    <atributo id="47" nome="quilometragemAtual" tipo="INT"/>
+    <atributo id="48" nome="status" tipo="ENUM"/>
+    <atributo id="49" nome="id_dep" tipo="INT" obrigatorio="true" fk="true"/>
+    <atributo id="50" nome="ativo" tipo="BOOLEAN"/>
+    <atributo id="51" nome="data_criacao" tipo="TIMESTAMP"/>
+  </entidade>
+
+  <entidade id="6" nome="Reserva">
+    <atributo id="52" nome="id_res" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="53" nome="id_vei" tipo="INT" obrigatorio="true" fk="true"/>
+    <atributo id="54" nome="id_cli" tipo="INT" fk="true"/>
+    <atributo id="55" nome="id_dep" tipo="INT" fk="true"/>
+    <atributo id="56" nome="data_reserva" tipo="DATE" obrigatorio="true"/>
+    <atributo id="57" nome="hora_ini" tipo="TIME" obrigatorio="true"/>
+    <atributo id="58" nome="hora_fim" tipo="TIME" obrigatorio="true"/>
+    <atributo id="59" nome="origem" tipo="VARCHAR(200)"/>
+    <atributo id="60" nome="destino" tipo="VARCHAR(200)"/>
+    <atributo id="61" nome="justificativa" tipo="TEXT"/>
+    <atributo id="62" nome="status" tipo="ENUM"/>
+    <atributo id="63" nome="data_criacao" tipo="TIMESTAMP"/>
+  </entidade>
+
+  <entidade id="7" nome="Percurso">
+    <atributo id="64" nome="id_perc" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="65" nome="id_vei" tipo="INT" obrigatorio="true" fk="true"/>
+    <atributo id="66" nome="id_mot" tipo="INT" obrigatorio="true" fk="true"/>
+    <atributo id="67" nome="id_res" tipo="INT" fk="true"/>
+    <atributo id="68" nome="data_per" tipo="DATE" obrigatorio="true"/>
+    <atributo id="69" nome="hora_ini" tipo="TIME" obrigatorio="true"/>
+    <atributo id="70" nome="hora_fim" tipo="TIME" obrigatorio="true"/>
+    <atributo id="71" nome="origem" tipo="VARCHAR(200)" obrigatorio="true"/>
+    <atributo id="72" nome="destino" tipo="VARCHAR(200)" obrigatorio="true"/>
+    <atributo id="73" nome="quilometragem" tipo="INT" obrigatorio="true"/>
+    <atributo id="74" nome="observacoes" tipo="TEXT"/>
+    <atributo id="75" nome="data_criacao" tipo="TIMESTAMP"/>
+  </entidade>
+
+  <entidade id="8" nome="Manutencao">
+    <atributo id="76" nome="id_man" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="77" nome="id_vei" tipo="INT" obrigatorio="true" fk="true"/>
+    <atributo id="78" nome="tipo" tipo="ENUM" obrigatorio="true"/>
+    <atributo id="79" nome="data_man" tipo="DATE" obrigatorio="true"/>
+    <atributo id="80" nome="oficina" tipo="VARCHAR(200)"/>
+    <atributo id="81" nome="servico" tipo="TEXT"/>
+    <atributo id="82" nome="custo" tipo="DECIMAL(10,2)"/>
+    <atributo id="83" nome="quilometragem" tipo="INT"/>
+    <atributo id="84" nome="observacoes" tipo="TEXT"/>
+    <atributo id="85" nome="proxima_data" tipo="DATE"/>
+    <atributo id="86" nome="data_criacao" tipo="TIMESTAMP"/>
+  </entidade>
+
+  <entidade id="9" nome="Abastecimento">
+    <atributo id="87" nome="id_aba" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="88" nome="id_vei" tipo="INT" obrigatorio="true" fk="true"/>
+    <atributo id="89" nome="data_aba" tipo="DATE" obrigatorio="true"/>
+    <atributo id="90" nome="hora_aba" tipo="TIME" obrigatorio="true"/>
+    <atributo id="91" nome="posto" tipo="VARCHAR(200)"/>
+    <atributo id="92" nome="litros" tipo="DECIMAL(8,2)" obrigatorio="true"/>
+    <atributo id="93" nome="valor" tipo="DECIMAL(10,2)" obrigatorio="true"/>
+    <atributo id="94" nome="quilometragem" tipo="INT" obrigatorio="true"/>
+    <atributo id="95" nome="tipo_combustivel" tipo="ENUM"/>
+    <atributo id="96" nome="observacoes" tipo="TEXT"/>
+    <atributo id="97" nome="data_criacao" tipo="TIMESTAMP"/>
+  </entidade>
+
+  <entidade id="10" nome="Multa">
+    <atributo id="98" nome="id_mul" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="99" nome="id_vei" tipo="INT" obrigatorio="true" fk="true"/>
+    <atributo id="100" nome="id_mot" tipo="INT" fk="true"/>
+    <atributo id="101" nome="data_infra" tipo="DATE" obrigatorio="true"/>
+    <atributo id="102" nome="hora_infra" tipo="TIME"/>
+    <atributo id="103" nome="local" tipo="VARCHAR(200)"/>
+    <atributo id="104" nome="infracao" tipo="VARCHAR(200)" obrigatorio="true"/>
+    <atributo id="105" nome="valor_multa" tipo="DECIMAL(10,2)" obrigatorio="true"/>
+    <atributo id="106" nome="pontos" tipo="INT"/>
+    <atributo id="107" nome="status" tipo="ENUM"/>
+    <atributo id="108" nome="data_pagamento" tipo="DATE"/>
+    <atributo id="109" nome="observacoes" tipo="TEXT"/>
+    <atributo id="110" nome="data_criacao" tipo="TIMESTAMP"/>
+  </entidade>
+
+  <entidade id="11" nome="Sessao">
+    <atributo id="111" nome="id_sess" tipo="INT" chave="true" obrigatorio="true"/>
+    <atributo id="112" nome="id_usr" tipo="INT" obrigatorio="true" fk="true"/>
+    <atributo id="113" nome="token" tipo="VARCHAR(255)" obrigatorio="true" unico="true"/>
+    <atributo id="114" nome="data_ini" tipo="TIMESTAMP"/>
+    <atributo id="115" nome="data_fim" tipo="TIMESTAMP"/>
+    <atributo id="116" nome="ip" tipo="VARCHAR(45)"/>
+    <atributo id="117" nome="navigator" tipo="VARCHAR(255)"/>
+    <atributo id="118" nome="ativo" tipo="BOOLEAN"/>
+  </entidade>
+
+  <relacionamento id="1" nome="Departamento_Veiculo" tipo="1:N">
+    <ligacao entidade="1" cardinalidade="1"/>
+    <ligacao entidade="5" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="2" nome="Departamento_Reserva" tipo="1:N">
+    <ligacao entidade="1" cardinalidade="1"/>
+    <ligacao entidade="6" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="3" nome="Cliente_Reserva" tipo="1:N">
+    <ligacao entidade="3" cardinalidade="1"/>
+    <ligacao entidade="6" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="4" nome="Veiculo_Reserva" tipo="1:N">
+    <ligacao entidade="5" cardinalidade="1"/>
+    <ligacao entidade="6" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="5" nome="Veiculo_Percurso" tipo="1:N">
+    <ligacao entidade="5" cardinalidade="1"/>
+    <ligacao entidade="7" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="6" nome="Motorista_Percurso" tipo="1:N">
+    <ligacao entidade="4" cardinalidade="1"/>
+    <ligacao entidade="7" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="7" nome="Reserva_Percurso" tipo="1:N">
+    <ligacao entidade="6" cardinalidade="1"/>
+    <ligacao entidade="7" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="8" nome="Veiculo_Manutencao" tipo="1:N">
+    <ligacao entidade="5" cardinalidade="1"/>
+    <ligacao entidade="8" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="9" nome="Veiculo_Abastecimento" tipo="1:N">
+    <ligacao entidade="5" cardinalidade="1"/>
+    <ligacao entidade="9" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="10" nome="Veiculo_Multa" tipo="1:N">
+    <ligacao entidade="5" cardinalidade="1"/>
+    <ligacao entidade="10" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="11" nome="Motorista_Multa" tipo="1:N">
+    <ligacao entidade="4" cardinalidade="1"/>
+    <ligacao entidade="10" cardinalidade="N"/>
+  </relacionamento>
+
+  <relacionamento id="12" nome="Usuario_Sessao" tipo="1:N">
+    <ligacao entidade="2" cardinalidade="1"/>
+    <ligacao entidade="11" cardinalidade="N"/>
+  </relacionamento>
+</modelo>
