@@ -1,183 +1,165 @@
-CREATE DATABASE controle_de_frota;
-USE controle_de_frota;
+CREATE DATABASE controle_frota;
+USE controle_frota;
 
-CREATE TABLE IF NOT EXISTS usuarios(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    data_nascimento DATE NOT NULL,
-  	tipo INT NOT NULL
-    -- 1 - Motorista
-    -- 2 - 
-    -- 3 - 
-    -- 4 - Gerente 
-    -- 5 - Admin Geral
+CREATE TABLE departamento (
+    id_departamento INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    responsavel VARCHAR(100),
+    ativo BOOLEAN DEFAULT TRUE,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS empresas(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(255) NOT NULL,
-	cnpj VARCHAR(14) NOT NULL,
-	email VARCHAR(255) NOT NULL,
-	quantidade_veiculos INT NOT NULL,
+CREATE TABLE usuario (
+    id_usr INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    perfil ENUM('admin', 'operador', 'visualizador') DEFAULT 'operador',
+    ativo BOOLEAN DEFAULT TRUE,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ultima_consessao TIMESTAMP NULL
 );
 
-
-CREATE TABLE IF NOT EXISTS veiculos(
-	placa VARCHAR(10) NOT NULL PRIMARY KEY,
-    cor VARCHAR(10) NOT NULL,
-	empresa INT NOT NULL
+CREATE TABLE cliente (
+    id_cli INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(150) NOT NULL,
+    cnpj_cpf VARCHAR(18),
+    ie_rg VARCHAR(20),
+    telefone VARCHAR(20),
+    email VARCHAR(100),
+    uf CHAR(2),
+    cidade VARCHAR(100),
+    ativo BOOLEAN DEFAULT TRUE,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-CREATE TABLE IF NOT EXISTS abastecimentos(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    placa_veiculo VARCHAR(10),
-    data DATE NOT NULL,
-	quantidade DECIMAL NOT NULL
-);
-CREATE TABLE IF NOT EXISTS documentos(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(255),
-	tipo INT NOT NULL,
-	dono INT NOT NULL,
-);
-
-CREATE TABLE IF NOT EXISTS fornecedores(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	cpnj VARCHAR(14) NOT NULL
+CREATE TABLE motorista (
+    id_mot INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(150) NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL,
+    cnh VARCHAR(20),
+    validade_cnh DATE,
+    telefone VARCHAR(20),
+    email VARCHAR(100),
+    uf CHAR(2),
+    cidade VARCHAR(100),
+    ativo BOOLEAN DEFAULT TRUE,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-CREATE TABLE IF NOT EXISTS multas(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    placa_veiculo VARCHAR(10),
-    motorista_id INT,
-    valor DECIMAL NOT NULL,
-    data DATE NOT NULL,
-    pago BOOL NOT NULL,
+CREATE TABLE veiculo (
+    id_vei INT PRIMARY KEY AUTO_INCREMENT,
+    placa VARCHAR(8) UNIQUE NOT NULL,
+    marca VARCHAR(50),
+    modelo VARCHAR(50),
+    ano_fabricacao INT,
+    ano_modelo INT,
+    cor VARCHAR(30),
+    tipo ENUM('carro', 'moto', 'caminhao', 'van', 'onibus') DEFAULT 'carro',
+    chassi VARCHAR(17),
+    combustivel ENUM('flex', 'gasolina', 'diesel', 'eletrico') DEFAULT 'flex',
+    capacidade INT,
+    quilometragem_inicial INT DEFAULT 0,
+    quilometragemAtual INT DEFAULT 0,
+    status ENUM('disponivel', 'em_uso', 'manutencao', 'inativo') DEFAULT 'disponivel',
+    id_dep INT NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_dep) REFERENCES departamento(id_departamento)
 );
 
-CREATE TABLE IF NOT EXISTS manutencoes(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    placa_veiculo NOT NULL,
-    tipo VAo VARCHAR(10),
-    data DATE RCHAR(16),
-    sobre TEXT
+CREATE TABLE reserva (
+    id_res INT PRIMARY KEY AUTO_INCREMENT,
+    id_vei INT NOT NULL,
+    id_cli INT,
+    id_dep INT,
+    data_reserva DATE NOT NULL,
+    hora_ini TIME NOT NULL,
+    hora_fim TIME NOT NULL,
+    origem VARCHAR(200),
+    destino VARCHAR(200),
+    justificativa TEXT,
+    status ENUM('pendente', 'confirmada', 'cancelada', 'concluida') DEFAULT 'pendente',
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_vei) REFERENCES veiculo(id_vei),
+    FOREIGN KEY (id_cli) REFERENCES cliente(id_cli),
+    FOREIGN KEY (id_dep) REFERENCES departamento(id_departamento)
 );
 
-
-
-CREATE TABLE IF NOT EXISTS viagem(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    placa_veiculo VARCHAR(10),
-    motorista_id INT,
-	tempo_inicio TIMESTAMP NOT NULL,
-    tempo_fim TIMESTAMP NOT NULL,
-    local_inicio VARCHAR(50) NOT NULL,
-    local_fim VARCAHR(50) NOT NULL
+CREATE TABLE percurso (
+    id_perc INT PRIMARY KEY AUTO_INCREMENT,
+    id_vei INT NOT NULL,
+    id_mot INT NOT NULL,
+    id_res INT,
+    data_per DATE NOT NULL,
+    hora_ini TIME NOT NULL,
+    hora_fim TIME NOT NULL,
+    origem VARCHAR(200) NOT NULL,
+    destino VARCHAR(200) NOT NULL,
+    quilometragem INT NOT NULL,
+    observacoes TEXT,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_vei) REFERENCES veiculo(id_vei),
+    FOREIGN KEY (id_mot) REFERENCES motorista(id_mot),
+    FOREIGN KEY (id_res) REFERENCES reserva(id_res)
 );
 
-CREATE TABLE IF NOT EXISTS sinistro(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	assunto VARCHAR(100) NOT NULL,
-	descricao TEXT NOT NULL,
-	arquivos TEXT,
-	tipo INT NOT NULL,
-	-- 1 - roubo
-	bo BOOLEAN NOT NULL
+CREATE TABLE manutencao (
+    id_man INT PRIMARY KEY AUTO_INCREMENT,
+    id_vei INT NOT NULL,
+    tipo ENUM('preventiva', 'corretiva', 'revisao') NOT NULL,
+    data_man DATE NOT NULL,
+    oficina VARCHAR(200),
+    servico TEXT,
+    custo DECIMAL(10,2) DEFAULT 0,
+    quilometragem INT,
+    observacoes TEXT,
+    proxima_data DATE,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_vei) REFERENCES veiculo(id_vei)
 );
 
-
-CREATE TABLE IF NOT EXISTS logs(
-	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    usuario INT,
-    acao VARCHAR(10) NOT NULL,
-    sobre TEXT
+CREATE TABLE abastecimento (
+    id_aba INT PRIMARY KEY AUTO_INCREMENT,
+    id_vei INT NOT NULL,
+    data_aba DATE NOT NULL,
+    hora_aba TIME NOT NULL,
+    posto VARCHAR(200),
+    litros DECIMAL(8,2) NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    quilometragem INT NOT NULL,
+    tipo_combustivel ENUM('flex', 'gasolina', 'diesel', 'eletrico'),
+    observacoes TEXT,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_vei) REFERENCES veiculo(id_vei)
 );
 
-CREATE DATABASE control;
-USE control;
-
-CREATE TABLE usuario  (
-	CPF CHAR(11) PRIMARY KEY NOT NULL,
-	Nome VARCHAR(100) NOT NULL,
-	Email VARCHAR(100) UNIQUE NOT NULL,
-	Senha VARCHAR(255) NOT NULL,
-	Funcao VARCHAR(50) NOT NULL,
-	Telefone VARCHAR(15) NOT NULL,
-	Salario DECIMAL(10,2) NOT NULL
-	Nivel_Permissao ENUM('ADMIN', 'GERENTE', 'USUARIO', 'MOTORISTA', 'RH') NOT NULL, -- Padronizado em maiúsculas
+CREATE TABLE multa (
+    id_mul INT PRIMARY KEY AUTO_INCREMENT,
+    id_vei INT NOT NULL,
+    id_mot INT,
+    data_infra DATE NOT NULL,
+    hora_infra TIME,
+    local VARCHAR(200),
+    infracao VARCHAR(200) NOT NULL,
+    valor_multa DECIMAL(10,2) NOT NULL,
+    pontos INT DEFAULT 0,
+    status ENUM('pendente', 'paga', 'cancelada') DEFAULT 'pendente',
+    data_pagamento DATE,
+    observacoes TEXT,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_vei) REFERENCES veiculo(id_vei),
+    FOREIGN KEY (id_mot) REFERENCES motorista(id_mot)
 );
 
-CREATE TABLE Carga (
-	Id_Carga INT AUTO_INCREMENT PRIMARY KEY,
-	Descricao VARCHAR(255) NOT NULL,
-	Peso DECIMAL(10,2) NOT NULL, -- Peso é importante ser obrigatório
-	Origem VARCHAR(100) NOT NULL, -- Obrigatório para logística
-	Destino VARCHAR(100) NOT NULL,
-	Data_Envio DATE NOT NULL
+CREATE TABLE sessao (
+    id_sess INT PRIMARY KEY AUTO_INCREMENT,
+    id_usr INT NOT NULL,
+    token VARCHAR(255) UNIQUE NOT NULL,
+    data_ini TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_fim TIMESTAMP NULL,
+    ip VARCHAR(45),
+    navigator VARCHAR(255),
+    ativo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (id_usr) REFERENCES usuario(id_usr)
 );
-
-CREATE TABLE Veiculos (
-	Id_Veiculo INT AUTO_INCREMENT PRIMARY KEY,
-	Placa VARCHAR(10) UNIQUE NOT NULL,
-	Modelo VARCHAR(100) NOT NULL,
-	Marca VARCHAR(100) NOT NULL, -- Evita veículos sem marca definida
-	Ano INT NOT NULL,
-	Capacidade_Carga DECIMAL(10,2) NOT NULL
-);
-
-CREATE TABLE Banco_de_horas (
-	Id_Banco INT AUTO_INCREMENT PRIMARY KEY,
-	CPF_Funcionario CHAR(11) NOT NULL,
-	Horas DECIMAL(5,2) NOT NULL,
-	Data_Registro DATE NOT NULL,
-	FOREIGN KEY (CPF_Funcionario) REFERENCES Funcionario(CPF)
-);
-
-CREATE TABLE Abastecimentos (
-	Id_Abastecimento INT AUTO_INCREMENT PRIMARY KEY,
-	Id_Veiculo INT NOT NULL,
-	Data_Abastecimento DATETIME NOT NULL,
-	Litros DECIMAL(10,2) NOT NULL,
-	Valor_Total DECIMAL(10,2) NOT NULL,
-	Posto VARCHAR(100) NOT NULL,
-	FOREIGN KEY (Id_Veiculo) REFERENCES Veiculos(Id_Veiculo)
-);
-
-CREATE TABLE Manutencoes (
-	Id_Manutencao INT AUTO_INCREMENT PRIMARY KEY,
-	Id_Veiculo INT NOT NULL,
-	Tipo VARCHAR(100) NOT NULL,
-	Descricao TEXT,
-	Data_Manutencao DATE NOT NULL,
-	Custo DECIMAL(10,2) NOT NULL,
-	FOREIGN KEY (Id_Veiculo) REFERENCES Veiculos(Id_Veiculo)
-);
-
-CREATE TABLE Viagens (
-	Id_Viagem INT AUTO_INCREMENT PRIMARY KEY,
-	Id_Veiculo INT NOT NULL,
-	CPF_Funcionario CHAR(11) NOT NULL,
-	Id_Carga INT NOT NULL, -- Se é uma viagem de controle de carga, o ID deve ser obrigatório
-	Data_Saida DATETIME NOT NULL,
-	Data_Chegada DATETIME, -- Pode ser NULL até que a viagem seja concluída
-	Origem VARCHAR(100) NOT NULL,
-	Destino VARCHAR(100) NOT NULL,
-	FOREIGN KEY (Id_Veiculo) REFERENCES Veiculos(Id_Veiculo),
-	FOREIGN KEY (CPF_Funcionario) REFERENCES Funcionario(CPF),
-	FOREIGN KEY (Id_Carga) REFERENCES Carga(Id_Carga)
-);
-
-CREATE TABLE Multas (
-	Id_Multa INT AUTO_INCREMENT PRIMARY KEY,
-	Id_Veiculo INT NOT NULL,
-	CPF_Funcionario CHAR(11) NOT NULL,
-	Data_Multa DATE NOT NULL,
-	Valor DECIMAL(10,2) NOT NULL,
-	Motivo VARCHAR(255) NOT NULL,
-	FOREIGN KEY (Id_Veiculo) REFERENCES Veiculos(Id_Veiculo),
-	FOREIGN KEY (CPF_Funcionario) REFERENCES Funcionario(CPF)
-);
-
