@@ -1,5 +1,5 @@
-CREATE DATABASE controle_frota;
-USE controle_frota;
+CREATE DATABASE IF NOT EXISTS controle_de_frota;
+USE controle_de_frota;
 
 CREATE TABLE departamento (
     id_departamento INT PRIMARY KEY AUTO_INCREMENT,

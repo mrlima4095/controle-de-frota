@@ -1,0 +1,29 @@
+services:
+  web:
+    build: .
+    container_name: controle_web
+    ports:
+      - "8090:8080"
+    environment:
+      DB_HOST: db
+      DB_NAME: controle_de_frota
+      DB_USER: controle
+      DB_PASSWORD: controle123
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: controle_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: controle_de_frota
+      MYSQL_USER: controle
+      MYSQL_PASSWORD: controle123
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/controle.sql:/docker-entrypoint-initdb.d/controle.sql:ro
+
+volumes:
+  db_data:

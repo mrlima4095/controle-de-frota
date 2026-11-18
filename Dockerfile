@@ -1,6 +1,7 @@
 FROM php:8.3-fpm-alpine
 
 RUN apk add --no-cache nginx supervisor \
+    && docker-php-ext-install pdo_mysql \
     && mkdir -p /run/nginx /var/lib/nginx/tmp \
     && rm -f /etc/nginx/http.d/default.conf
 

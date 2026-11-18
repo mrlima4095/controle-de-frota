@@ -1,5 +1,45 @@
 <?php
-    $submitted = $_SERVER['REQUEST_METHOD'] === 'POST';
+    session_start();
+
+    $erro = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        require_once __DIR__ . '/includes/connect.php';
+
+        $nome = trim($_POST['nome'] ?? '');
+        $sobrenome = trim($_POST['sobrenome'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $senha = $_POST['senha'] ?? '';
+
+        if ($nome === '' || $email === '' || $senha === '') {
+            $erro = 'Preencha nome, e-mail e senha.';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $erro = 'Informe um e-mail válido.';
+        } elseif (strlen($senha) < 6) {
+            $erro = 'A senha deve ter pelo menos 6 caracteres.';
+        } else {
+            $check = $pdo->prepare('SELECT id_usr FROM usuario WHERE email = :email LIMIT 1');
+            $check->execute([':email' => $email]);
+
+            if ($check->fetch()) {
+                $erro = 'Este e-mail já está cadastrado.';
+            } else {
+                $nomeCompleto = $sobrenome !== '' ? "$nome $sobrenome" : $nome;
+
+                $sql = 'INSERT INTO usuario (nome, email, senha, perfil) VALUES (:nome, :email, :senha, :perfil)';
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([
+                    ':nome' => $nomeCompleto,
+                    ':email' => $email,
+                    ':senha' => password_hash($senha, PASSWORD_DEFAULT),
+                    ':perfil' => 'operador',
+                ]);
+
+                header('Location: login.php');
+                exit;
+            }
+        }
+    }
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -26,13 +66,13 @@
                     <a class="back" href="index.html">← Voltar para o início</a>
                     <h2>Crie sua conta</h2>
                     <p class="form-description">Preencha os dados para iniciar sua experiência no DriveHub.</p>
-                    <?php if ($submitted): ?>
-                        <p class="notice">Cadastro enviado com sucesso. Os dados ainda não são armazenados nesta demonstração.</p>
+                    <?php if ($erro !== ''): ?>
+                        <p class="notice"><?= htmlspecialchars($erro) ?></p>
                     <?php endif; ?>
                     <form method="post">
-                        <div class="fields"><label>Nome<input type="text" name="nome" placeholder="Seu nome" required></label><label>Sobrenome<input type="text" name="sobrenome" placeholder="Seu sobrenome" required></label></div>
+                        <div class="fields"><label>Nome<input type="text" name="nome" placeholder="Seu nome" required></label><label>Sobrenome<input type="text" name="sobrenome" placeholder="Seu sobrenome"></label></div>
                         <label>E-mail<input type="email" name="email" placeholder="voce@email.com" required></label>
-                        <label>Senha<input type="password" name="senha" placeholder="Crie uma senha" required></label>
+                        <label>Senha<input type="password" name="senha" placeholder="Crie uma senha (mín. 6 caracteres)" required></label>
                         <button type="submit">Criar minha conta</button>
                     </form>
                     <p class="form-footer">Já possui uma conta? <a href="login.php">Entrar</a></p>
