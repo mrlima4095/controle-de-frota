@@ -1,7 +1,6 @@
 services:
   web:
     build: .
-    container_name: controle_web
     ports:
       - "8090:8080"
     environment:
@@ -11,10 +10,26 @@ services:
       DB_PASSWORD: controle123
     depends_on:
       - db
+    networks:
+      - default
+      - coolify
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frota-http.entryPoints=http"
+      - "traefik.http.routers.frota-http.middlewares=frota-redirect-https"
+      - "traefik.http.routers.frota-http.rule=Host(`frota.opentty.fun`)"
+      - "traefik.http.routers.frota-http.service=frota-svc"
+      - "traefik.http.middlewares.frota-redirect-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.frota-https.entryPoints=https"
+      - "traefik.http.routers.frota-https.rule=Host(`frota.opentty.fun`)"
+      - "traefik.http.routers.frota-https.service=frota-svc"
+      - "traefik.http.routers.frota-https.tls=true"
+      - "traefik.http.routers.frota-https.tls.certresolver=letsencrypt"
+      - "traefik.http.services.frota-svc.loadbalancer.server.port=8080"
 
   db:
-    image: mysql:8.0
-    container_name: controle_db
+    build:
+      context: ./database
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root123
@@ -23,7 +38,13 @@ services:
       MYSQL_PASSWORD: controle123
     volumes:
       - db_data:/var/lib/mysql
-      - ./database/controle.sql:/docker-entrypoint-initdb.d/controle.sql:ro
+      # O script database/controle.sql deve ser importado manualmente
+      # (ver README), para evitar problemas de montagem no Coolify.
 
 volumes:
   db_data:
+
+networks:
+  default:
+  coolify:
+    external: true
