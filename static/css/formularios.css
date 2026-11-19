@@ -1,0 +1,132 @@
+.page-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.page-head h2 {
+    font-size: 1.15rem;
+    letter-spacing: -0.03em;
+}
+
+.page-head p {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.btn {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.btn-primary {
+    color: var(--white);
+    background: var(--green);
+}
+
+.btn-primary:hover {
+    background: var(--green-deep);
+}
+
+.btn-light {
+    color: var(--ink);
+    border-color: var(--line);
+    background: var(--white);
+}
+
+.btn-light:hover {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.btn-danger {
+    color: var(--white);
+    background: var(--red);
+}
+
+.form-card {
+    max-width: 720px;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--white);
+}
+
+.form-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.form-grid .full {
+    grid-column: 1 / -1;
+}
+
+.campo {
+    display: grid;
+    gap: 7px;
+    color: var(--ink);
+    font-size: 0.84rem;
+    font-weight: 750;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    outline: none;
+    color: var(--ink);
+    background: var(--white);
+    font: inherit;
+}
+
+.campo textarea {
+    min-height: 96px;
+    resize: vertical;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(13, 107, 82, 0.1);
+}
+
+.form-acoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.alerta {
+    margin-bottom: 18px;
+    padding: 12px 15px;
+    border: 1px solid #b7debd;
+    border-radius: 8px;
+    color: var(--green-deep);
+    background: #e6f4e6;
+    font-size: 0.86rem;
+}
+
+.alerta.is-erro {
+    border-color: #e8b6b6;
+    color: #922727;
+    background: #fbe5e5;
+}

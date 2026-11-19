@@ -1,0 +1,146 @@
+.app {
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 22px 16px;
+    overflow-y: auto;
+    color: #dcebe6;
+    background: var(--green-deep);
+}
+
+.sidebar .brand {
+    padding: 4px 10px 22px;
+    color: var(--white);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+}
+
+.menu-group {
+    margin: 16px 10px 6px;
+    color: #7fa398;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 11px;
+    border-radius: 8px;
+    color: #c3d8d1;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.menu-link:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.menu-link.is-active {
+    color: var(--green-deep);
+    background: var(--lime);
+    font-weight: 800;
+}
+
+.menu-icon {
+    width: 18px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.menu-logout {
+    margin-top: 12px;
+    color: #e7a3a3;
+}
+
+.menu-logout:hover {
+    color: #fff;
+    background: rgba(214, 69, 69, 0.28);
+}
+
+.main {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px clamp(20px, 3vw, 34px);
+    border-bottom: 1px solid var(--line);
+    background: var(--white);
+}
+
+.topbar h1 {
+    font-size: 1.5rem;
+    letter-spacing: -0.05em;
+}
+
+.topbar-subtitle {
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.user-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px 6px 6px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--paper);
+}
+
+.avatar {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--white);
+    background: var(--green);
+    font-weight: 800;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.user-info strong {
+    font-size: 0.84rem;
+}
+
+.user-info small {
+    color: var(--muted);
+    font-size: 0.72rem;
+    text-transform: capitalize;
+}
+
+.content {
+    padding: clamp(20px, 3vw, 34px);
+    flex: 1;
+}

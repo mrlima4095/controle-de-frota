@@ -1,0 +1,144 @@
+.grid-kpi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.kpi {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--white);
+}
+
+.kpi-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.kpi-value {
+    margin: 12px 0 4px;
+    font-size: 2rem;
+    font-weight: 850;
+    letter-spacing: -0.06em;
+}
+
+.kpi-hint {
+    color: var(--muted);
+    font-size: 0.76rem;
+}
+
+.kpi-hint.is-green { color: var(--green); font-weight: 700; }
+.kpi-hint.is-red { color: var(--red); font-weight: 700; }
+
+.kpi-icon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 9px;
+    background: #eef1ee;
+    font-size: 1rem;
+}
+
+.grid-paineis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 18px;
+}
+
+.painel {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--white);
+    overflow: hidden;
+}
+
+.painel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+}
+
+.painel-head h2 {
+    font-size: 1rem;
+    letter-spacing: -0.03em;
+}
+
+.painel-head a {
+    color: var(--green);
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.painel-body {
+    padding: 6px 18px 14px;
+}
+
+.lista-vazia {
+    padding: 24px 4px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.lista-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid #edf0ee;
+    font-size: 0.86rem;
+}
+
+.lista-item:last-child {
+    border-bottom: 0;
+}
+
+.lista-item strong {
+    display: block;
+    font-size: 0.88rem;
+}
+
+.lista-item small {
+    color: var(--muted);
+    font-size: 0.76rem;
+}
+
+.quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.quick-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 14px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--white);
+    font-size: 0.86rem;
+    font-weight: 700;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.quick-link:hover {
+    border-color: var(--green);
+    transform: translateY(-1px);
+}
+
+.quick-link .menu-icon {
+    color: var(--green);
+}
