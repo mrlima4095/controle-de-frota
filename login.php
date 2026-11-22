@@ -39,36 +39,52 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Acesse sua conta DriveHub.">
-        <link rel="stylesheet" href="static/css/auth.css">
         <title>Entrar | DriveHub</title>
+        <link rel="stylesheet" href="/static/vendor/bootstrap-5.3.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/app.css">
+        <script src="/static/vendor/bootstrap-5.3.3/js/bootstrap.bundle.min.js" defer></script>
     </head>
     <body>
-        <main class="page">
-            <section class="intro">
-                <a class="brand" href="index.html"><span class="brand-mark">↗</span>DriveHub</a>
-                <div class="intro-copy">
-                    <p class="eyebrow">Controle de frota</p>
-                    <h1>Sua operação em um só lugar.</h1>
-                    <p>Acompanhe o que importa para manter sua frota sempre no caminho certo.</p>
+        <div class="container-fluid min-vh-100">
+            <div class="row min-vh-100 g-0">
+                <div class="col-lg-6 auth-intro d-none d-lg-flex flex-column p-5">
+                    <a class="brand" href="index.html"><span class="brand-mark">↗</span>DriveHub</a>
+                    <div class="my-auto py-5">
+                        <p class="eyebrow">Controle de frota</p>
+                        <h1 class="display-5 fw-bolder mt-3 mb-4">Sua operação em um só lugar.</h1>
+                        <p class="fs-6">Acompanhe o que importa para manter sua frota sempre no caminho certo.</p>
+                    </div>
+                    <span class="small">© 2026 DriveHub</span>
                 </div>
-                <span class="intro-footer">© 2026 DriveHub</span>
-            </section>
-            <section class="form-area">
-                <div class="form-card">
-                    <a class="back" href="index.html">← Voltar para o início</a>
-                    <h2>Boas-vindas de volta</h2>
-                    <p class="form-description">Entre para acessar o painel da sua operação.</p>
-                    <?php if ($erro !== ''): ?>
-                        <p class="notice"><?= htmlspecialchars($erro) ?></p>
-                    <?php endif; ?>
-                    <form method="post">
-                        <label>E-mail<input type="email" name="email" placeholder="voce@empresa.com" required></label>
-                        <label>Senha<input type="password" name="senha" placeholder="Sua senha" required></label>
-                        <button type="submit">Entrar na plataforma</button>
-                    </form>
-                    <p class="form-footer">Ainda não tem uma conta? <a href="registro.php">Cadastre-se</a></p>
+
+                <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center p-4 p-sm-5">
+                    <div class="auth-form">
+                        <a class="small fw-bold text-brand" href="index.html">← Voltar para o início</a>
+                        <h2 class="h2 fw-bolder mt-4">Boas-vindas de volta</h2>
+                        <p class="text-muted mb-4">Entre para acessar o painel da sua operação.</p>
+
+                        <?php if ($erro !== ''): ?>
+                            <div class="alert alert-danger" role="alert"><?= htmlspecialchars($erro) ?></div>
+                        <?php endif; ?>
+
+                        <form method="post">
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-semibold small">E-mail</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="voce@empresa.com" autocomplete="email" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="senha" class="form-label fw-semibold small">Senha</label>
+                                <input type="password" class="form-control" id="senha" name="senha" placeholder="Sua senha" autocomplete="current-password" required>
+                            </div>
+                            <button type="submit" class="btn btn-brand w-100 py-2">Entrar na plataforma</button>
+                        </form>
+
+                        <p class="text-center text-muted small mt-4 mb-0">
+                            Ainda não tem uma conta? <a class="fw-bold text-brand" href="registro.php">Cadastre-se</a>
+                        </p>
+                    </div>
                 </div>
-            </section>
-        </main>
+            </div>
+        </div>
     </body>
 </html>

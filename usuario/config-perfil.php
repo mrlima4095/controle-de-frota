@@ -89,53 +89,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require __DIR__ . '/../includes/header.php';
 ?>
 
-<?php if (isset($_GET['ok'])): ?>
-    <p class="alerta">Dados atualizados com sucesso.</p>
-<?php endif; ?>
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+        <?php if (isset($_GET['ok'])): ?>
+            <div class="alert alert-success" role="alert">Dados atualizados com sucesso.</div>
+        <?php endif; ?>
 
-<?php if ($erro !== ''): ?>
-    <p class="alerta is-erro"><?= h($erro) ?></p>
-<?php endif; ?>
+        <?php if ($erro !== ''): ?>
+            <div class="alert alert-danger" role="alert"><?= h($erro) ?></div>
+        <?php endif; ?>
 
-<div class="page-head">
-    <div>
-        <h2>Dados da conta</h2>
-        <p>Perfil de acesso: <span class="badge is-blue"><?= h($conta['perfil']) ?></span></p>
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <h2 class="h6 mb-0">Dados da conta</h2>
+                <span class="text-muted small">Perfil de acesso: <span class="badge text-bg-primary rounded-pill"><?= h($conta['perfil']) ?></span></span>
+            </div>
+            <div class="card-body p-3 p-sm-4">
+                <form method="post">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="nome" class="form-label fw-semibold small">Nome completo</label>
+                            <input type="text" class="form-control" id="nome" name="nome" value="<?= h($nome) ?>" maxlength="100" autocomplete="name" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label fw-semibold small">E-mail</label>
+                            <input type="email" class="form-control" id="email" name="email" value="<?= h($email) ?>" maxlength="100" autocomplete="email" required>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="senha_atual" class="form-label fw-semibold small">Senha atual</label>
+                            <input type="password" class="form-control" id="senha_atual" name="senha_atual" autocomplete="current-password" placeholder="Necessária apenas para trocar a senha">
+                            <div class="form-text">Preencha somente se quiser alterar sua senha.</div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="senha_nova" class="form-label fw-semibold small">Nova senha</label>
+                            <input type="password" class="form-control" id="senha_nova" name="senha_nova" autocomplete="new-password" minlength="6" placeholder="Mínimo de 6 caracteres">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="senha_confirmar" class="form-label fw-semibold small">Confirmar nova senha</label>
+                            <input type="password" class="form-control" id="senha_confirmar" name="senha_confirmar" autocomplete="new-password" placeholder="Repita a nova senha">
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+                        <button type="submit" class="btn btn-brand">Salvar alterações</button>
+                        <a class="btn btn-outline-secondary" href="/usuario/index.php">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-
-<form method="post" class="form-card">
-    <div class="form-grid">
-        <label class="campo full">
-            Nome completo
-            <input type="text" name="nome" value="<?= h($nome) ?>" maxlength="100" autocomplete="name" required>
-        </label>
-
-        <label class="campo full">
-            E-mail
-            <input type="email" name="email" value="<?= h($email) ?>" maxlength="100" autocomplete="email" required>
-        </label>
-
-        <label class="campo">
-            Senha atual
-            <input type="password" name="senha_atual" autocomplete="current-password" placeholder="Necessária apenas para trocar a senha">
-        </label>
-
-        <label class="campo">
-            Nova senha
-            <input type="password" name="senha_nova" autocomplete="new-password" minlength="6" placeholder="Mínimo de 6 caracteres">
-        </label>
-
-        <label class="campo full">
-            Confirmar nova senha
-            <input type="password" name="senha_confirmar" autocomplete="new-password" placeholder="Repita a nova senha">
-        </label>
-    </div>
-
-    <div class="form-acoes">
-        <button type="submit" class="btn btn-primary">Salvar alterações</button>
-        <a class="btn btn-light" href="/usuario/index.php">Cancelar</a>
-    </div>
-</form>
 
 <?php require __DIR__ . '/../includes/footer.php'; ?>

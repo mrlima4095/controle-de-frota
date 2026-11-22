@@ -56,7 +56,7 @@ function dataBr(?string $data): string
     if (!$data) {
         return '—';
     }
-    return date('d/m/Y', strtotime($data));
+    return date('d/m/Y', (int) strtotime($data));
 }
 
 function moeda(float $valor): string
@@ -64,127 +64,123 @@ function moeda(float $valor): string
     return 'R$ ' . number_format($valor, 2, ',', '.');
 }
 
+$kpis = [
+    ['Veículos', $totalVeiculos, $veiculosEmUso . ' em uso · ' . $veiculosManutencao . ' em manutenção', '▤', ''],
+    ['Motoristas', $totalMotoristas, 'Condutores ativos', '◍', ''],
+    ['Reservas pendentes', $reservasPendentes, 'Aguardando confirmação', '➔', $reservasPendentes > 0 ? 'text-brand fw-bold' : ''],
+    ['Multas pendentes', $multasPendentes, 'Requerem atenção', '⚠', $multasPendentes > 0 ? 'text-danger fw-bold' : ''],
+    ['Manutenções no mês', $manutencoesMes, 'Serviços registrados', '⚙', ''],
+    ['Clientes', $totalClientes, 'Cadastros ativos', '⌂', ''],
+];
+
 require __DIR__ . '/../includes/header.php';
 ?>
 
-<div class="grid-kpi">
-    <article class="kpi">
-        <div class="kpi-label">Veículos <span class="kpi-icon">▤</span></div>
-        <p class="kpi-value"><?= $totalVeiculos ?></p>
-        <p class="kpi-hint"><?= $veiculosEmUso ?> em uso · <?= $veiculosManutencao ?> em manutenção</p>
-    </article>
-
-    <article class="kpi">
-        <div class="kpi-label">Motoristas <span class="kpi-icon">◍</span></div>
-        <p class="kpi-value"><?= $totalMotoristas ?></p>
-        <p class="kpi-hint">Condutores ativos</p>
-    </article>
-
-    <article class="kpi">
-        <div class="kpi-label">Reservas pendentes <span class="kpi-icon">➔</span></div>
-        <p class="kpi-value"><?= $reservasPendentes ?></p>
-        <p class="kpi-hint <?= $reservasPendentes > 0 ? 'is-green' : '' ?>">Aguardando confirmação</p>
-    </article>
-
-    <article class="kpi">
-        <div class="kpi-label">Multas pendentes <span class="kpi-icon">⚠</span></div>
-        <p class="kpi-value"><?= $multasPendentes ?></p>
-        <p class="kpi-hint <?= $multasPendentes > 0 ? 'is-red' : '' ?>">Requerem atenção</p>
-    </article>
-
-    <article class="kpi">
-        <div class="kpi-label">Manutenções no mês <span class="kpi-icon">⚙</span></div>
-        <p class="kpi-value"><?= $manutencoesMes ?></p>
-        <p class="kpi-hint">Serviços registrados</p>
-    </article>
-
-    <article class="kpi">
-        <div class="kpi-label">Clientes <span class="kpi-icon">⌂</span></div>
-        <p class="kpi-value"><?= $totalClientes ?></p>
-        <p class="kpi-hint">Cadastros ativos</p>
-    </article>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-3 mb-4">
+    <?php foreach ($kpis as [$label, $valor, $dica, $icone, $classeDica]): ?>
+        <div class="col">
+            <article class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between gap-2">
+                        <span class="text-muted small fw-semibold"><?= htmlspecialchars($label) ?></span>
+                        <span class="kpi-icon" aria-hidden="true"><?= $icone ?></span>
+                    </div>
+                    <p class="display-6 fw-bolder lh-1 my-3"><?= $valor ?></p>
+                    <p class="small mb-0 <?= $classeDica ?>"><?= htmlspecialchars($dica) ?></p>
+                </div>
+            </article>
+        </div>
+    <?php endforeach; ?>
 </div>
 
-<div class="grid-paineis">
-    <section class="painel">
-        <header class="painel-head">
-            <h2>Próximas manutenções</h2>
-            <a href="/dashboard/manutencao/index.php">Ver todas</a>
-        </header>
-        <div class="painel-body">
-            <?php if (!$proximasManutencoes): ?>
-                <p class="lista-vazia">Nenhuma manutenção agendada.</p>
-            <?php else: ?>
-                <?php foreach ($proximasManutencoes as $m): ?>
-                    <div class="lista-item">
-                        <div>
-                            <strong><?= htmlspecialchars($m['placa']) ?> · <?= htmlspecialchars($m['modelo'] ?? '') ?></strong>
-                            <small><?= htmlspecialchars(ucfirst($m['tipo'])) ?></small>
+<div class="row g-3">
+    <div class="col-12 col-xl-6">
+        <section class="card h-100 border-0 shadow-sm">
+            <header class="card-header bg-white d-flex align-items-center justify-content-between gap-2 py-3">
+                <h2 class="h6 mb-0">Próximas manutenções</h2>
+                <a class="text-brand small fw-bold text-nowrap" href="/dashboard/manutencao/index.php">Ver todas</a>
+            </header>
+            <div class="list-group list-group-flush">
+                <?php if (!$proximasManutencoes): ?>
+                    <p class="list-group-item text-muted small text-center py-4 mb-0">Nenhuma manutenção agendada.</p>
+                <?php else: ?>
+                    <?php foreach ($proximasManutencoes as $m): ?>
+                        <div class="list-group-item d-flex align-items-center justify-content-between gap-3">
+                            <div class="min-w-0">
+                                <strong class="d-block text-truncate"><?= htmlspecialchars($m['placa']) ?> · <?= htmlspecialchars($m['modelo'] ?? '') ?></strong>
+                                <small class="text-muted"><?= htmlspecialchars(ucfirst($m['tipo'])) ?></small>
+                            </div>
+                            <span class="badge text-bg-primary rounded-pill flex-shrink-0"><?= dataBr($m['data_man']) ?></span>
                         </div>
-                        <span class="badge is-blue"><?= dataBr($m['data_man']) ?></span>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
-    </section>
-
-    <section class="painel">
-        <header class="painel-head">
-            <h2>Multas pendentes</h2>
-            <a href="/dashboard/sinistros/index.php">Ver todas</a>
-        </header>
-        <div class="painel-body">
-            <?php if (!$multasRecentes): ?>
-                <p class="lista-vazia">Nenhuma multa pendente. Tudo em dia!</p>
-            <?php else: ?>
-                <?php foreach ($multasRecentes as $mu): ?>
-                    <div class="lista-item">
-                        <div>
-                            <strong><?= htmlspecialchars($mu['placa']) ?> · <?= htmlspecialchars($mu['infracao']) ?></strong>
-                            <small><?= dataBr($mu['data_infra']) ?></small>
-                        </div>
-                        <span class="badge is-red"><?= moeda((float) $mu['valor_multa']) ?></span>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
-    </section>
-
-    <section class="painel">
-        <header class="painel-head">
-            <h2>CNHs a vencer (60 dias)</h2>
-            <a href="/dashboard/motoristas/index.php">Ver motoristas</a>
-        </header>
-        <div class="painel-body">
-            <?php if (!$cnhsVencendo): ?>
-                <p class="lista-vazia">Nenhuma CNH vencendo nos próximos 60 dias.</p>
-            <?php else: ?>
-                <?php foreach ($cnhsVencendo as $m): ?>
-                    <div class="lista-item">
-                        <div>
-                            <strong><?= htmlspecialchars($m['nome']) ?></strong>
-                            <small>Validade da CNH</small>
-                        </div>
-                        <span class="badge is-orange"><?= dataBr($m['validade_cnh']) ?></span>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
-    </section>
-
-    <section class="painel">
-        <header class="painel-head">
-            <h2>Acesso rápido</h2>
-        </header>
-        <div class="painel-body">
-            <div class="quick-links">
-                <a class="quick-link" href="/dashboard/veiculos/create.php"><span class="menu-icon">＋</span> Novo veículo</a>
-                <a class="quick-link" href="/dashboard/motoristas/create.php"><span class="menu-icon">＋</span> Novo motorista</a>
-                <a class="quick-link" href="/dashboard/viagens/index.php"><span class="menu-icon">➔</span> Viagens</a>
-                <a class="quick-link" href="/dashboard/relatorios/index.php"><span class="menu-icon">▥</span> Relatórios</a>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
+
+    <div class="col-12 col-xl-6">
+        <section class="card h-100 border-0 shadow-sm">
+            <header class="card-header bg-white d-flex align-items-center justify-content-between gap-2 py-3">
+                <h2 class="h6 mb-0">Multas pendentes</h2>
+                <a class="text-brand small fw-bold text-nowrap" href="/dashboard/sinistros/index.php">Ver todas</a>
+            </header>
+            <div class="list-group list-group-flush">
+                <?php if (!$multasRecentes): ?>
+                    <p class="list-group-item text-muted small text-center py-4 mb-0">Nenhuma multa pendente. Tudo em dia!</p>
+                <?php else: ?>
+                    <?php foreach ($multasRecentes as $mu): ?>
+                        <div class="list-group-item d-flex align-items-center justify-content-between gap-3">
+                            <div class="min-w-0">
+                                <strong class="d-block text-truncate"><?= htmlspecialchars($mu['placa']) ?> · <?= htmlspecialchars($mu['infracao']) ?></strong>
+                                <small class="text-muted"><?= dataBr($mu['data_infra']) ?></small>
+                            </div>
+                            <span class="badge text-bg-danger rounded-pill flex-shrink-0"><?= moeda((float) $mu['valor_multa']) ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-12 col-xl-6">
+        <section class="card h-100 border-0 shadow-sm">
+            <header class="card-header bg-white d-flex align-items-center justify-content-between gap-2 py-3">
+                <h2 class="h6 mb-0">CNHs a vencer (60 dias)</h2>
+                <a class="text-brand small fw-bold text-nowrap" href="/dashboard/motoristas/index.php">Ver motoristas</a>
+            </header>
+            <div class="list-group list-group-flush">
+                <?php if (!$cnhsVencendo): ?>
+                    <p class="list-group-item text-muted small text-center py-4 mb-0">Nenhuma CNH vencendo nos próximos 60 dias.</p>
+                <?php else: ?>
+                    <?php foreach ($cnhsVencendo as $m): ?>
+                        <div class="list-group-item d-flex align-items-center justify-content-between gap-3">
+                            <div class="min-w-0">
+                                <strong class="d-block text-truncate"><?= htmlspecialchars($m['nome']) ?></strong>
+                                <small class="text-muted">Validade da CNH</small>
+                            </div>
+                            <span class="badge text-bg-warning rounded-pill flex-shrink-0"><?= dataBr($m['validade_cnh']) ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-12 col-xl-6">
+        <section class="card h-100 border-0 shadow-sm">
+            <header class="card-header bg-white py-3">
+                <h2 class="h6 mb-0">Acesso rápido</h2>
+            </header>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-sm-2 g-2">
+                    <div class="col"><a class="quick-link" href="/dashboard/veiculos/create.php"><span class="menu-icon" aria-hidden="true">＋</span> Novo veículo</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/motoristas/create.php"><span class="menu-icon" aria-hidden="true">＋</span> Novo motorista</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/viagens/index.php"><span class="menu-icon" aria-hidden="true">➔</span> Viagens</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/relatorios/index.php"><span class="menu-icon" aria-hidden="true">▥</span> Relatórios</a></div>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
 
 <?php require __DIR__ . '/../includes/footer.php'; ?>

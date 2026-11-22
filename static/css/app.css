@@ -1,0 +1,284 @@
+/* Identidade visual DriveHub sobre o Bootstrap 5.
+   Layout e responsividade ficam a cargo do Bootstrap; aqui só ajustes de marca. */
+
+:root {
+    --dh-ink: #132126;
+    --dh-muted: #617176;
+    --dh-line: #d9e1df;
+    --dh-paper: #f6f7f3;
+    --dh-green: #00a86b;
+    --dh-green-deep: #003f2b;
+    --dh-lime: #c8ff5d;
+    --dh-red: #d64545;
+}
+
+body {
+    color: var(--dh-ink);
+    background: var(--dh-paper);
+}
+
+.btn-deep {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--dh-green-deep);
+    --bs-btn-border-color: var(--dh-green-deep);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #002d1f;
+    --bs-btn-hover-border-color: #002d1f;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #002d1f;
+    --bs-btn-active-border-color: #002d1f;
+}
+
+.btn-brand {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--dh-green);
+    --bs-btn-border-color: var(--dh-green);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--dh-green-deep);
+    --bs-btn-hover-border-color: var(--dh-green-deep);
+    --bs-btn-focus-shadow-rgb: 0, 168, 107;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--dh-green-deep);
+    --bs-btn-active-border-color: var(--dh-green-deep);
+}
+
+.text-brand { color: var(--dh-green) !important; }
+.bg-brand { background-color: var(--dh-green) !important; }
+.bg-brand-deep { background-color: var(--dh-green-deep) !important; }
+.bg-lime { background-color: var(--dh-lime) !important; }
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 850;
+    font-size: 1.08rem;
+    letter-spacing: -0.04em;
+    color: inherit;
+}
+.brand:hover { color: inherit; }
+
+.brand-mark {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    place-items: center;
+    border-radius: 10px;
+    color: var(--dh-green-deep);
+    background: var(--dh-lime);
+    font-weight: 900;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: var(--dh-green);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.eyebrow::before {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--dh-lime);
+    content: "";
+}
+
+/* --- Área autenticada --- */
+
+.app-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1030;
+    width: 250px;
+    background: #fff;
+    border-right: 1px solid var(--dh-line);
+}
+.app-sidebar .brand { padding: 18px 20px; }
+.app-content { min-height: 100vh; }
+.app-offcanvas { width: 280px; }
+.min-w-0 { min-width: 0; }
+
+@media (min-width: 992px) {
+    .app-content { margin-left: 250px; }
+}
+
+.app-topbar {
+    z-index: 1020;
+    background: #fff;
+    border-bottom: 1px solid var(--dh-line);
+}
+
+.menu-group {
+    padding: 14px 20px 4px;
+    color: var(--dh-muted);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+}
+.menu-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 1px 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    color: var(--dh-muted);
+    font-size: 0.9rem;
+    font-weight: 650;
+}
+.menu-link:hover,
+.menu-link.active {
+    color: var(--dh-green-deep);
+    background: #e6f4e6;
+}
+.menu-link.active { font-weight: 800; }
+.menu-icon {
+    width: 20px;
+    flex: none;
+    text-align: center;
+}
+.menu-logout { color: #a52a2a !important; }
+.menu-logout:hover { color: #922727 !important; background: #fbe5e5 !important; }
+
+.user-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 12px 5px 5px;
+    border: 1px solid var(--dh-line);
+    border-radius: 999px;
+    background: var(--dh-paper);
+    color: inherit;
+}
+.user-chip:hover { color: inherit; border-color: var(--dh-green); }
+.avatar {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: none;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--dh-green);
+    font-weight: 800;
+}
+
+.kpi-icon {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 9px;
+    background: #eef1ee;
+    font-size: 1rem;
+}
+
+.quick-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    height: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--dh-line);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--dh-ink);
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.quick-link:hover {
+    border-color: var(--dh-green);
+    color: var(--dh-green-deep);
+    transform: translateY(-1px);
+}
+.quick-link .menu-icon { color: var(--dh-green); }
+
+/* --- Login / cadastro --- */
+
+.auth-intro {
+    color: #fff;
+    background: var(--dh-green-deep);
+}
+.auth-intro .brand-mark { background: var(--dh-lime); }
+.auth-intro .eyebrow { color: var(--dh-lime); }
+.auth-intro .eyebrow::before { background: #fff; }
+.auth-intro p { color: #c9ddd5; }
+.auth-form { max-width: 430px; width: 100%; }
+
+/* --- Landing page --- */
+
+.hero-title {
+    font-size: clamp(2.6rem, 5vw, 4.6rem);
+    line-height: 1;
+    letter-spacing: -0.06em;
+}
+.hero-title span { color: var(--dh-green); }
+.hero-glow {
+    position: absolute;
+    top: -210px;
+    right: -170px;
+    z-index: -1;
+    width: 600px;
+    height: 600px;
+    border: 1px solid rgba(13, 107, 82, 0.11);
+    border-radius: 50%;
+    box-shadow: 0 0 0 58px rgba(13, 107, 82, 0.035), 0 0 0 116px rgba(13, 107, 82, 0.025);
+    pointer-events: none;
+}
+.landing-band { background: var(--dh-green-deep); color: #fff; }
+.band-item { border-bottom: 1px solid rgba(255, 255, 255, 0.13); }
+.band-item:last-child { border-bottom: 0; }
+.cta-box { background: var(--dh-lime); border-radius: 16px; }
+.dash-preview { transform: rotate(1.2deg); }
+
+.mini-avatar {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-left: -6px;
+    border: 2px solid var(--dh-paper);
+    border-radius: 50%;
+}
+.mini-avatar:first-child { margin-left: 0; }
+
+.dash-count {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    flex: none;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--dh-green-deep);
+    background: var(--dh-lime);
+    font-weight: 850;
+}
+
+.task-icon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    place-items: center;
+    border-radius: 8px;
+    color: var(--dh-green);
+    background: #e0f7ed;
+}
+
+@media (min-width: 768px) {
+    .band-item {
+        border-bottom: 0;
+        border-right: 1px solid rgba(255, 255, 255, 0.13);
+    }
+    .band-item:last-child { border-right: 0; }
+}
+
+@media (max-width: 991.98px) {
+    .dash-preview { transform: none; }
+}

@@ -3,260 +3,208 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            name="description"
-            content="Frota em dia: controle simples, inteligente e centralizado para sua operação."
-        />
+        <meta name="description" content="Frota em dia: controle simples, inteligente e centralizado para sua operação." />
         <title>DriveHub | Controle de Frota</title>
-        <style>
-            :root {
-              --ink: #132126;
-              --muted: #617176;
-              --line: #d9e1df;
-              --paper: #f6f7f3;
-              --white: #ffffff;
-              --green: #00a86b;
-              --green-deep: #003f2b;
-              --lime: #c8ff5d;
-              --orange: #f1a94c;
-            }
-
-            * { box-sizing: border-box; }
-            html { scroll-behavior: smooth; }
-            body {
-              margin: 0;
-              color: var(--ink);
-              background: var(--paper);
-              font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            }
-            a { color: inherit; text-decoration: none; }
-            .container { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
-            .eyebrow {
-              display: inline-flex;
-              align-items: center;
-              gap: 8px;
-              margin: 0;
-              color: var(--green);
-              font-size: 0.74rem;
-              font-weight: 800;
-              letter-spacing: 0.12em;
-              text-transform: uppercase;
-            }
-            .eyebrow::before { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); content: ""; }
-
-            header { padding: 22px 0; }
-            .nav { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
-            .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 850; font-size: 1.08rem; letter-spacing: -0.04em; }
-            .brand-mark {
-              display: grid;
-              width: 34px;
-              height: 34px;
-              place-items: center;
-              border-radius: 10px;
-              color: var(--white);
-              background: var(--green);
-            }
-            .nav-links { display: flex; align-items: center; gap: 27px; color: var(--muted); font-size: 0.9rem; font-weight: 650; }
-            .nav-links a:hover { color: var(--green); }
-            .login { color: var(--green); font-weight: 800; }
-            .button {
-              display: inline-flex;
-              min-height: 48px;
-              align-items: center;
-              justify-content: center;
-              gap: 10px;
-              padding: 0 19px;
-              border: 1px solid transparent;
-              border-radius: 8px;
-              font-size: 0.92rem;
-              font-weight: 800;
-              transition: transform .2s ease, background .2s ease;
-            }
-            .button:hover { transform: translateY(-2px); }
-            .button-primary { color: var(--white); background: var(--green); box-shadow: 0 9px 20px rgba(0, 168, 107, .22); }
-            .button-primary:hover { background: var(--green-deep); }
-            .button-light { color: var(--ink); border-color: var(--line); background: var(--white); }
-            .button-light:hover { border-color: var(--green); }
-
-            .hero { position: relative; overflow: hidden; padding: 70px 0 84px; }
-            .hero::after {
-              position: absolute;
-              z-index: -1;
-              top: -210px;
-              right: -170px;
-              width: 600px;
-              height: 600px;
-              border: 1px solid rgba(13, 107, 82, .11);
-              border-radius: 50%;
-              box-shadow: 0 0 0 58px rgba(13, 107, 82, .035), 0 0 0 116px rgba(13, 107, 82, .025);
-              content: "";
-            }
-            .hero-grid { display: grid; grid-template-columns: minmax(0, .94fr) minmax(430px, 1.06fr); align-items: center; gap: 66px; }
-            h1 { max-width: 670px; margin: 18px 0 21px; font-size: clamp(2.65rem, 5vw, 4.8rem); line-height: .99; letter-spacing: -0.07em; }
-            h1 span { color: var(--green); }
-            .hero-copy { max-width: 535px; margin: 0; color: var(--muted); font-size: 1.07rem; line-height: 1.65; }
-            .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 31px; }
-            .trust { display: flex; align-items: center; gap: 11px; margin-top: 29px; color: var(--muted); font-size: .84rem; }
-            .avatars { display: flex; }
-            .avatars i { display: block; width: 24px; height: 24px; margin-left: -6px; border: 2px solid var(--paper); border-radius: 50%; }
-            .avatars i:first-child { margin-left: 0; background: #d89268; }
-            .avatars i:nth-child(2) { background: #688fa7; }
-            .avatars i:nth-child(3) { background: #725c42; }
-
-            .dashboard { padding: 17px; border: 1px solid rgba(19, 33, 38, .09); border-radius: 17px; background: var(--white); box-shadow: 0 24px 50px rgba(20, 43, 40, .13); transform: rotate(1.3deg); }
-            .dash-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid #edf0ee; }
-            .dash-title { font-size: .75rem; font-weight: 800; }
-            .date { color: var(--muted); font-size: .68rem; font-weight: 700; }
-            .schedule-highlight { display: flex; align-items: center; justify-content: space-between; margin: 15px 0 11px; padding: 18px; border-radius: 11px; color: var(--white); background: var(--green); }
-            .schedule-highlight small { display: block; color: #d9fff1; font-size: .64rem; font-weight: 700; letter-spacing: .08em; }
-            .schedule-highlight strong { display: block; margin-top: 5px; font-size: 1.32rem; letter-spacing: -.05em; }
-            .schedule-count { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; color: var(--green-deep); background: var(--lime); font-size: 1.1rem; font-weight: 850; }
-            .task-list { display: grid; gap: 3px; }
-            .task { display: grid; grid-template-columns: 35px 1fr auto; align-items: center; gap: 10px; padding: 11px 4px; border-bottom: 1px solid #edf0ee; }
-            .task:last-child { border-bottom: 0; }
-            .task-icon { display: grid; width: 31px; height: 31px; place-items: center; border-radius: 8px; color: var(--green); background: #e0f7ed; font-size: .88rem; }
-            .task-info strong { display: block; font-size: .72rem; }.task-info small { display: block; margin-top: 3px; color: var(--muted); font-size: .62rem; }
-            .task time { color: var(--green); font-size: .67rem; font-weight: 850; }
-
-            .band { background: var(--green-deep); color: var(--white); }
-            .band-inner { display: grid; grid-template-columns: repeat(3, 1fr); }
-            .band-item { display: flex; align-items: center; gap: 13px; padding: 25px 30px; border-right: 1px solid rgba(255,255,255,.13); }
-            .band-item:last-child { border: 0; }.band-icon { color: var(--lime); }.band-item strong { display: block; font-size: .82rem; }.band-item span { color: #aac3bc; font-size: .72rem; }
-
-            .features { padding: 96px 0; }.section-heading { max-width: 580px; }.section-heading h2 { margin: 13px 0 0; font-size: clamp(2rem, 3.7vw, 3.25rem); line-height: 1.05; letter-spacing: -.06em; }.section-heading p { color: var(--muted); line-height: 1.6; }
-            .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; margin-top: 40px; }.feature-card { padding: 26px; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }.feature-card svg { color: var(--green); }.feature-card h3 { margin: 20px 0 9px; font-size: 1.05rem; letter-spacing: -.03em; }.feature-card p { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.6; }
-            .cta { padding: 0 0 85px; }.cta-box { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 47px 56px; overflow: hidden; border-radius: 15px; background: var(--lime); }.cta-box h2 { max-width: 550px; margin: 10px 0 0; font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.02; letter-spacing: -.06em; }.cta-box .eyebrow { color: var(--green-deep); }.cta-box .eyebrow::before { background: var(--green); }.cta-box .button { flex: none; color: var(--white); background: var(--green-deep); }
-            footer { padding: 27px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .78rem; }.footer-inner { display: flex; justify-content: space-between; gap: 18px; }.footer-inner a { color: var(--green); font-weight: 750; }
-
-            @media (max-width: 850px) { .nav-links { display: none; }.hero { padding-top: 42px; }.hero-grid { grid-template-columns: 1fr; gap: 52px; }.dashboard { width: min(490px, calc(100% - 20px); margin: 0 auto; }.band-inner { grid-template-columns: 1fr; }.band-item { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.13); }.cards { grid-template-columns: 1fr; }.cta-box { align-items: flex-start; flex-direction: column; padding: 37px 30px; } }
-            @media (max-width: 480px) { .container { width: min(100% - 30px, 1160px); }.nav .button { display: none; } h1 { font-size: 2.7rem; }.features { padding: 72px 0; }.footer-inner { align-items: flex-start; flex-direction: column; } }
-        </style>
+        <link rel="stylesheet" href="/static/vendor/bootstrap-5.3.3/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/static/css/app.css" />
+        <script src="/static/vendor/bootstrap-5.3.3/js/bootstrap.bundle.min.js" defer></script>
     </head>
     <body>
-        <header class="container">
-            <nav class="nav" aria-label="Navegação principal">
+        <nav class="navbar navbar-expand-lg border-bottom py-3">
+            <div class="container">
                 <a class="brand" href="#inicio" aria-label="DriveHub, início"><span class="brand-mark">↗</span>DriveHub</a>
-                <div class="nav-links">
-                    <a href="#recursos">Recursos</a
-                    ><a href="#como-funciona">Como funciona</a
-                    ><a href="#como-funciona">Vantagens</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navPrincipal" aria-controls="navPrincipal" aria-expanded="false" aria-label="Abrir navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navPrincipal">
+                    <ul class="navbar-nav mx-auto mb-3 mb-lg-0 gap-lg-4">
+                        <li class="nav-item"><a class="nav-link" href="#recursos">Recursos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#como-funciona">Como funciona</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#como-funciona">Vantagens</a></li>
+                    </ul>
+                    <div class="d-flex align-items-center gap-2">
+                        <a class="btn btn-link text-brand fw-bold text-decoration-none" href="login.php">Entrar</a>
+                        <a class="btn btn-brand" href="registro.php">Criar minha conta</a>
+                    </div>
                 </div>
-                <a class="login" href="login.php">Entrar</a>
-                <a class="button button-primary" href="registro.php">Criar minha conta</a>
-            </nav>
-        </header>
+            </div>
+        </nav>
 
         <main id="inicio">
-            <section class="hero">
-                <div class="container hero-grid">
-                    <div>
-                        <p class="eyebrow">Gestão de frota simplificada</p>
-                        <h1>Sua frota no rumo <span>certo.</span></h1>
-                        <p class="hero-copy">
-                            Organize veículos, acompanhe manutenções e tome
-                            decisões melhores. Tudo em um só lugar, sem
-                            planilhas que nunca acabam.
-                        </p>
-                        <div class="hero-actions">
-                            <a class="button button-primary" href="registro.php">Começar agora<span aria-hidden="true">→</span></a>
-                            <a class="button button-light" href="#recursos">Conhecer a plataforma</a>
+            <section class="position-relative overflow-hidden py-5">
+                <div class="hero-glow"></div>
+                <div class="container py-lg-5">
+                    <div class="row align-items-center g-5">
+                        <div class="col-lg-6">
+                            <p class="eyebrow">Gestão de frota simplificada</p>
+                            <h1 class="hero-title fw-bolder mt-3 mb-4">Sua frota no rumo <span>certo.</span></h1>
+                            <p class="text-muted lh-lg mb-0">
+                                Organize veículos, acompanhe manutenções e tome decisões melhores.
+                                Tudo em um só lugar, sem planilhas que nunca acabam.
+                            </p>
+                            <div class="d-flex flex-wrap gap-2 mt-4">
+                                <a class="btn btn-brand btn-lg" href="registro.php">Começar agora →</a>
+                                <a class="btn btn-outline-secondary btn-lg" href="#recursos">Conhecer a plataforma</a>
+                            </div>
+                            <div class="d-flex align-items-center gap-3 mt-4 text-muted small">
+                                <span class="d-flex" aria-hidden="true">
+                                    <i class="mini-avatar bg-secondary"></i>
+                                    <i class="mini-avatar bg-info"></i>
+                                    <i class="mini-avatar bg-dark"></i>
+                                </span>
+                                <span>Feito para quem faz a operação acontecer.</span>
+                            </div>
                         </div>
-                        <div class="trust">
-                            <span class="avatars" aria-hidden="true"><i></i><i></i><i></i></span>
-                            <span>Feito para quem faz a operação acontecer.</span>
+
+                        <div class="col-lg-6">
+                            <div class="dash-preview card border-0 shadow-lg rounded-4 p-3 p-sm-4 bg-white">
+                                <div class="d-flex align-items-center justify-content-between border-bottom pb-3">
+                                    <strong class="small">Visão geral da frota</strong>
+                                    <span class="text-muted small">Hoje</span>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-between gap-3 rounded-3 bg-brand text-white p-3 p-sm-4 my-3">
+                                    <div>
+                                        <small class="d-block opacity-75">Próxima viagem</small>
+                                        <strong class="fs-5">Coleta programada</strong>
+                                    </div>
+                                    <span class="dash-count" aria-hidden="true">4</span>
+                                </div>
+
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item d-flex align-items-center gap-3 px-0 py-3">
+                                        <span class="task-icon" aria-hidden="true">▤</span>
+                                        <div class="min-w-0 flex-grow-1">
+                                            <strong class="d-block small text-truncate">Veículo liberado</strong>
+                                            <small class="text-muted">Fiat Strada · ABC-1234</small>
+                                        </div>
+                                        <span class="text-brand small fw-bold">09:30</span>
+                                    </div>
+                                    <div class="list-group-item d-flex align-items-center gap-3 px-0 py-3">
+                                        <span class="task-icon" aria-hidden="true">⚙</span>
+                                        <div class="min-w-0 flex-grow-1">
+                                            <strong class="d-block small text-truncate">Revisão agendada</strong>
+                                            <small class="text-muted">Sprinter · XYZ-9876</small>
+                                        </div>
+                                        <span class="text-brand small fw-bold">14:00</span>
+                                    </div>
+                                    <div class="list-group-item d-flex align-items-center gap-3 px-0 py-3">
+                                        <span class="task-icon" aria-hidden="true">◈</span>
+                                        <div class="min-w-0 flex-grow-1">
+                                            <strong class="d-block small text-truncate">Abastecimento registrado</strong>
+                                            <small class="text-muted">Gol · DEF-4567</small>
+                                        </div>
+                                        <span class="text-brand small fw-bold">16:45</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="band" id="como-funciona">
-                <div class="container band-inner">
-                    <div class="band-item">
-                        <span class="band-icon">◉</span
-                        ><span
-                            ><strong>Controle em tempo real</strong
-                            ><span>Saiba onde sua operação está.</span></span
-                        >
-                    </div>
-                    <div class="band-item">
-                        <span class="band-icon">▣</span
-                        ><span
-                            ><strong>Manutenção previsível</strong
-                            ><span
-                                >Evite paradas e custos inesperados.</span
-                            ></span
-                        >
-                    </div>
-                    <div class="band-item">
-                        <span class="band-icon">⌁</span
-                        ><span
-                            ><strong>Dados que orientam</strong
-                            ><span>Decisões mais seguras todo dia.</span></span
-                        >
+            <section class="landing-band py-4" id="como-funciona">
+                <div class="container">
+                    <div class="row g-0">
+                        <div class="col-12 col-md-4 band-item p-4">
+                            <div class="d-flex align-items-start gap-3">
+                                <span class="fs-4" aria-hidden="true">◉</span>
+                                <div>
+                                    <strong class="d-block small">Controle em tempo real</strong>
+                                    <span class="small opacity-75">Saiba onde sua operação está.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 band-item p-4">
+                            <div class="d-flex align-items-start gap-3">
+                                <span class="fs-4" aria-hidden="true">▣</span>
+                                <div>
+                                    <strong class="d-block small">Manutenção previsível</strong>
+                                    <span class="small opacity-75">Evite paradas e custos inesperados.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 band-item p-4">
+                            <div class="d-flex align-items-start gap-3">
+                                <span class="fs-4" aria-hidden="true">⌁</span>
+                                <div>
+                                    <strong class="d-block small">Dados que orientam</strong>
+                                    <span class="small opacity-75">Decisões mais seguras todo dia.</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section class="features container" id="recursos">
-                <div class="section-heading">
-                    <p class="eyebrow">Feito para a sua rotina</p>
-                    <h2>Menos burocracia. Mais estrada.</h2>
-                    <p>
-                        Uma plataforma clara para centralizar as informações que
-                        movem o seu negócio.
-                    </p>
+            <section class="container py-5" id="recursos">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <p class="eyebrow">Feito para a sua rotina</p>
+                        <h2 class="display-6 fw-bolder mt-3">Menos burocracia. Mais estrada.</h2>
+                        <p class="text-muted lh-lg mt-3 mb-0">
+                            Uma plataforma clara para centralizar as informações que movem o seu negócio.
+                        </p>
+                    </div>
                 </div>
-                <div class="cards">
-                    <article class="feature-card">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <rect x="3" y="5" width="18" height="15" rx="2" />
-                            <path d="M7 15h.01M11 15h.01M15 15h.01M7 10h10" />
-                        </svg>
-                        <h3>Cadastro organizado</h3>
-                        <p>
-                            Reúna veículos, documentos e dados importantes em
-                            uma base simples de consultar.
-                        </p>
-                    </article>
-                    <article class="feature-card">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="M12 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" />
-                            <path d="M12 9v4l3 2M12 3V1M4.2 5.2 2.8 3.8" />
-                        </svg>
-                        <h3>Alertas no momento certo</h3>
-                        <p>
-                            Não deixe prazos, revisões ou vencimentos passarem
-                            despercebidos.
-                        </p>
-                    </article>
-                    <article class="feature-card">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="M4 19V5M4 19h16" />
-                            <path d="m7 15 4-4 3 2 5-6" />
-                        </svg>
-                        <h3>Visão para decidir</h3>
-                        <p>
-                            Acompanhe indicadores da frota e transforme dados em
-                            economia para a empresa.
-                        </p>
-                    </article>
+
+                <div class="row g-3 mt-2">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card h-100 border-1 shadow-sm p-4">
+                            <svg class="text-brand" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <rect x="3" y="5" width="18" height="15" rx="2" />
+                                <path d="M7 15h.01M11 15h.01M15 15h.01M7 10h10" />
+                            </svg>
+                            <h3 class="h5 fw-bolder mt-4 mb-2">Cadastro organizado</h3>
+                            <p class="text-muted small mb-0">
+                                Reúna veículos, documentos e dados importantes em uma base simples de consultar.
+                            </p>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card h-100 border-1 shadow-sm p-4">
+                            <svg class="text-brand" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="M12 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" />
+                                <path d="M12 9v4l3 2M12 3V1M4.2 5.2 2.8 3.8" />
+                            </svg>
+                            <h3 class="h5 fw-bolder mt-4 mb-2">Alertas no momento certo</h3>
+                            <p class="text-muted small mb-0">
+                                Não deixe prazos, revisões ou vencimentos passarem despercebidos.
+                            </p>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card h-100 border-1 shadow-sm p-4">
+                            <svg class="text-brand" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="M4 19V5M4 19h16" />
+                                <path d="m7 15 4-4 3 2 5-6" />
+                            </svg>
+                            <h3 class="h5 fw-bolder mt-4 mb-2">Visão para decidir</h3>
+                            <p class="text-muted small mb-0">
+                                Acompanhe indicadores da frota e transforme dados em economia para a empresa.
+                            </p>
+                        </article>
+                    </div>
                 </div>
             </section>
 
-            <section class="cta container" id="conta">
-                <div class="cta-box">
+            <section class="container py-5">
+                <div class="cta-box p-4 p-lg-5 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-4">
                     <div>
                         <p class="eyebrow">Comece agora</p>
-                        <h2>Pronto para colocar sua frota em movimento?</h2>
+                        <h2 class="display-6 fw-bolder mt-3 mb-0">Pronto para colocar sua frota em movimento?</h2>
                     </div>
-                    <a class="button" href="registro.php">Criar minha conta<span aria-hidden="true">→</span></a>
+                    <a class="btn btn-deep btn-lg flex-shrink-0" href="registro.php">Criar minha conta →</a>
                 </div>
             </section>
         </main>
-        <footer>
-            <div class="container footer-inner">
-                <span>© 2026 DriveHub. Gestão que acompanha.</span
-                ><a href="#inicio">Voltar ao início ↑</a>
+
+        <footer class="border-top py-4">
+            <div class="container d-flex flex-column flex-sm-row justify-content-between gap-2 text-muted small">
+                <span>© 2026 DriveHub. Gestão que acompanha.</span>
+                <a class="text-brand fw-bold" href="#inicio">Voltar ao início ↑</a>
             </div>
         </footer>
     </body>

@@ -32,6 +32,25 @@ $menuGrupos = [
     ],
 ];
 
+// Reaproveitado no menu fixo (desktop) e no offcanvas (mobile).
+function renderizarMenu(array $grupos, string $activeMenu): void
+{
+    foreach ($grupos as $grupo => $itens): ?>
+        <p class="menu-group mb-1"><?= htmlspecialchars((string) $grupo) ?></p>
+        <?php foreach ($itens as [$slug, $label, $href, $icone]): ?>
+            <a class="nav-link menu-link<?= $activeMenu === $slug ? ' active' : '' ?>" href="<?= $href ?>">
+                <span class="menu-icon" aria-hidden="true"><?= $icone ?></span>
+                <span><?= htmlspecialchars($label) ?></span>
+            </a>
+        <?php endforeach; ?>
+    <?php endforeach; ?>
+    <a class="nav-link menu-link menu-logout mt-3" href="/logout.php">
+        <span class="menu-icon" aria-hidden="true">⏻</span>
+        <span>Sair</span>
+    </a>
+    <?php
+}
+
 $primeiraLetra = strtoupper(substr($usuarioLogado['nome'], 0, 1));
 ?>
 <!doctype html>
@@ -40,54 +59,57 @@ $primeiraLetra = strtoupper(substr($usuarioLogado['nome'], 0, 1));
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= htmlspecialchars($pageTitle) ?> | DriveHub</title>
-        <link rel="stylesheet" href="/static/css/global.css">
-        <link rel="stylesheet" href="/static/css/layout.css">
-        <link rel="stylesheet" href="/static/css/dashboard.css">
-        <link rel="stylesheet" href="/static/css/tabelas.css">
-        <link rel="stylesheet" href="/static/css/formularios.css">
-        <link rel="stylesheet" href="/static/css/responsivo.css">
+        <link rel="stylesheet" href="/static/vendor/bootstrap-5.3.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/app.css">
+        <script src="/static/vendor/bootstrap-5.3.3/js/bootstrap.bundle.min.js" defer></script>
     </head>
     <body>
-        <div class="app">
-            <aside class="sidebar">
+        <div class="app-shell">
+            <aside class="app-sidebar d-none d-lg-flex flex-column" aria-label="Menu lateral">
                 <a class="brand" href="/dashboard/index.php">
                     <span class="brand-mark">↗</span>
                     <span>DriveHub</span>
                 </a>
 
-                <nav class="menu" aria-label="Menu principal">
-                    <?php foreach ($menuGrupos as $grupo => $itens): ?>
-                        <p class="menu-group"><?= htmlspecialchars($grupo) ?></p>
-                        <?php foreach ($itens as [$slug, $label, $href, $icone]): ?>
-                            <a class="menu-link<?= $activeMenu === $slug ? ' is-active' : '' ?>" href="<?= $href ?>">
-                                <span class="menu-icon" aria-hidden="true"><?= $icone ?></span>
-                                <span><?= htmlspecialchars($label) ?></span>
-                            </a>
-                        <?php endforeach; ?>
-                    <?php endforeach; ?>
+                <nav class="nav flex-column flex-grow-1 overflow-auto py-2">
+                    <?php renderizarMenu($menuGrupos, $activeMenu); ?>
                 </nav>
-
-                <a class="menu-link menu-logout" href="/logout.php">
-                    <span class="menu-icon" aria-hidden="true">⏻</span>
-                    <span>Sair</span>
-                </a>
             </aside>
 
-            <main class="main">
-                <header class="topbar">
-                    <div>
-                        <h1><?= htmlspecialchars($pageTitle) ?></h1>
-                        <?php if ($pageSubtitle !== ''): ?>
-                            <p class="topbar-subtitle"><?= htmlspecialchars($pageSubtitle) ?></p>
-                        <?php endif; ?>
+            <div class="offcanvas offcanvas-start app-offcanvas" tabindex="-1" id="menuLateral" aria-labelledby="menuLateralLabel">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="offcanvas-title brand" id="menuLateralLabel">
+                        <span class="brand-mark">↗</span>
+                        <span>DriveHub</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar menu"></button>
+                </div>
+                <div class="offcanvas-body p-0">
+                    <nav class="nav flex-column py-2">
+                        <?php renderizarMenu($menuGrupos, $activeMenu); ?>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="app-content">
+                <header class="app-topbar sticky-top d-flex align-items-center justify-content-between gap-3 px-3 px-lg-4 py-3">
+                    <div class="d-flex align-items-center gap-2 min-w-0">
+                        <button class="btn btn-outline-secondary d-lg-none flex-shrink-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral" aria-controls="menuLateral" aria-label="Abrir menu">☰</button>
+                        <div class="min-w-0">
+                            <h1 class="h4 mb-0 text-truncate"><?= htmlspecialchars($pageTitle) ?></h1>
+                            <?php if ($pageSubtitle !== ''): ?>
+                                <p class="text-muted small mb-0 d-none d-sm-block text-truncate"><?= htmlspecialchars($pageSubtitle) ?></p>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                    <a class="user-chip" href="/usuario/index.php" title="Minha conta">
+
+                    <a class="user-chip flex-shrink-0" href="/usuario/index.php" title="Minha conta">
                         <span class="avatar" aria-hidden="true"><?= htmlspecialchars($primeiraLetra) ?></span>
-                        <span class="user-info">
-                            <strong><?= htmlspecialchars($usuarioLogado['nome']) ?></strong>
-                            <small><?= htmlspecialchars($usuarioLogado['perfil']) ?></small>
+                        <span class="d-none d-sm-flex flex-column lh-sm">
+                            <strong class="small"><?= htmlspecialchars($usuarioLogado['nome']) ?></strong>
+                            <small class="text-muted text-capitalize"><?= htmlspecialchars($usuarioLogado['perfil']) ?></small>
                         </span>
                     </a>
                 </header>
 
-                <div class="content">
+                <main class="container-fluid px-3 px-lg-4 py-4">

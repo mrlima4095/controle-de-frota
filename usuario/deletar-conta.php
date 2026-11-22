@@ -63,39 +63,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require __DIR__ . '/../includes/header.php';
 ?>
 
-<?php if ($erro !== ''): ?>
-    <p class="alerta is-erro"><?= h($erro) ?></p>
-<?php endif; ?>
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+        <?php if ($erro !== ''): ?>
+            <div class="alert alert-danger" role="alert"><?= h($erro) ?></div>
+        <?php endif; ?>
 
-<p class="alerta is-erro">
-    <strong>Atenção:</strong> a conta de <strong><?= h($conta['nome']) ?></strong> e todos os seus dados serão removidos
-    permanentemente. Você será desconectado ao concluir a exclusão.
-</p>
+        <div class="alert alert-danger" role="alert">
+            <strong>Atenção:</strong> a conta de <strong><?= h($conta['nome']) ?></strong> e todos os seus dados serão removidos
+            permanentemente. Você será desconectado ao concluir a exclusão.
+        </div>
 
-<div class="page-head">
-    <div>
-        <h2>Confirmar exclusão</h2>
-        <p>Informe sua senha e confirme a operação para continuar.</p>
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h2 class="h6 mb-0">Confirmar exclusão</h2>
+            </div>
+            <div class="card-body p-3 p-sm-4">
+                <p class="text-muted small mb-4">Informe sua senha e confirme a operação para continuar.</p>
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="senha" class="form-label fw-semibold small">Senha da conta</label>
+                        <input type="password" class="form-control" id="senha" name="senha" autocomplete="current-password" placeholder="Digite sua senha atual" required>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" name="confirmar" value="1" id="confirmar" required>
+                        <label class="form-check-label" for="confirmar">Quero excluir minha conta permanentemente</label>
+                    </div>
+
+                    <div class="d-flex flex-column flex-sm-row gap-2">
+                        <button type="submit" class="btn btn-danger">Excluir minha conta</button>
+                        <a class="btn btn-outline-secondary" href="/usuario/index.php">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-
-<form method="post" class="form-card">
-    <div class="form-grid">
-        <label class="campo full">
-            Senha da conta
-            <input type="password" name="senha" autocomplete="current-password" placeholder="Digite sua senha atual" required>
-        </label>
-
-        <label class="campo full">
-            <span>Confirmação</span>
-            <span><input type="checkbox" name="confirmar" value="1" required> Quero excluir minha conta permanentemente</span>
-        </label>
-    </div>
-
-    <div class="form-acoes">
-        <button type="submit" class="btn btn-danger">Excluir minha conta</button>
-        <a class="btn btn-light" href="/usuario/index.php">Cancelar</a>
-    </div>
-</form>
 
 <?php require __DIR__ . '/../includes/footer.php'; ?>
