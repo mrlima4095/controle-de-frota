@@ -81,13 +81,13 @@ $primeiraLetra = strtoupper(substr($usuarioLogado['nome'], 0, 1));
                             <p class="topbar-subtitle"><?= htmlspecialchars($pageSubtitle) ?></p>
                         <?php endif; ?>
                     </div>
-                    <div class="user-chip">
+                    <a class="user-chip" href="/usuario/index.php" title="Minha conta">
                         <span class="avatar" aria-hidden="true"><?= htmlspecialchars($primeiraLetra) ?></span>
                         <span class="user-info">
                             <strong><?= htmlspecialchars($usuarioLogado['nome']) ?></strong>
                             <small><?= htmlspecialchars($usuarioLogado['perfil']) ?></small>
                         </span>
-                    </div>
+                    </a>
                 </header>
 
                 <div class="content">
