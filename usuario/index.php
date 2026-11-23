@@ -98,11 +98,13 @@ require __DIR__ . '/../includes/header.php';
                 <h2 class="h6 mb-0">Ações da conta</h2>
             </header>
             <div class="card-body">
-                <div class="row row-cols-1 row-cols-sm-3 g-2">
+                <div class="row row-cols-1 row-cols-sm-2 g-2">
                     <div class="col"><a class="quick-link" href="/usuario/config-perfil.php"><span class="menu-icon" aria-hidden="true">✏️</span> Editar perfil</a></div>
-                    <div class="col"><a class="quick-link" href="/usuario/deletar-conta.php"><span class="menu-icon" aria-hidden="true">🗑️</span> Excluir conta</a></div>
                     <div class="col"><a class="quick-link" href="/dashboard/index.php"><span class="menu-icon" aria-hidden="true">📊</span> Voltar ao painel</a></div>
                 </div>
+                <p class="text-muted small mb-0 mt-3">
+                    Contas não podem ser excluídas. Para revogar o acesso de alguém, solicite ao RH ou ao administrador que desative a conta.
+                </p>
             </div>
         </section>
     </div>

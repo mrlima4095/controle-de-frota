@@ -16,16 +16,16 @@ function contar(PDO $pdo, string $sql): int
 
 $totalVeiculos = contar($pdo, 'SELECT COUNT(*) FROM veiculo WHERE ativo = TRUE');
 $totalMotoristas = contar($pdo, 'SELECT COUNT(*) FROM motorista WHERE ativo = TRUE');
-$totalClientes = contar($pdo, 'SELECT COUNT(*) FROM cliente WHERE ativo = TRUE');
 $veiculosEmUso = contar($pdo, "SELECT COUNT(*) FROM veiculo WHERE ativo = TRUE AND status = 'em_uso'");
 $veiculosManutencao = contar($pdo, "SELECT COUNT(*) FROM veiculo WHERE ativo = TRUE AND status = 'manutencao'");
-$reservasPendentes = contar($pdo, "SELECT COUNT(*) FROM reserva WHERE status = 'pendente'");
+$totalViagens = contar($pdo, 'SELECT COUNT(*) FROM percurso');
+$abastecimentosMes = contar($pdo, 'SELECT COUNT(*) FROM abastecimento WHERE YEAR(data_aba) = YEAR(CURDATE()) AND MONTH(data_aba) = MONTH(CURDATE())');
 $multasPendentes = contar($pdo, "SELECT COUNT(*) FROM multa WHERE status = 'pendente'");
 $manutencoesMes = contar($pdo, "SELECT COUNT(*) FROM manutencao WHERE YEAR(data_man) = YEAR(CURDATE()) AND MONTH(data_man) = MONTH(CURDATE())");
 
 // --- Listas de apoio ---
 $proximasManutencoes = $pdo->query(
-    'SELECT m.data_man, m.tipo, v.placa, v.modelo
+    'SELECT m.proxima_data, m.tipo, v.placa, v.modelo
      FROM manutencao m
      JOIN veiculo v ON v.id_vei = m.id_vei
      WHERE m.proxima_data IS NOT NULL AND m.proxima_data >= CURDATE()
@@ -65,12 +65,12 @@ function moeda(float $valor): string
 }
 
 $kpis = [
-    ['Veículos', $totalVeiculos, $veiculosEmUso . ' em uso · ' . $veiculosManutencao . ' em manutenção', '▤', ''],
-    ['Motoristas', $totalMotoristas, 'Condutores ativos', '◍', ''],
-    ['Reservas pendentes', $reservasPendentes, 'Aguardando confirmação', '➔', $reservasPendentes > 0 ? 'text-brand fw-bold' : ''],
-    ['Multas pendentes', $multasPendentes, 'Requerem atenção', '⚠', $multasPendentes > 0 ? 'text-danger fw-bold' : ''],
-    ['Manutenções no mês', $manutencoesMes, 'Serviços registrados', '⚙', ''],
-    ['Clientes', $totalClientes, 'Cadastros ativos', '⌂', ''],
+    ['Veículos', $totalVeiculos, $veiculosEmUso . ' em uso · ' . $veiculosManutencao . ' em manutenção', '🚗', ''],
+    ['Motoristas', $totalMotoristas, 'Condutores ativos', '🧑‍✈️', ''],
+    ['Viagens', $totalViagens, 'Percursos registrados', '🛣️', ''],
+    ['Abastecimentos no mês', $abastecimentosMes, 'Registros do mês', '⛽', ''],
+    ['Multas pendentes', $multasPendentes, 'Requerem atenção', '⚠️', $multasPendentes > 0 ? 'text-danger fw-bold' : ''],
+    ['Manutenções no mês', $manutencoesMes, 'Serviços registrados', '🔧', ''],
 ];
 
 require __DIR__ . '/../includes/header.php';
@@ -110,7 +110,7 @@ require __DIR__ . '/../includes/header.php';
                                 <strong class="d-block text-truncate"><?= htmlspecialchars($m['placa']) ?> · <?= htmlspecialchars($m['modelo'] ?? '') ?></strong>
                                 <small class="text-muted"><?= htmlspecialchars(ucfirst($m['tipo'])) ?></small>
                             </div>
-                            <span class="badge text-bg-primary rounded-pill flex-shrink-0"><?= dataBr($m['data_man']) ?></span>
+                            <span class="badge text-bg-primary rounded-pill flex-shrink-0"><?= dataBr($m['proxima_data']) ?></span>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -173,10 +173,13 @@ require __DIR__ . '/../includes/header.php';
             </header>
             <div class="card-body">
                 <div class="row row-cols-1 row-cols-sm-2 g-2">
-                    <div class="col"><a class="quick-link" href="/dashboard/veiculos/create.php"><span class="menu-icon" aria-hidden="true">＋</span> Novo veículo</a></div>
-                    <div class="col"><a class="quick-link" href="/dashboard/motoristas/create.php"><span class="menu-icon" aria-hidden="true">＋</span> Novo motorista</a></div>
-                    <div class="col"><a class="quick-link" href="/dashboard/viagens/index.php"><span class="menu-icon" aria-hidden="true">➔</span> Viagens</a></div>
-                    <div class="col"><a class="quick-link" href="/dashboard/relatorios/index.php"><span class="menu-icon" aria-hidden="true">▥</span> Relatórios</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/veiculos/create.php"><span class="menu-icon" aria-hidden="true">➕</span> Novo veículo</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/motoristas/create.php"><span class="menu-icon" aria-hidden="true">➕</span> Novo motorista</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/abastecimentos/create.php"><span class="menu-icon" aria-hidden="true">⛽</span> Abastecer</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/manutencao/create.php"><span class="menu-icon" aria-hidden="true">🔧</span> Manutenção</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/viagens/index.php"><span class="menu-icon" aria-hidden="true">🛣️</span> Viagens</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/alertas/index.php"><span class="menu-icon" aria-hidden="true">🔔</span> Alertas</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/relatorios/index.php"><span class="menu-icon" aria-hidden="true">📈</span> Relatórios</a></div>
                 </div>
             </div>
         </section>
