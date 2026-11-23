@@ -58,10 +58,6 @@ require __DIR__ . '/../../includes/header.php';
     <div class="alert alert-success" role="alert">Usuário salvo com sucesso.</div>
 <?php endif; ?>
 
-<div class="alert alert-info" role="alert">
-    ℹ️ Contas não são excluídas. Para revogar o acesso, desative a conta na edição do usuário.
-</div>
-
 <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
     <div>
         <h2 class="h5 mb-1">Contas cadastradas</h2>
