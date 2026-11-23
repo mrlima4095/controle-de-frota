@@ -80,7 +80,7 @@
                         </form>
 
                         <p class="text-center text-muted small mt-4 mb-0">
-                            Ainda não tem uma conta? <a class="fw-bold text-brand" href="registro.php">Cadastre-se</a>
+                            Precisa de acesso? Solicite ao gerente ou RH da sua empresa.
                         </p>
                     </div>
                 </div>
