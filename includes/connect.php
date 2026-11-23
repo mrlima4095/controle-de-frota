@@ -15,6 +15,9 @@ try {
             PDO::ATTR_EMULATE_PREPARES => false,
         ]
     );
+
+    // Ajusta a sessão do MySQL para o mesmo fuso usado pelo PHP.
+    $pdo->exec("SET time_zone = '" . DB_TIMEZONE . "'");
 } catch (PDOException $exception) {
     http_response_code(500);
     exit('Erro ao conectar ao banco de dados.');
