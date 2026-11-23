@@ -236,7 +236,6 @@ body {
 .band-item { border-bottom: 1px solid rgba(255, 255, 255, 0.13); }
 .band-item:last-child { border-bottom: 0; }
 .cta-box { background: var(--dh-lime); border-radius: 16px; }
-.dash-preview { transform: rotate(1.2deg); }
 
 .mini-avatar {
     display: inline-block;
@@ -248,29 +247,6 @@ body {
 }
 .mini-avatar:first-child { margin-left: 0; }
 
-.dash-count {
-    display: grid;
-    width: 42px;
-    height: 42px;
-    flex: none;
-    place-items: center;
-    border-radius: 50%;
-    color: var(--dh-green-deep);
-    background: var(--dh-lime);
-    font-weight: 850;
-}
-
-.task-icon {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    flex: none;
-    place-items: center;
-    border-radius: 8px;
-    color: var(--dh-green);
-    background: #e0f7ed;
-}
-
 @media (min-width: 768px) {
     .band-item {
         border-bottom: 0;
@@ -279,6 +255,3 @@ body {
     .band-item:last-child { border-right: 0; }
 }
 
-@media (max-width: 991.98px) {
-    .dash-preview { transform: none; }
-}
