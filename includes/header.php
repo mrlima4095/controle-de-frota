@@ -14,30 +14,36 @@ $activeMenu = $activeMenu ?? 'visao';
 // Menu lateral agrupado por área do sistema.
 $menuGrupos = [
     'Operação' => [
-        ['visao', 'Visão geral', '/dashboard/index.php', '◫'],
-        ['veiculos', 'Veículos', '/dashboard/veiculos/index.php', '▤'],
-        ['motoristas', 'Motoristas', '/dashboard/motoristas/index.php', '◍'],
-        ['viagens', 'Viagens', '/dashboard/viagens/index.php', '➔'],
-        ['abastecimentos', 'Abastecimentos', '/dashboard/abastecimentos/index.php', '◈'],
-        ['manutencao', 'Manutenção', '/dashboard/manutencao/index.php', '⚙'],
-        ['pneus', 'Pneus', '/dashboard/pneus/index.php', '◎'],
+        ['visao', 'Visão geral', '/dashboard/index.php', '📊'],
+        ['veiculos', 'Veículos', '/dashboard/veiculos/index.php', '🚗'],
+        ['motoristas', 'Motoristas', '/dashboard/motoristas/index.php', '🧑‍✈️'],
+        ['viagens', 'Viagens', '/dashboard/viagens/index.php', '🛣️'],
+        ['abastecimentos', 'Abastecimentos', '/dashboard/abastecimentos/index.php', '⛽'],
+        ['manutencao', 'Manutenção', '/dashboard/manutencao/index.php', '🔧'],
+        ['pneus', 'Pneus', '/dashboard/pneus/index.php', '🛞'],
+        ['alertas', 'Alertas', '/dashboard/alertas/index.php', '🔔'],
     ],
     'Gestão' => [
-        ['despesas', 'Despesas', '/dashboard/despesas/index.php', '▦'],
-        ['fornecedores', 'Fornecedores', '/dashboard/fornecedores/index.php', '⌂'],
-        ['documentos', 'Documentos', '/dashboard/documentos/index.php', '❐'],
-        ['sinistros', 'Sinistros', '/dashboard/sinistros/index.php', '⚠'],
-        ['relatorios', 'Relatórios', '/dashboard/relatorios/index.php', '▥'],
-        ['usuarios', 'Usuários', '/dashboard/usuarios/index.php', '☗'],
+        ['despesas', 'Despesas', '/dashboard/despesas/index.php', '💰'],
+        ['fornecedores', 'Fornecedores', '/dashboard/fornecedores/index.php', '🏢'],
+        ['documentos', 'Documentos', '/dashboard/documentos/index.php', '📄'],
+        ['sinistros', 'Sinistros', '/dashboard/sinistros/index.php', '⚠️'],
+        ['relatorios', 'Relatórios', '/dashboard/relatorios/index.php', '📈'],
+        ['usuarios', 'Usuários', '/dashboard/usuarios/index.php', '👥'],
     ],
 ];
 
 // Reaproveitado no menu fixo (desktop) e no offcanvas (mobile).
-function renderizarMenu(array $grupos, string $activeMenu): void
+function renderizarMenu(array $grupos, string $activeMenu, string $perfil): void
 {
     foreach ($grupos as $grupo => $itens): ?>
         <p class="menu-group mb-1"><?= htmlspecialchars((string) $grupo) ?></p>
         <?php foreach ($itens as [$slug, $label, $href, $icone]): ?>
+            <?php
+            if ($slug === 'usuarios' && !podeGerenciarUsuarios($perfil)) {
+                continue;
+            }
+            ?>
             <a class="nav-link menu-link<?= $activeMenu === $slug ? ' active' : '' ?>" href="<?= $href ?>">
                 <span class="menu-icon" aria-hidden="true"><?= $icone ?></span>
                 <span><?= htmlspecialchars($label) ?></span>
@@ -45,7 +51,7 @@ function renderizarMenu(array $grupos, string $activeMenu): void
         <?php endforeach; ?>
     <?php endforeach; ?>
     <a class="nav-link menu-link menu-logout mt-3" href="/logout.php">
-        <span class="menu-icon" aria-hidden="true">⏻</span>
+        <span class="menu-icon" aria-hidden="true">🚪</span>
         <span>Sair</span>
     </a>
     <?php
@@ -72,7 +78,7 @@ $primeiraLetra = strtoupper(substr($usuarioLogado['nome'], 0, 1));
                 </a>
 
                 <nav class="nav flex-column flex-grow-1 overflow-auto py-2">
-                    <?php renderizarMenu($menuGrupos, $activeMenu); ?>
+                    <?php renderizarMenu($menuGrupos, $activeMenu, $usuarioLogado['perfil']); ?>
                 </nav>
             </aside>
 
@@ -86,7 +92,7 @@ $primeiraLetra = strtoupper(substr($usuarioLogado['nome'], 0, 1));
                 </div>
                 <div class="offcanvas-body p-0">
                     <nav class="nav flex-column py-2">
-                        <?php renderizarMenu($menuGrupos, $activeMenu); ?>
+                        <?php renderizarMenu($menuGrupos, $activeMenu, $usuarioLogado['perfil']); ?>
                     </nav>
                 </div>
             </div>

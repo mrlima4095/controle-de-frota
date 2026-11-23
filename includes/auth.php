@@ -26,3 +26,9 @@ if (!$usuarioLogado) {
     header('Location: /login.php');
     exit;
 }
+
+// Perfis com permissão para criar e gerenciar usuários.
+function podeGerenciarUsuarios(string $perfil): bool
+{
+    return in_array($perfil, ['admin', 'gerente', 'rh'], true);
+}
