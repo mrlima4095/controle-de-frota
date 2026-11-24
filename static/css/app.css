@@ -1,5 +1,4 @@
-/* Identidade visual DriveHub sobre o Bootstrap 5.
-   Layout e responsividade ficam a cargo do Bootstrap; aqui só ajustes de marca. */
+
 
 :root {
     --dh-ink: #132126;
@@ -89,17 +88,18 @@ body {
     content: "";
 }
 
-/* --- Área autenticada --- */
+
 
 .app-sidebar {
     position: fixed;
     inset: 0 auto 0 0;
     z-index: 1030;
     width: 250px;
+    overflow: hidden;
     background: #fff;
     border-right: 1px solid var(--dh-line);
 }
-.app-sidebar .brand { padding: 18px 20px; }
+.app-sidebar .brand { flex: none; padding: 18px 20px; }
 .app-content { min-height: 100vh; }
 .app-offcanvas { width: 280px; }
 .min-w-0 { min-width: 0; }
@@ -121,17 +121,28 @@ body {
     font-weight: 800;
     letter-spacing: 0.09em;
 }
+.menu-scroll {
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+}
+.app-sidebar .menu-scroll { flex: 1 1 auto; }
 .menu-link {
     display: flex;
     align-items: center;
     gap: 6px;
+    min-width: 0;
     margin: 1px 10px;
     padding: 9px 12px;
     border-radius: 8px;
     color: var(--dh-muted);
     font-size: 0.9rem;
     font-weight: 650;
+    white-space: nowrap;
 }
+.menu-link > span:last-child { overflow: hidden; text-overflow: ellipsis; }
 .menu-link:hover,
 .menu-link.active {
     color: var(--dh-green-deep);
@@ -200,7 +211,7 @@ body {
 }
 .quick-link .menu-icon { color: var(--dh-green); }
 
-/* --- Login / cadastro --- */
+
 
 .auth-intro {
     color: #fff;
@@ -212,7 +223,7 @@ body {
 .auth-intro p { color: #c9ddd5; }
 .auth-form { max-width: 430px; width: 100%; }
 
-/* --- Landing page --- */
+
 
 .hero-title {
     font-size: clamp(2.6rem, 5vw, 4.6rem);
