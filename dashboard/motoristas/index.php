@@ -48,7 +48,9 @@ require __DIR__ . '/../../includes/header.php';
 ?>
 
 <?php if (isset($_GET['ok'])): ?>
-    <div class="alert alert-success" role="alert">Motorista salvo com sucesso.</div>
+    <div class="alert alert-success" role="alert">
+        <?= $_GET['ok'] === 'importado' ? 'Usuário importado como motorista com sucesso.' : 'Motorista salvo com sucesso.' ?>
+    </div>
 <?php endif; ?>
 
 <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-3">
@@ -56,7 +58,10 @@ require __DIR__ . '/../../includes/header.php';
         <h2 class="h5 mb-1">Condutores cadastrados</h2>
         <p class="text-muted small mb-0"><?= count($motoristas) ?> motorista(s) encontrado(s).</p>
     </div>
-    <a class="btn btn-brand" href="create.php">➕ Novo motorista</a>
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-outline-primary" href="importar.php">🔄 Importar usuário</a>
+        <a class="btn btn-brand" href="create.php">➕ Novo motorista</a>
+    </div>
 </div>
 
 <form class="row g-2 mb-3" method="get">
