@@ -8,7 +8,7 @@ $pageTitle = 'Visão geral';
 $pageSubtitle = 'Um panorama da operação da sua frota.';
 $activeMenu = 'visao';
 
-// --- KPIs (contagens simples) ---
+
 function contar(PDO $pdo, string $sql): int
 {
     return (int) $pdo->query($sql)->fetchColumn();
@@ -23,7 +23,7 @@ $abastecimentosMes = contar($pdo, 'SELECT COUNT(*) FROM abastecimento WHERE YEAR
 $multasPendentes = contar($pdo, "SELECT COUNT(*) FROM multa WHERE status = 'pendente'");
 $manutencoesMes = contar($pdo, "SELECT COUNT(*) FROM manutencao WHERE YEAR(data_man) = YEAR(CURDATE()) AND MONTH(data_man) = MONTH(CURDATE())");
 
-// --- Listas de apoio ---
+
 $proximasManutencoes = $pdo->query(
     'SELECT m.proxima_data, m.tipo, v.placa, v.modelo
      FROM manutencao m
@@ -66,7 +66,7 @@ function moeda(float $valor): string
 
 $kpis = [
     ['Veículos', $totalVeiculos, $veiculosEmUso . ' em uso · ' . $veiculosManutencao . ' em manutenção', '🚗', ''],
-    ['Motoristas', $totalMotoristas, 'Condutores ativos', '🧑‍✈️', ''],
+    ['Motoristas', $totalMotoristas, 'Condutores ativos', '🧑', ''],
     ['Viagens', $totalViagens, 'Percursos registrados', '🛣️', ''],
     ['Abastecimentos no mês', $abastecimentosMes, 'Registros do mês', '⛽', ''],
     ['Multas pendentes', $multasPendentes, 'Requerem atenção', '⚠️', $multasPendentes > 0 ? 'text-danger fw-bold' : ''],
