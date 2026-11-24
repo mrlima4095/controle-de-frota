@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// O header pode ser incluído direto, então garantimos o usuário logado aqui.
+
 if (!isset($usuarioLogado)) {
     require_once __DIR__ . '/auth.php';
 }
@@ -11,12 +11,12 @@ $pageTitle = $pageTitle ?? 'Visão geral';
 $pageSubtitle = $pageSubtitle ?? '';
 $activeMenu = $activeMenu ?? 'visao';
 
-// Menu lateral agrupado por área do sistema.
+
 $menuGrupos = [
     'Operação' => [
         ['visao', 'Visão geral', '/dashboard/index.php', '📊'],
         ['veiculos', 'Veículos', '/dashboard/veiculos/index.php', '🚗'],
-        ['motoristas', 'Motoristas', '/dashboard/motoristas/index.php', '🧑‍✈️'],
+        ['motoristas', 'Motoristas', '/dashboard/motoristas/index.php', '🧑'],
         ['viagens', 'Viagens', '/dashboard/viagens/index.php', '🛣️'],
         ['abastecimentos', 'Abastecimentos', '/dashboard/abastecimentos/index.php', '⛽'],
         ['manutencao', 'Manutenção', '/dashboard/manutencao/index.php', '🔧'],
@@ -24,6 +24,7 @@ $menuGrupos = [
         ['alertas', 'Alertas', '/dashboard/alertas/index.php', '🔔'],
     ],
     'Gestão' => [
+        ['departamentos', 'Departamentos', '/dashboard/departamentos/index.php', '🏬'],
         ['despesas', 'Despesas', '/dashboard/despesas/index.php', '💰'],
         ['fornecedores', 'Fornecedores', '/dashboard/fornecedores/index.php', '🏢'],
         ['documentos', 'Documentos', '/dashboard/documentos/index.php', '📄'],
@@ -33,7 +34,7 @@ $menuGrupos = [
     ],
 ];
 
-// Reaproveitado no menu fixo (desktop) e no offcanvas (mobile).
+
 function renderizarMenu(array $grupos, string $activeMenu, string $perfil): void
 {
     foreach ($grupos as $grupo => $itens): ?>
@@ -65,9 +66,9 @@ $primeiraLetra = strtoupper(substr($usuarioLogado['nome'], 0, 1));
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= htmlspecialchars($pageTitle) ?> | DriveHub</title>
-        <link rel="stylesheet" href="/static/vendor/bootstrap-5.3.3/css/bootstrap.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="/static/css/app.css">
-        <script src="/static/vendor/bootstrap-5.3.3/js/bootstrap.bundle.min.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
     </head>
     <body>
         <div class="app-shell">
@@ -77,7 +78,7 @@ $primeiraLetra = strtoupper(substr($usuarioLogado['nome'], 0, 1));
                     <span>DriveHub</span>
                 </a>
 
-                <nav class="nav flex-column flex-grow-1 overflow-auto py-2">
+                <nav class="nav flex-column flex-grow-1 menu-scroll py-2">
                     <?php renderizarMenu($menuGrupos, $activeMenu, $usuarioLogado['perfil']); ?>
                 </nav>
             </aside>
@@ -91,7 +92,7 @@ $primeiraLetra = strtoupper(substr($usuarioLogado['nome'], 0, 1));
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar menu"></button>
                 </div>
                 <div class="offcanvas-body p-0">
-                    <nav class="nav flex-column py-2">
+                    <nav class="nav flex-column menu-scroll py-2">
                         <?php renderizarMenu($menuGrupos, $activeMenu, $usuarioLogado['perfil']); ?>
                     </nav>
                 </div>

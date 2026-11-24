@@ -38,8 +38,6 @@ services:
       MYSQL_PASSWORD: controle123
     volumes:
       - db_data:/var/lib/mysql
-      # O script database/controle.sql deve ser importado manualmente
-      # (ver README), para evitar problemas de montagem no Coolify.
 
 volumes:
   db_data:
