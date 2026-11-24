@@ -30,6 +30,7 @@ $perfis = ['admin', 'gerente', 'rh', 'operador', 'visualizador'];
 
 $nome = '';
 $email = '';
+$cpf = '';
 $perfil = 'operador';
 $ativo = true;
 $erro = '';
@@ -37,6 +38,7 @@ $erro = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = trim($_POST['nome'] ?? '');
     $email = trim($_POST['email'] ?? '');
+    $cpf = trim((string) ($_POST['cpf'] ?? ''));
     $senha = $_POST['senha'] ?? '';
     $perfil = $_POST['perfil'] ?? 'operador';
     $ativo = isset($_POST['ativo']) && $_POST['ativo'] === '1';
@@ -49,21 +51,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erro = 'Informe o nome do usuário.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erro = 'Informe um e-mail válido.';
+    } elseif ($cpf === '') {
+        $erro = 'Informe o CPF do usuário.';
+    } elseif (strlen($cpf) > 14) {
+        $erro = 'Informe um CPF com até 14 caracteres.';
     } elseif (strlen($senha) < 6) {
         $erro = 'A senha deve ter pelo menos 6 caracteres.';
     } else {
-        $check = $pdo->prepare('SELECT id_usr FROM usuario WHERE email = :email LIMIT 1');
-        $check->execute([':email' => $email]);
+        $check = $pdo->prepare('SELECT id_usr FROM usuario WHERE email = :email OR cpf = :cpf LIMIT 1');
+        $check->execute([':email' => $email, ':cpf' => $cpf]);
 
         if ($check->fetch()) {
-            $erro = 'Este e-mail já está cadastrado.';
+            $erro = 'Este e-mail ou CPF já está cadastrado.';
         } else {
-            $sql = 'INSERT INTO usuario (nome, email, senha, perfil, ativo) VALUES (:nome, :email, :senha, :perfil, :ativo)';
+            $sql = 'INSERT INTO usuario (nome, email, cpf, senha, perfil, ativo) VALUES (:nome, :email, :cpf, :senha, :perfil, :ativo)';
 
             try {
                 $pdo->prepare($sql)->execute([
                     ':nome' => $nome,
                     ':email' => $email,
+                    ':cpf' => $cpf,
                     ':senha' => password_hash($senha, PASSWORD_DEFAULT),
                     ':perfil' => $perfil,
                     ':ativo' => $ativo ? 1 : 0,
@@ -104,6 +111,11 @@ require __DIR__ . '/../../includes/header.php';
                         <div class="col-12 col-md-6">
                             <label for="email" class="form-label fw-semibold small">E-mail</label>
                             <input type="email" class="form-control" id="email" name="email" value="<?= h($email) ?>" maxlength="100" autocomplete="email" required>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="cpf" class="form-label fw-semibold small">CPF *</label>
+                            <input type="text" class="form-control" id="cpf" name="cpf" value="<?= h($cpf) ?>" maxlength="14" placeholder="000.000.000-00" required>
                         </div>
 
                         <div class="col-12 col-md-6">

@@ -13,18 +13,20 @@ function h(string $valor): string
     return htmlspecialchars($valor, ENT_QUOTES, 'UTF-8');
 }
 
-// A senha atual é necessária para validar uma eventual troca de senha.
-$stmt = $pdo->prepare('SELECT nome, email, perfil, senha FROM usuario WHERE id_usr = :id LIMIT 1');
+
+$stmt = $pdo->prepare('SELECT nome, email, cpf, perfil, senha FROM usuario WHERE id_usr = :id LIMIT 1');
 $stmt->execute([':id' => $_SESSION['id_usr']]);
 $conta = $stmt->fetch();
 
 $nome = $conta['nome'];
 $email = $conta['email'];
+$cpf = $conta['cpf'] ?? '';
 $erro = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = trim($_POST['nome'] ?? '');
     $email = trim($_POST['email'] ?? '');
+    $cpf = trim((string) ($_POST['cpf'] ?? ''));
     $senhaAtual = $_POST['senha_atual'] ?? '';
     $senhaNova = $_POST['senha_nova'] ?? '';
     $senhaConfirmar = $_POST['senha_confirmar'] ?? '';
@@ -33,12 +35,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erro = 'Informe seu nome.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erro = 'Informe um e-mail válido.';
+    } elseif ($cpf === '') {
+        $erro = 'Informe seu CPF.';
+    } elseif (strlen($cpf) > 14) {
+        $erro = 'Informe um CPF com até 14 caracteres.';
     } else {
-        $check = $pdo->prepare('SELECT id_usr FROM usuario WHERE email = :email AND id_usr <> :id LIMIT 1');
-        $check->execute([':email' => $email, ':id' => $_SESSION['id_usr']]);
+        $check = $pdo->prepare('SELECT id_usr FROM usuario WHERE (email = :email OR cpf = :cpf) AND id_usr <> :id LIMIT 1');
+        $check->execute([':email' => $email, ':cpf' => $cpf, ':id' => $_SESSION['id_usr']]);
 
         if ($check->fetch()) {
-            $erro = 'Este e-mail já está em uso por outra conta.';
+            $erro = 'Este e-mail ou CPF já está em uso por outra conta.';
         } elseif ($senhaNova !== '' || $senhaConfirmar !== '' || $senhaAtual !== '') {
             if ($senhaNova === '') {
                 $erro = 'Informe a nova senha que deseja usar.';
@@ -53,10 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($erro === '') {
-        $sql = 'UPDATE usuario SET nome = :nome, email = :email';
+        $sql = 'UPDATE usuario SET nome = :nome, email = :email, cpf = :cpf';
         $parametros = [
             ':nome' => $nome,
             ':email' => $email,
+            ':cpf' => $cpf,
             ':id' => $_SESSION['id_usr'],
         ];
 
@@ -74,11 +81,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($erro === '') {
-            // Mantém o cabeçalho e a sessão sincronizados com o novo nome.
+            
             $_SESSION['nome'] = $nome;
             $usuarioLogado['nome'] = $nome;
             $conta['nome'] = $nome;
             $conta['email'] = $email;
+            $conta['cpf'] = $cpf;
 
             header('Location: /usuario/config-perfil.php?ok=1');
             exit;
@@ -115,6 +123,11 @@ require __DIR__ . '/../includes/header.php';
                         <div class="col-12">
                             <label for="email" class="form-label fw-semibold small">E-mail</label>
                             <input type="email" class="form-control" id="email" name="email" value="<?= h($email) ?>" maxlength="100" autocomplete="email" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="cpf" class="form-label fw-semibold small">CPF</label>
+                            <input type="text" class="form-control" id="cpf" name="cpf" value="<?= h($cpf) ?>" maxlength="14" placeholder="000.000.000-00" required>
                         </div>
 
                         <div class="col-12 col-md-6">

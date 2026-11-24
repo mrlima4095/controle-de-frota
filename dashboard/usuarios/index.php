@@ -23,10 +23,10 @@ if (!podeGerenciarUsuarios($usuarioLogado['perfil'])) {
 
 $busca = trim($_GET['q'] ?? '');
 
-$sql = 'SELECT id_usr, nome, email, perfil, ativo, data_criacao, ultima_consessao FROM usuario';
+$sql = 'SELECT id_usr, nome, email, cpf, perfil, ativo, data_criacao, ultima_consessao FROM usuario';
 $parametros = [];
 if ($busca !== '') {
-    $sql .= ' WHERE nome LIKE :q OR email LIKE :q OR perfil LIKE :q';
+    $sql .= ' WHERE nome LIKE :q OR email LIKE :q OR cpf LIKE :q OR perfil LIKE :q';
     $parametros[':q'] = '%' . $busca . '%';
 }
 $sql .= ' ORDER BY nome ASC';
@@ -68,7 +68,7 @@ require __DIR__ . '/../../includes/header.php';
 
 <form class="row g-2 mb-3" method="get">
     <div class="col-12 col-sm-8 col-lg-6">
-        <input type="search" class="form-control" name="q" value="<?= htmlspecialchars($busca, ENT_QUOTES, 'UTF-8') ?>" placeholder="Buscar por nome, e-mail ou perfil">
+        <input type="search" class="form-control" name="q" value="<?= htmlspecialchars($busca, ENT_QUOTES, 'UTF-8') ?>" placeholder="Buscar por nome, e-mail, CPF ou perfil">
     </div>
     <div class="col-12 col-sm-auto">
         <button type="submit" class="btn btn-outline-secondary w-100">🔎 Buscar</button>
@@ -82,6 +82,7 @@ require __DIR__ . '/../../includes/header.php';
                 <tr>
                     <th scope="col">Nome</th>
                     <th scope="col">E-mail</th>
+                    <th scope="col">CPF</th>
                     <th scope="col">Perfil</th>
                     <th scope="col">Status</th>
                     <th scope="col">Criado em</th>
@@ -91,7 +92,7 @@ require __DIR__ . '/../../includes/header.php';
             </thead>
             <tbody>
                 <?php if (!$usuarios): ?>
-                    <tr><td colspan="7" class="text-center text-muted py-4">Nenhum usuário cadastrado.</td></tr>
+                    <tr><td colspan="8" class="text-center text-muted py-4">Nenhum usuário cadastrado.</td></tr>
                 <?php else: ?>
                     <?php foreach ($usuarios as $usuario): ?>
                         <tr>
@@ -100,6 +101,7 @@ require __DIR__ . '/../../includes/header.php';
                                 <small class="d-block text-muted">#<?= (int) $usuario['id_usr'] ?></small>
                             </td>
                             <td class="small text-break"><?= htmlspecialchars($usuario['email']) ?></td>
+                            <td class="small text-muted"><?= htmlspecialchars($usuario['cpf'] ?? '—') ?></td>
                             <td><span class="badge rounded-pill <?= classePerfil($usuario['perfil']) ?>"><?= htmlspecialchars($usuario['perfil']) ?></span></td>
                             <td>
                                 <span class="badge rounded-pill <?= $usuario['ativo'] ? 'text-bg-success' : 'text-bg-secondary' ?>">
@@ -111,6 +113,7 @@ require __DIR__ . '/../../includes/header.php';
                             <td class="text-end text-nowrap">
                                 <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $usuario['id_usr'] ?>">👁️ Ver</a>
                                 <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $usuario['id_usr'] ?>">✏️ Editar</a>
+                                <a class="btn btn-sm btn-outline-info" href="/dashboard/motoristas/importar.php?id=<?= (int) $usuario['id_usr'] ?>">🧑 Motorista</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

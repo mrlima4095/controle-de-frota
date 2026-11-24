@@ -8,7 +8,7 @@ $pageTitle = 'Minha conta';
 $pageSubtitle = 'Confira os dados da sua conta e gerencie suas preferências.';
 $activeMenu = '';
 
-// auth.php já carrega o básico; buscamos também as datas da conta.
+
 $stmt = $pdo->prepare(
     'SELECT nome, email, perfil, data_criacao, ultima_consessao
      FROM usuario WHERE id_usr = :id LIMIT 1'

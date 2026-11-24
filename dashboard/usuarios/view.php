@@ -33,7 +33,7 @@ if (!podeGerenciarUsuarios($usuarioLogado['perfil'])) {
 
 $id = (int) ($_GET['id'] ?? 0);
 
-$stmt = $pdo->prepare('SELECT id_usr, nome, email, perfil, ativo, data_criacao, ultima_consessao FROM usuario WHERE id_usr = :id LIMIT 1');
+$stmt = $pdo->prepare('SELECT id_usr, nome, email, cpf, perfil, ativo, data_criacao, ultima_consessao FROM usuario WHERE id_usr = :id LIMIT 1');
 $stmt->execute([':id' => $id]);
 $usuario = $stmt->fetch();
 
@@ -41,6 +41,18 @@ if (!$usuario) {
     header('Location: /dashboard/usuarios/index.php');
     exit;
 }
+
+function codigoUsuario(int $id): string
+{
+    return 'USR' . str_pad((string) $id, 10, '0', STR_PAD_LEFT);
+}
+
+$stmtMotorista = $pdo->prepare('SELECT id_mot FROM motorista WHERE email = :email OR cpf = :codigo LIMIT 1');
+$stmtMotorista->execute([
+    ':email' => $usuario['email'],
+    ':codigo' => codigoUsuario((int) $usuario['id_usr']),
+]);
+$motoristaId = (int) $stmtMotorista->fetchColumn();
 
 $classePerfil = match ($usuario['perfil']) {
     'admin' => 'text-bg-dark',
@@ -64,10 +76,18 @@ require __DIR__ . '/../../includes/header.php';
         <div class="d-flex flex-wrap gap-2">
             <span class="badge rounded-pill <?= $classePerfil ?>"><?= h($usuario['perfil']) ?></span>
             <span class="badge rounded-pill <?= $usuario['ativo'] ? 'text-bg-success' : 'text-bg-secondary' ?>"><?= $usuario['ativo'] ? 'Ativo' : 'Inativo' ?></span>
+            <?php if ($motoristaId): ?>
+                <span class="badge rounded-pill text-bg-info">🧑 Motorista</span>
+            <?php endif; ?>
         </div>
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a class="btn btn-outline-secondary" href="index.php">← Voltar</a>
+        <?php if ($motoristaId): ?>
+            <a class="btn btn-outline-info" href="/dashboard/motoristas/view.php?id=<?= $motoristaId ?>">🧑 Ver motorista</a>
+        <?php else: ?>
+            <a class="btn btn-outline-info" href="/dashboard/motoristas/importar.php?id=<?= $id ?>">🧑 Tornar motorista</a>
+        <?php endif; ?>
         <a class="btn btn-brand" href="edit.php?id=<?= $id ?>">✏️ Editar</a>
     </div>
 </div>
@@ -82,6 +102,7 @@ require __DIR__ . '/../../includes/header.php';
                     ['ID', '#' . (int) $usuario['id_usr']],
                     ['Nome', $usuario['nome']],
                     ['E-mail', $usuario['email']],
+                    ['CPF', $usuario['cpf'] ?: '—'],
                     ['Perfil', ucfirst($usuario['perfil'])],
                     ['Situação', $usuario['ativo'] ? 'Ativa' : 'Inativa'],
                 ];

@@ -28,7 +28,7 @@ if (!podeGerenciarUsuarios($usuarioLogado['perfil'])) {
 
 $id = (int) ($_GET['id'] ?? 0);
 
-$stmt = $pdo->prepare('SELECT id_usr, nome, email, perfil, ativo, data_criacao, ultima_consessao FROM usuario WHERE id_usr = :id LIMIT 1');
+$stmt = $pdo->prepare('SELECT id_usr, nome, email, cpf, perfil, ativo, data_criacao, ultima_consessao FROM usuario WHERE id_usr = :id LIMIT 1');
 $stmt->execute([':id' => $id]);
 $usuario = $stmt->fetch();
 
@@ -42,6 +42,7 @@ $ehPropriaConta = $id === (int) $usuarioLogado['id_usr'];
 
 $nome = $usuario['nome'];
 $email = $usuario['email'];
+$cpf = $usuario['cpf'] ?? '';
 $perfil = $usuario['perfil'];
 $ativo = (bool) $usuario['ativo'];
 $erro = '';
@@ -49,6 +50,7 @@ $erro = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = trim((string) ($_POST['nome'] ?? ''));
     $email = trim((string) ($_POST['email'] ?? ''));
+    $cpf = trim((string) ($_POST['cpf'] ?? ''));
     $senha = (string) ($_POST['senha'] ?? '');
     $perfil = (string) ($_POST['perfil'] ?? $usuario['perfil']);
     $ativo = isset($_POST['ativo']) && $_POST['ativo'] === '1';
@@ -57,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $perfil = $usuario['perfil'];
     }
 
-    // Não permite que o próprio usuário se desative ou altere seu perfil aqui.
+    
     if ($ehPropriaConta) {
         $ativo = true;
         $perfil = $usuario['perfil'];
@@ -67,30 +69,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erro = 'Informe o nome do usuário.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erro = 'Informe um e-mail válido.';
+    } elseif ($cpf === '') {
+        $erro = 'Informe o CPF do usuário.';
+    } elseif (strlen($cpf) > 14) {
+        $erro = 'Informe um CPF com até 14 caracteres.';
     } elseif ($senha !== '' && strlen($senha) < 6) {
         $erro = 'A nova senha deve ter pelo menos 6 caracteres.';
     } else {
-        $check = $pdo->prepare('SELECT id_usr FROM usuario WHERE email = :email AND id_usr <> :id LIMIT 1');
-        $check->execute([':email' => $email, ':id' => $id]);
+        $check = $pdo->prepare('SELECT id_usr FROM usuario WHERE (email = :email OR cpf = :cpf) AND id_usr <> :id LIMIT 1');
+        $check->execute([':email' => $email, ':cpf' => $cpf, ':id' => $id]);
 
         if ($check->fetch()) {
-            $erro = 'Este e-mail já está cadastrado em outro usuário.';
+            $erro = 'Este e-mail ou CPF já está cadastrado em outro usuário.';
         } else {
             if ($senha !== '') {
-                $sql = 'UPDATE usuario SET nome = :nome, email = :email, senha = :senha, perfil = :perfil, ativo = :ativo WHERE id_usr = :id';
+                $sql = 'UPDATE usuario SET nome = :nome, email = :email, cpf = :cpf, senha = :senha, perfil = :perfil, ativo = :ativo WHERE id_usr = :id';
                 $parametros = [
                     ':nome' => $nome,
                     ':email' => $email,
+                    ':cpf' => $cpf,
                     ':senha' => password_hash($senha, PASSWORD_DEFAULT),
                     ':perfil' => $perfil,
                     ':ativo' => $ativo ? 1 : 0,
                     ':id' => $id,
                 ];
             } else {
-                $sql = 'UPDATE usuario SET nome = :nome, email = :email, perfil = :perfil, ativo = :ativo WHERE id_usr = :id';
+                $sql = 'UPDATE usuario SET nome = :nome, email = :email, cpf = :cpf, perfil = :perfil, ativo = :ativo WHERE id_usr = :id';
                 $parametros = [
                     ':nome' => $nome,
                     ':email' => $email,
+                    ':cpf' => $cpf,
                     ':perfil' => $perfil,
                     ':ativo' => $ativo ? 1 : 0,
                     ':id' => $id,
@@ -142,6 +150,11 @@ require __DIR__ . '/../../includes/header.php';
                         <div class="col-12 col-md-6">
                             <label for="email" class="form-label fw-semibold small">E-mail</label>
                             <input type="email" class="form-control" id="email" name="email" value="<?= h($email) ?>" maxlength="100" autocomplete="email" required>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="cpf" class="form-label fw-semibold small">CPF *</label>
+                            <input type="text" class="form-control" id="cpf" name="cpf" value="<?= h($cpf) ?>" maxlength="14" placeholder="000.000.000-00" required>
                         </div>
 
                         <div class="col-12 col-md-6">
