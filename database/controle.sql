@@ -13,24 +13,12 @@ CREATE TABLE usuario (
     id_usr INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
+    cpf VARCHAR(14) UNIQUE,
     senha VARCHAR(255) NOT NULL,
-    perfil ENUM('admin', 'operador', 'visualizador') DEFAULT 'operador',
+    perfil ENUM('admin', 'gerente', 'rh', 'operador', 'visualizador') DEFAULT 'operador',
     ativo BOOLEAN DEFAULT TRUE,
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ultima_consessao TIMESTAMP NULL
-);
-
-CREATE TABLE cliente (
-    id_cli INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(150) NOT NULL,
-    cnpj_cpf VARCHAR(18),
-    ie_rg VARCHAR(20),
-    telefone VARCHAR(20),
-    email VARCHAR(100),
-    uf CHAR(2),
-    cidade VARCHAR(100),
-    ativo BOOLEAN DEFAULT TRUE,
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE motorista (
@@ -68,29 +56,10 @@ CREATE TABLE veiculo (
     FOREIGN KEY (id_dep) REFERENCES departamento(id_departamento)
 );
 
-CREATE TABLE reserva (
-    id_res INT PRIMARY KEY AUTO_INCREMENT,
-    id_vei INT NOT NULL,
-    id_cli INT,
-    id_dep INT,
-    data_reserva DATE NOT NULL,
-    hora_ini TIME NOT NULL,
-    hora_fim TIME NOT NULL,
-    origem VARCHAR(200),
-    destino VARCHAR(200),
-    justificativa TEXT,
-    status ENUM('pendente', 'confirmada', 'cancelada', 'concluida') DEFAULT 'pendente',
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_vei) REFERENCES veiculo(id_vei),
-    FOREIGN KEY (id_cli) REFERENCES cliente(id_cli),
-    FOREIGN KEY (id_dep) REFERENCES departamento(id_departamento)
-);
-
 CREATE TABLE percurso (
     id_perc INT PRIMARY KEY AUTO_INCREMENT,
     id_vei INT NOT NULL,
     id_mot INT NOT NULL,
-    id_res INT,
     data_per DATE NOT NULL,
     hora_ini TIME NOT NULL,
     hora_fim TIME NOT NULL,
@@ -100,8 +69,7 @@ CREATE TABLE percurso (
     observacoes TEXT,
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_vei) REFERENCES veiculo(id_vei),
-    FOREIGN KEY (id_mot) REFERENCES motorista(id_mot),
-    FOREIGN KEY (id_res) REFERENCES reserva(id_res)
+    FOREIGN KEY (id_mot) REFERENCES motorista(id_mot)
 );
 
 CREATE TABLE manutencao (
@@ -162,4 +130,63 @@ CREATE TABLE sessao (
     navigator VARCHAR(255),
     ativo BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (id_usr) REFERENCES usuario(id_usr)
+);
+
+CREATE TABLE pneu (
+    id_pneu INT PRIMARY KEY AUTO_INCREMENT,
+    id_vei INT NOT NULL,
+    posicao ENUM('dianteiro_esquerdo', 'dianteiro_direito', 'traseiro_esquerdo', 'traseiro_direito', 'estepe', 'outro') DEFAULT 'outro',
+    marca VARCHAR(50),
+    modelo VARCHAR(50),
+    dimensao VARCHAR(30),
+    numero_serie VARCHAR(50),
+    data_instalacao DATE,
+    km_instalacao INT DEFAULT 0,
+    km_atual INT DEFAULT 0,
+    vida_util_km INT,
+    status ENUM('em_uso', 'reserva', 'desgastado', 'descartado') DEFAULT 'em_uso',
+    observacoes TEXT,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_vei) REFERENCES veiculo(id_vei)
+);
+
+CREATE TABLE fornecedor (
+    id_forn INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(150) NOT NULL,
+    cnpj_cpf VARCHAR(18),
+    telefone VARCHAR(20),
+    email VARCHAR(100),
+    categoria VARCHAR(100),
+    uf CHAR(2),
+    cidade VARCHAR(100),
+    ativo BOOLEAN DEFAULT TRUE,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE despesa (
+    id_des INT PRIMARY KEY AUTO_INCREMENT,
+    descricao VARCHAR(200) NOT NULL,
+    categoria ENUM('combustivel', 'manutencao', 'pneu', 'multa', 'seguro', 'pedagio', 'salario', 'outro') DEFAULT 'outro',
+    valor DECIMAL(10,2) NOT NULL,
+    data_despesa DATE NOT NULL,
+    id_vei INT,
+    id_forn INT,
+    observacoes TEXT,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_vei) REFERENCES veiculo(id_vei),
+    FOREIGN KEY (id_forn) REFERENCES fornecedor(id_forn)
+);
+
+CREATE TABLE documento (
+    id_doc INT PRIMARY KEY AUTO_INCREMENT,
+    id_vei INT NOT NULL,
+    tipo ENUM('crlv', 'licenciamento', 'seguro', 'ipva', 'vistoria', 'outro') DEFAULT 'outro',
+    numero VARCHAR(100),
+    descricao VARCHAR(200),
+    data_emissao DATE,
+    data_validade DATE,
+    arquivo VARCHAR(255),
+    observacoes TEXT,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_vei) REFERENCES veiculo(id_vei)
 );
