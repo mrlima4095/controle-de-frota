@@ -35,8 +35,10 @@ $sql = 'SELECT id_mot, nome, cpf, cnh, validade_cnh, telefone, uf, cidade, ativo
 $parametros = [];
 
 if ($busca !== '') {
-    $sql .= ' WHERE nome LIKE :q OR cpf LIKE :q OR cnh LIKE :q';
-    $parametros[':q'] = '%' . $busca . '%';
+    $sql .= ' WHERE nome LIKE :q1 OR cpf LIKE :q2 OR cnh LIKE :q3';
+    $parametros[':q1'] = '%' . $busca . '%';
+    $parametros[':q2'] = '%' . $busca . '%';
+    $parametros[':q3'] = '%' . $busca . '%';
 }
 
 $sql .= ' ORDER BY nome ASC';

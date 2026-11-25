@@ -32,8 +32,10 @@ $sql = 'SELECT v.id_vei, v.placa, v.marca, v.modelo, v.tipo, v.status,
 $parametros = [];
 
 if ($busca !== '') {
-    $sql .= ' WHERE v.placa LIKE :q OR v.marca LIKE :q OR v.modelo LIKE :q';
-    $parametros[':q'] = '%' . $busca . '%';
+    $sql .= ' WHERE v.placa LIKE :q1 OR v.marca LIKE :q2 OR v.modelo LIKE :q3';
+    $parametros[':q1'] = '%' . $busca . '%';
+    $parametros[':q2'] = '%' . $busca . '%';
+    $parametros[':q3'] = '%' . $busca . '%';
 }
 
 $sql .= ' ORDER BY v.placa ASC';

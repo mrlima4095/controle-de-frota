@@ -41,8 +41,11 @@ $condicoes = [];
 $parametros = [];
 
 if ($busca !== '') {
-    $condicoes[] = '(v.placa LIKE :q OR v.modelo LIKE :q OR m.oficina LIKE :q OR m.servico LIKE :q)';
-    $parametros[':q'] = '%' . $busca . '%';
+    $condicoes[] = '(v.placa LIKE :q1 OR v.modelo LIKE :q2 OR m.oficina LIKE :q3 OR m.servico LIKE :q4)';
+    $parametros[':q1'] = '%' . $busca . '%';
+    $parametros[':q2'] = '%' . $busca . '%';
+    $parametros[':q3'] = '%' . $busca . '%';
+    $parametros[':q4'] = '%' . $busca . '%';
 }
 if ($veiculoFiltro > 0) {
     $condicoes[] = 'm.id_vei = :veiculo';

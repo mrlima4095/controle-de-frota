@@ -21,8 +21,9 @@ $sql = 'SELECT d.id_departamento, d.nome, d.responsavel, d.ativo, d.data_criacao
 $parametros = [];
 
 if ($busca !== '') {
-    $sql .= ' WHERE d.nome LIKE :q OR d.responsavel LIKE :q';
-    $parametros[':q'] = '%' . $busca . '%';
+    $sql .= ' WHERE d.nome LIKE :q1 OR d.responsavel LIKE :q2';
+    $parametros[':q1'] = '%' . $busca . '%';
+    $parametros[':q2'] = '%' . $busca . '%';
 }
 
 $sql .= ' ORDER BY d.nome ASC';

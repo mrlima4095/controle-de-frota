@@ -38,8 +38,10 @@ $sql = 'SELECT f.id_forn, f.nome, f.cnpj_cpf, f.telefone, f.email, f.categoria,
 $parametros = [];
 
 if ($busca !== '') {
-    $sql .= ' WHERE f.nome LIKE :q OR f.cnpj_cpf LIKE :q OR f.categoria LIKE :q';
-    $parametros[':q'] = '%' . $busca . '%';
+    $sql .= ' WHERE f.nome LIKE :q1 OR f.cnpj_cpf LIKE :q2 OR f.categoria LIKE :q3';
+    $parametros[':q1'] = '%' . $busca . '%';
+    $parametros[':q2'] = '%' . $busca . '%';
+    $parametros[':q3'] = '%' . $busca . '%';
 }
 
 $sql .= ' GROUP BY f.id_forn, f.nome, f.cnpj_cpf, f.telefone, f.email,

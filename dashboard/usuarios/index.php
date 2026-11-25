@@ -26,8 +26,11 @@ $busca = trim($_GET['q'] ?? '');
 $sql = 'SELECT id_usr, nome, email, cpf, perfil, ativo, data_criacao, ultima_consessao FROM usuario';
 $parametros = [];
 if ($busca !== '') {
-    $sql .= ' WHERE nome LIKE :q OR email LIKE :q OR cpf LIKE :q OR perfil LIKE :q';
-    $parametros[':q'] = '%' . $busca . '%';
+    $sql .= ' WHERE nome LIKE :q1 OR email LIKE :q2 OR cpf LIKE :q3 OR perfil LIKE :q4';
+    $parametros[':q1'] = '%' . $busca . '%';
+    $parametros[':q2'] = '%' . $busca . '%';
+    $parametros[':q3'] = '%' . $busca . '%';
+    $parametros[':q4'] = '%' . $busca . '%';
 }
 $sql .= ' ORDER BY nome ASC';
 

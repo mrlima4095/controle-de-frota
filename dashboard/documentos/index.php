@@ -57,8 +57,11 @@ $sql = 'SELECT d.*, v.placa
 $parametros = [];
 
 if ($busca !== '') {
-    $sql .= ' WHERE v.placa LIKE :q OR d.numero LIKE :q OR d.descricao LIKE :q OR d.tipo LIKE :q';
-    $parametros[':q'] = '%' . $busca . '%';
+    $sql .= ' WHERE v.placa LIKE :q1 OR d.numero LIKE :q2 OR d.descricao LIKE :q3 OR d.tipo LIKE :q4';
+    $parametros[':q1'] = '%' . $busca . '%';
+    $parametros[':q2'] = '%' . $busca . '%';
+    $parametros[':q3'] = '%' . $busca . '%';
+    $parametros[':q4'] = '%' . $busca . '%';
 }
 
 $sql .= ' ORDER BY d.data_validade ASC, v.placa ASC';

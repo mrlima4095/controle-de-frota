@@ -78,8 +78,10 @@ $condicoes = [];
 $parametros = [];
 
 if ($busca !== '') {
-    $condicoes[] = '(d.descricao LIKE :q OR v.placa LIKE :q OR f.nome LIKE :q)';
-    $parametros[':q'] = '%' . $busca . '%';
+    $condicoes[] = '(d.descricao LIKE :q1 OR v.placa LIKE :q2 OR f.nome LIKE :q3)';
+    $parametros[':q1'] = '%' . $busca . '%';
+    $parametros[':q2'] = '%' . $busca . '%';
+    $parametros[':q3'] = '%' . $busca . '%';
 }
 if ($categoriaFiltro !== '') {
     $condicoes[] = 'd.categoria = :categoria';

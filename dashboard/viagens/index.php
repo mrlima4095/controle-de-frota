@@ -28,8 +28,11 @@ $sql = 'SELECT p.id_perc, p.data_per, p.hora_ini, p.origem, p.destino, p.quilome
 $parametros = [];
 
 if ($busca !== '') {
-    $sql .= ' WHERE v.placa LIKE :q OR m.nome LIKE :q OR p.origem LIKE :q OR p.destino LIKE :q';
-    $parametros[':q'] = '%' . $busca . '%';
+    $sql .= ' WHERE v.placa LIKE :q1 OR m.nome LIKE :q2 OR p.origem LIKE :q3 OR p.destino LIKE :q4';
+    $parametros[':q1'] = '%' . $busca . '%';
+    $parametros[':q2'] = '%' . $busca . '%';
+    $parametros[':q3'] = '%' . $busca . '%';
+    $parametros[':q4'] = '%' . $busca . '%';
 }
 
 $sql .= ' ORDER BY p.data_per DESC, p.hora_ini DESC';
