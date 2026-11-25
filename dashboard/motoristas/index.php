@@ -59,8 +59,8 @@ require __DIR__ . '/../../includes/header.php';
         <p class="text-muted small mb-0"><?= count($motoristas) ?> motorista(s) encontrado(s).</p>
     </div>
     <div class="d-flex flex-wrap gap-2">
-        <a class="btn btn-outline-primary" href="importar.php">🔄 Importar usuário</a>
-        <a class="btn btn-brand" href="create.php">➕ Novo motorista</a>
+        <a class="btn btn-outline-primary" href="importar.php"><i class="fa-solid fa-arrows-rotate"></i> Importar usuário</a>
+        <a class="btn btn-brand" href="create.php"><i class="fa-solid fa-plus"></i> Novo motorista</a>
     </div>
 </div>
 
@@ -69,7 +69,7 @@ require __DIR__ . '/../../includes/header.php';
         <input type="search" class="form-control" name="q" value="<?= h($busca) ?>" placeholder="Buscar por nome, CPF ou CNH">
     </div>
     <div class="col-12 col-sm-auto">
-        <button type="submit" class="btn btn-outline-secondary w-100">🔎 Buscar</button>
+        <button type="submit" class="btn btn-outline-secondary w-100"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
     </div>
 </form>
 
@@ -106,8 +106,8 @@ require __DIR__ . '/../../includes/header.php';
                             </td>
                             <td><span class="badge rounded-pill <?= $motorista['ativo'] ? 'text-bg-success' : 'text-bg-secondary' ?>"><?= $motorista['ativo'] ? 'Ativo' : 'Inativo' ?></span></td>
                             <td class="text-end text-nowrap">
-                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $motorista['id_mot'] ?>">👁️ Ver</a>
-                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $motorista['id_mot'] ?>">✏️ Editar</a>
+                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $motorista['id_mot'] ?>"><i class="fa-solid fa-eye"></i> Ver</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $motorista['id_mot'] ?>"><i class="fa-solid fa-pen"></i> Editar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

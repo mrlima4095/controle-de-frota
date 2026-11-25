@@ -68,33 +68,33 @@ require __DIR__ . '/../../includes/header.php';
 
 <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
     <div>
-        <h2 class="h4 mb-1">🛞 Pneu #<?= $id ?> <span class="badge rounded-pill <?= $badgeStatus ?>"><?= h($status) ?></span></h2>
+        <h2 class="h4 mb-1"><i class="fa-solid fa-circle-dot"></i> Pneu #<?= $id ?> <span class="badge rounded-pill <?= $badgeStatus ?>"><?= h($status) ?></span></h2>
         <p class="text-muted small mb-0"><?= h($pneu['placa']) ?> · <?= h($posicao) ?></p>
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a class="btn btn-outline-secondary" href="index.php">← Voltar</a>
-        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>">✏️ Editar</a>
+        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>"><i class="fa-solid fa-pen"></i> Editar</a>
     </div>
 </div>
 
 <div class="row g-3 mb-3">
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">🛣️ KM rodados</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-road"></i> KM rodados</small>
             <strong class="fs-4"><?= number_format($kmRodados, 0, ',', '.') ?></strong>
             <small class="text-muted">desde a instalação</small>
         </div></div>
     </div>
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">📏 Vida útil</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-ruler"></i> Vida útil</small>
             <strong class="fs-4"><?= $vidaUtil > 0 ? number_format($vidaUtil, 0, ',', '.') : '—' ?></strong>
             <?php if ($vidaUtil > 0): ?><small class="text-muted">km previstos</small><?php endif; ?>
         </div></div>
     </div>
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">⚠️ Desgaste</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-triangle-exclamation"></i> Desgaste</small>
             <?php if ($percentual === null): ?>
                 <strong class="fs-4">—</strong>
             <?php else: ?>
@@ -107,7 +107,7 @@ require __DIR__ . '/../../includes/header.php';
     </div>
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">🚗 Veículo</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-car"></i> Veículo</small>
             <strong class="fs-5 d-block text-truncate"><?= h($pneu['placa']) ?></strong>
             <small class="text-muted text-truncate d-block"><?= h((string) ($pneu['veiculo_modelo'] ?? '')) ?: '—' ?></small>
         </div></div>

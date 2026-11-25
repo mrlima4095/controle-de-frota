@@ -50,6 +50,7 @@ $dados = [
     'quilometragemAtual' => $veiculo['quilometragemAtual'],
     'status' => $veiculo['status'],
     'id_dep' => $veiculo['id_dep'],
+    'novo_departamento' => '',
     'ativo' => $veiculo['ativo'],
 ];
 $erro = '';
@@ -76,11 +77,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dados['status'] = 'disponivel';
     }
 
-    if ($dados['placa'] === '') {
+    if ($dados['novo_departamento'] !== '') {
+        $nomeDepartamento = trim($dados['novo_departamento']);
+        $buscaDep = $pdo->prepare('SELECT id_departamento FROM departamento WHERE nome = :nome LIMIT 1');
+        $buscaDep->execute([':nome' => $nomeDepartamento]);
+        $depExistente = $buscaDep->fetch();
+
+        if ($depExistente) {
+            $dados['id_dep'] = (string) $depExistente['id_departamento'];
+        } else {
+            try {
+                $pdo->prepare('INSERT INTO departamento (nome, ativo) VALUES (:nome, 1)')->execute([':nome' => $nomeDepartamento]);
+                $novoId = (int) $pdo->lastInsertId();
+                $dados['id_dep'] = (string) $novoId;
+                $departamentos[] = ['id_departamento' => $novoId, 'nome' => $nomeDepartamento];
+            } catch (PDOException $exception) {
+                $erro = 'Não foi possível criar o departamento. Tente novamente.';
+            }
+        }
+    }
+
+    if ($erro === '' && $dados['placa'] === '') {
         $erro = 'Informe a placa do veículo.';
-    } elseif ($dados['id_dep'] === '' || !ctype_digit((string) $dados['id_dep'])) {
+    } elseif ($erro === '' && ($dados['id_dep'] === '' || !ctype_digit((string) $dados['id_dep']))) {
         $erro = 'Selecione o departamento do veículo.';
-    } else {
+    } elseif ($erro === '') {
         $check = $pdo->prepare('SELECT id_vei FROM veiculo WHERE placa = :placa AND id_vei <> :id LIMIT 1');
         $check->execute([':placa' => $dados['placa'], ':id' => $id]);
 
@@ -139,7 +160,7 @@ require __DIR__ . '/../../includes/header.php';
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between gap-2">
                 <h2 class="h6 mb-0">Editando <?= h($dados['placa']) ?></h2>
-                <a class="btn btn-sm btn-outline-secondary" href="view.php?id=<?= $id ?>">👁️ Ver detalhes</a>
+                <a class="btn btn-sm btn-outline-secondary" href="view.php?id=<?= $id ?>"><i class="fa-solid fa-eye"></i> Ver detalhes</a>
             </div>
             <div class="card-body p-3 p-sm-4">
                 <form method="post">
@@ -214,15 +235,20 @@ require __DIR__ . '/../../includes/header.php';
 
                         <div class="col-12 col-md-6">
                             <label for="id_dep" class="form-label fw-semibold small">Departamento *</label>
-                            <select class="form-select" id="id_dep" name="id_dep" required>
+                            <select class="form-select" id="id_dep" name="id_dep">
                                 <option value="">Selecione...</option>
                                 <?php foreach ($departamentos as $dep): ?>
                                     <option value="<?= (int) $dep['id_departamento'] ?>"<?= (string) $dados['id_dep'] === (string) $dep['id_departamento'] ? ' selected' : '' ?>><?= h($dep['nome']) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="col-12 col-md-6 d-flex align-items-end">
-                            <div class="form-check mb-2">
+                        <div class="col-12 col-md-6">
+                            <label for="novo_departamento" class="form-label fw-semibold small">Ou digite um novo departamento</label>
+                            <input type="text" class="form-control" id="novo_departamento" name="novo_departamento" value="<?= h($dados['novo_departamento']) ?>" maxlength="100" placeholder="Ex.: Operações">
+                            <small class="form-text text-muted">Ele é criado automaticamente junto com o veículo. <a href="/dashboard/departamentos/index.php">Gerenciar departamentos</a></small>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="ativo" value="1" id="ativo"<?= $dados['ativo'] ? ' checked' : '' ?>>
                                 <label class="form-check-label" for="ativo">Veículo ativo</label>
                             </div>

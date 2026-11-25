@@ -64,20 +64,20 @@ require __DIR__ . '/../../includes/header.php';
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a class="btn btn-outline-secondary" href="index.php">← Voltar</a>
-        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>">✏️ Editar</a>
+        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>"><i class="fa-solid fa-pen"></i> Editar</a>
     </div>
 </div>
 
 <div class="row g-3 mb-3">
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">🛣️ Viagens</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-road"></i> Viagens</small>
             <strong class="fs-4"><?= $totalViagens ?></strong>
         </div></div>
     </div>
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">⚠️ Multas</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-triangle-exclamation"></i> Multas</small>
             <strong class="fs-4"><?= $totalMultas ?></strong>
         </div></div>
     </div>

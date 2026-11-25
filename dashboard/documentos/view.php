@@ -70,19 +70,19 @@ require __DIR__ . '/../../includes/header.php';
 
 <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
     <div>
-        <h2 class="h4 mb-1">📄 <?= h($tipo) ?> #<?= $id ?> <span class="badge rounded-pill <?= $badgeValidade ?>"><?= h($situacao) ?></span></h2>
+        <h2 class="h4 mb-1"><i class="fa-solid fa-file-lines"></i> <?= h($tipo) ?> #<?= $id ?> <span class="badge rounded-pill <?= $badgeValidade ?>"><?= h($situacao) ?></span></h2>
         <p class="text-muted small mb-0"><?= h($documento['placa']) ?> · <?= h((string) ($documento['numero'] ?? '')) ?: 'Sem número informado' ?></p>
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a class="btn btn-outline-secondary" href="index.php">← Voltar</a>
-        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>">✏️ Editar</a>
+        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>"><i class="fa-solid fa-pen"></i> Editar</a>
     </div>
 </div>
 
 <div class="row g-3 mb-3">
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">📅 Validade</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-calendar"></i> Validade</small>
             <strong class="fs-6 d-block"><?= dataBr($documento['data_validade'] ?: null) ?></strong>
             <small class="text-muted"><?= h($situacao) ?></small>
         </div></div>
@@ -96,14 +96,14 @@ require __DIR__ . '/../../includes/header.php';
     </div>
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">📄 Tipo</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-file-lines"></i> Tipo</small>
             <strong class="fs-5 d-block text-truncate"><?= h($tipo) ?></strong>
             <small class="text-muted text-truncate d-block"><?= h((string) ($documento['numero'] ?? '')) ?: '—' ?></small>
         </div></div>
     </div>
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">🚗 Veículo</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-car"></i> Veículo</small>
             <strong class="fs-5 d-block text-truncate"><?= h($documento['placa']) ?></strong>
             <small class="text-muted text-truncate d-block"><?= h((string) ($documento['veiculo_modelo'] ?? '')) ?: '—' ?></small>
         </div></div>

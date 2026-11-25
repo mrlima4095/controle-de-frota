@@ -78,7 +78,7 @@ require __DIR__ . '/../../includes/header.php';
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between gap-2">
                 <h2 class="h6 mb-0">Editando <?= h($dados['nome']) ?></h2>
-                <a class="btn btn-sm btn-outline-secondary" href="view.php?id=<?= $id ?>">👁️ Ver detalhes</a>
+                <a class="btn btn-sm btn-outline-secondary" href="view.php?id=<?= $id ?>"><i class="fa-solid fa-eye"></i> Ver detalhes</a>
             </div>
             <div class="card-body p-3 p-sm-4">
                 <form method="post">

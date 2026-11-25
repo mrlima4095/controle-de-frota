@@ -69,7 +69,7 @@ require __DIR__ . '/../../includes/header.php';
         <h2 class="h5 mb-1">Histórico de manutenções</h2>
         <p class="text-muted small mb-0"><?= count($manutencoes) ?> manutenção(ões) encontrada(s).</p>
     </div>
-    <a class="btn btn-brand" href="create.php">➕ Nova manutenção</a>
+    <a class="btn btn-brand" href="create.php"><i class="fa-solid fa-plus"></i> Nova manutenção</a>
 </div>
 
 <form class="row g-2 mb-3" method="get">
@@ -87,7 +87,7 @@ require __DIR__ . '/../../includes/header.php';
         </select>
     </div>
     <div class="col-12 col-sm-auto">
-        <button type="submit" class="btn btn-outline-secondary w-100">🔎 Buscar</button>
+        <button type="submit" class="btn btn-outline-secondary w-100"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
     </div>
 </form>
 
@@ -116,7 +116,7 @@ require __DIR__ . '/../../includes/header.php';
                                 <span class="d-block small"><?= h((string) ($item['modelo'] ?? '')) ?: '—' ?></span>
                             </td>
                             <td><span class="badge rounded-pill <?= badgeTipo((string) ($item['tipo'] ?? '')) ?>"><?= h(ucfirst((string) ($item['tipo'] ?? '')) ?: '—') ?></span></td>
-                            <td class="small text-nowrap">🗓️ <?= dataBr($item['data_man']) ?></td>
+                            <td class="small text-nowrap"><i class="fa-solid fa-calendar-days"></i> <?= dataBr($item['data_man']) ?></td>
                             <td class="small">
                                 <?= h((string) ($item['oficina'] ?? '')) ?: '—' ?>
                                 <span class="d-block text-muted text-truncate" style="max-width: 220px;"><?= h((string) ($item['servico'] ?? '')) ?: '—' ?></span>
@@ -124,8 +124,8 @@ require __DIR__ . '/../../includes/header.php';
                             <td class="small text-end text-nowrap">R$ <?= number_format((float) ($item['custo'] ?? 0), 2, ',', '.') ?></td>
                             <td class="small text-nowrap"><?= dataBr($item['proxima_data']) ?></td>
                             <td class="text-end text-nowrap">
-                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $item['id_man'] ?>">👁️ Ver</a>
-                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $item['id_man'] ?>">✏️ Editar</a>
+                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $item['id_man'] ?>"><i class="fa-solid fa-eye"></i> Ver</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $item['id_man'] ?>"><i class="fa-solid fa-pen"></i> Editar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

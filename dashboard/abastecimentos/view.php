@@ -57,39 +57,39 @@ require __DIR__ . '/../../includes/header.php';
 <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
     <div>
         <h2 class="h4 mb-1">
-            ⛽ Abastecimento #<?= $id ?>
+            <i class="fa-solid fa-gas-pump"></i> Abastecimento #<?= $id ?>
             <span class="badge rounded-pill <?= $badgeCombustivel ?>"><?= h(ucfirst((string) ($registro['tipo_combustivel'] ?? '')) ?: '—') ?></span>
         </h2>
         <p class="text-muted small mb-0"><?= h($registro['placa']) ?> — <?= h((string) ($registro['modelo'] ?? '')) ?: 'Sem modelo informado' ?></p>
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a class="btn btn-outline-secondary" href="index.php">← Voltar</a>
-        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>">✏️ Editar</a>
+        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>"><i class="fa-solid fa-pen"></i> Editar</a>
     </div>
 </div>
 
 <div class="row g-3 mb-3">
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">⛽ Litros</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-gas-pump"></i> Litros</small>
             <strong class="fs-5"><?= number_format($litros, 2, ',', '.') ?> L</strong>
         </div></div>
     </div>
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">💰 Valor total</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-coins"></i> Valor total</small>
             <strong class="fs-5">R$ <?= number_format((float) $registro['valor'], 2, ',', '.') ?></strong>
         </div></div>
     </div>
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">📈 Custo por litro</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-chart-line"></i> Custo por litro</small>
             <strong class="fs-5"><?= h($custoPorLitro) ?></strong>
         </div></div>
     </div>
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">🛣️ Quilometragem</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-road"></i> Quilometragem</small>
             <strong class="fs-5"><?= number_format((int) $registro['quilometragem'], 0, ',', '.') ?> km</strong>
         </div></div>
     </div>
@@ -103,8 +103,8 @@ require __DIR__ . '/../../includes/header.php';
                 <?php
                 $linhas = [
                     ['Veículo', $registro['placa'] . ' — ' . (string) ($registro['modelo'] ?? '')],
-                    ['🗓️ Data', dataBr($registro['data_aba'])],
-                    ['🕐 Hora', substr((string) ($registro['hora_aba'] ?? ''), 0, 5)],
+                    ['<i class="fa-solid fa-calendar-days"></i> Data', dataBr($registro['data_aba'])],
+                    ['<i class="fa-solid fa-clock"></i> Hora', substr((string) ($registro['hora_aba'] ?? ''), 0, 5)],
                     ['Posto', $registro['posto']],
                     ['Litros', number_format($litros, 2, ',', '.') . ' L'],
                     ['Valor', 'R$ ' . number_format((float) $registro['valor'], 2, ',', '.')],
@@ -115,7 +115,7 @@ require __DIR__ . '/../../includes/header.php';
                 ];
                 foreach ($linhas as [$rotulo, $valor]): ?>
                     <div class="list-group-item d-flex flex-column flex-sm-row justify-content-between gap-1 gap-sm-3">
-                        <strong class="small"><?= h($rotulo) ?></strong>
+                        <strong class="small"><?= $rotulo ?></strong>
                         <span class="small text-sm-end"><?= h((string) ($valor ?? '')) ?: '—' ?></span>
                     </div>
                 <?php endforeach; ?>
@@ -125,7 +125,7 @@ require __DIR__ . '/../../includes/header.php';
 
     <div class="col-12 col-lg-5">
         <section class="card h-100 border-0 shadow-sm">
-            <header class="card-header bg-white py-3"><h2 class="h6 mb-0">📝 Observações</h2></header>
+            <header class="card-header bg-white py-3"><h2 class="h6 mb-0"><i class="fa-solid fa-note-sticky"></i> Observações</h2></header>
             <div class="card-body">
                 <p class="small mb-0 text-break"><?= nl2br(h((string) ($registro['observacoes'] ?? ''))) ?: '—' ?></p>
             </div>

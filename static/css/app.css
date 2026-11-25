@@ -154,6 +154,10 @@ body {
     flex: none;
     text-align: center;
 }
+.menu-icon svg,
+.kpi-icon svg { vertical-align: -0.125em; }
+.btn svg,
+.quick-link svg { margin-right: 0.25rem; }
 .menu-logout { color: #a52a2a !important; }
 .menu-logout:hover { color: #922727 !important; background: #fbe5e5 !important; }
 

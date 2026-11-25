@@ -42,7 +42,7 @@ require __DIR__ . '/../../includes/header.php';
         <h2 class="h5 mb-1">Departamentos cadastrados</h2>
         <p class="text-muted small mb-0"><?= count($departamentos) ?> departamento(s) encontrado(s).</p>
     </div>
-    <a class="btn btn-brand" href="create.php">➕ Novo departamento</a>
+    <a class="btn btn-brand" href="create.php"><i class="fa-solid fa-plus"></i> Novo departamento</a>
 </div>
 
 <form class="row g-2 mb-3" method="get">
@@ -50,7 +50,7 @@ require __DIR__ . '/../../includes/header.php';
         <input type="search" class="form-control" name="q" value="<?= h($busca) ?>" placeholder="Buscar por departamento ou responsável">
     </div>
     <div class="col-12 col-sm-auto">
-        <button type="submit" class="btn btn-outline-secondary w-100">🔎 Buscar</button>
+        <button type="submit" class="btn btn-outline-secondary w-100"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
     </div>
 </form>
 
@@ -77,8 +77,8 @@ require __DIR__ . '/../../includes/header.php';
                             <td><span class="badge rounded-pill text-bg-light text-dark"><?= (int) $departamento['total_veiculos'] ?></span></td>
                             <td><span class="badge rounded-pill <?= $departamento['ativo'] ? 'text-bg-success' : 'text-bg-secondary' ?>"><?= $departamento['ativo'] ? 'Ativo' : 'Inativo' ?></span></td>
                             <td class="text-end text-nowrap">
-                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $departamento['id_departamento'] ?>">👁️ Ver</a>
-                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $departamento['id_departamento'] ?>">✏️ Editar</a>
+                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $departamento['id_departamento'] ?>"><i class="fa-solid fa-eye"></i> Ver</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $departamento['id_departamento'] ?>"><i class="fa-solid fa-pen"></i> Editar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

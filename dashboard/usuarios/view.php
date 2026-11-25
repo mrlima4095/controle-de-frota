@@ -77,18 +77,18 @@ require __DIR__ . '/../../includes/header.php';
             <span class="badge rounded-pill <?= $classePerfil ?>"><?= h($usuario['perfil']) ?></span>
             <span class="badge rounded-pill <?= $usuario['ativo'] ? 'text-bg-success' : 'text-bg-secondary' ?>"><?= $usuario['ativo'] ? 'Ativo' : 'Inativo' ?></span>
             <?php if ($motoristaId): ?>
-                <span class="badge rounded-pill text-bg-info">🧑 Motorista</span>
+                <span class="badge rounded-pill text-bg-info"><i class="fa-solid fa-user"></i> Motorista</span>
             <?php endif; ?>
         </div>
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a class="btn btn-outline-secondary" href="index.php">← Voltar</a>
         <?php if ($motoristaId): ?>
-            <a class="btn btn-outline-info" href="/dashboard/motoristas/view.php?id=<?= $motoristaId ?>">🧑 Ver motorista</a>
+            <a class="btn btn-outline-info" href="/dashboard/motoristas/view.php?id=<?= $motoristaId ?>"><i class="fa-solid fa-user"></i> Ver motorista</a>
         <?php else: ?>
-            <a class="btn btn-outline-info" href="/dashboard/motoristas/importar.php?id=<?= $id ?>">🧑 Tornar motorista</a>
+            <a class="btn btn-outline-info" href="/dashboard/motoristas/importar.php?id=<?= $id ?>"><i class="fa-solid fa-user"></i> Tornar motorista</a>
         <?php endif; ?>
-        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>">✏️ Editar</a>
+        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>"><i class="fa-solid fa-pen"></i> Editar</a>
     </div>
 </div>
 
@@ -138,7 +138,7 @@ require __DIR__ . '/../../includes/header.php';
             <div class="card-body">
                 <h3 class="h6">Permissões do perfil</h3>
                 <?php if (podeGerenciarUsuarios($usuario['perfil'])): ?>
-                    <p class="small text-muted mb-0">✅ Pode cadastrar e gerenciar usuários do sistema.</p>
+                    <p class="small text-muted mb-0"><i class="fa-solid fa-check"></i> Pode cadastrar e gerenciar usuários do sistema.</p>
                 <?php else: ?>
                     <p class="small text-muted mb-0">Acesso restrito às áreas operacionais do painel.</p>
                 <?php endif; ?>

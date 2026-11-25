@@ -53,7 +53,7 @@ require __DIR__ . '/../../includes/header.php';
         <h2 class="h5 mb-1">Frota cadastrada</h2>
         <p class="text-muted small mb-0"><?= count($veiculos) ?> veículo(s) encontrado(s).</p>
     </div>
-    <a class="btn btn-brand" href="create.php">➕ Novo veículo</a>
+    <a class="btn btn-brand" href="create.php"><i class="fa-solid fa-plus"></i> Novo veículo</a>
 </div>
 
 <form class="row g-2 mb-3" method="get">
@@ -61,7 +61,7 @@ require __DIR__ . '/../../includes/header.php';
         <input type="search" class="form-control" name="q" value="<?= h($busca) ?>" placeholder="Buscar por placa, marca ou modelo">
     </div>
     <div class="col-12 col-sm-auto">
-        <button type="submit" class="btn btn-outline-secondary w-100">🔎 Buscar</button>
+        <button type="submit" class="btn btn-outline-secondary w-100"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
     </div>
 </form>
 
@@ -93,8 +93,8 @@ require __DIR__ . '/../../includes/header.php';
                             <td><span class="badge rounded-pill <?= badgeStatus($veiculo['status']) ?>"><?= h($veiculo['status']) ?></span></td>
                             <td class="small text-muted text-nowrap"><?= number_format((int) $veiculo['quilometragemAtual'], 0, ',', '.') ?> km</td>
                             <td class="text-end text-nowrap">
-                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $veiculo['id_vei'] ?>">👁️ Ver</a>
-                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $veiculo['id_vei'] ?>">✏️ Editar</a>
+                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $veiculo['id_vei'] ?>"><i class="fa-solid fa-eye"></i> Ver</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $veiculo['id_vei'] ?>"><i class="fa-solid fa-pen"></i> Editar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

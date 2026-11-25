@@ -63,7 +63,7 @@ require __DIR__ . '/../../includes/header.php';
         <h2 class="h5 mb-1">Contas cadastradas</h2>
         <p class="text-muted small mb-0">Total de <?= count($usuarios) ?> usuário(s) no sistema.</p>
     </div>
-    <a class="btn btn-brand" href="/dashboard/usuarios/create.php">➕ Novo usuário</a>
+    <a class="btn btn-brand" href="/dashboard/usuarios/create.php"><i class="fa-solid fa-plus"></i> Novo usuário</a>
 </div>
 
 <form class="row g-2 mb-3" method="get">
@@ -71,7 +71,7 @@ require __DIR__ . '/../../includes/header.php';
         <input type="search" class="form-control" name="q" value="<?= htmlspecialchars($busca, ENT_QUOTES, 'UTF-8') ?>" placeholder="Buscar por nome, e-mail, CPF ou perfil">
     </div>
     <div class="col-12 col-sm-auto">
-        <button type="submit" class="btn btn-outline-secondary w-100">🔎 Buscar</button>
+        <button type="submit" class="btn btn-outline-secondary w-100"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
     </div>
 </form>
 
@@ -111,9 +111,9 @@ require __DIR__ . '/../../includes/header.php';
                             <td class="small text-muted text-nowrap"><?= dataHoraCurta($usuario['data_criacao']) ?></td>
                             <td class="small text-muted text-nowrap"><?= dataHoraCurta($usuario['ultima_consessao']) ?></td>
                             <td class="text-end text-nowrap">
-                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $usuario['id_usr'] ?>">👁️ Ver</a>
-                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $usuario['id_usr'] ?>">✏️ Editar</a>
-                                <a class="btn btn-sm btn-outline-info" href="/dashboard/motoristas/importar.php?id=<?= (int) $usuario['id_usr'] ?>">🧑 Motorista</a>
+                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $usuario['id_usr'] ?>"><i class="fa-solid fa-eye"></i> Ver</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $usuario['id_usr'] ?>"><i class="fa-solid fa-pen"></i> Editar</a>
+                                <a class="btn btn-sm btn-outline-info" href="/dashboard/motoristas/importar.php?id=<?= (int) $usuario['id_usr'] ?>"><i class="fa-solid fa-user"></i> Motorista</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

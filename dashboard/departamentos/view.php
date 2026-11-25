@@ -43,7 +43,7 @@ require __DIR__ . '/../../includes/header.php';
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a class="btn btn-outline-secondary" href="index.php">← Voltar</a>
-        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>">✏️ Editar</a>
+        <a class="btn btn-brand" href="edit.php?id=<?= $id ?>"><i class="fa-solid fa-pen"></i> Editar</a>
     </div>
 </div>
 
@@ -71,7 +71,7 @@ require __DIR__ . '/../../includes/header.php';
                             <td><strong><?= h($veiculo['placa']) ?></strong></td>
                             <td class="small text-muted"><?= h(trim(($veiculo['marca'] ?? '') . ' ' . ($veiculo['modelo'] ?? ''))) ?></td>
                             <td><span class="badge rounded-pill text-bg-light text-dark"><?= h($veiculo['status']) ?></span></td>
-                            <td class="text-end text-nowrap"><a class="btn btn-sm btn-outline-primary" href="/dashboard/veiculos/view.php?id=<?= (int) $veiculo['id_vei'] ?>">👁️ Ver</a></td>
+                            <td class="text-end text-nowrap"><a class="btn btn-sm btn-outline-primary" href="/dashboard/veiculos/view.php?id=<?= (int) $veiculo['id_vei'] ?>"><i class="fa-solid fa-eye"></i> Ver</a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

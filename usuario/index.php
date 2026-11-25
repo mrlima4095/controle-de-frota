@@ -99,8 +99,8 @@ require __DIR__ . '/../includes/header.php';
             </header>
             <div class="card-body">
                 <div class="row row-cols-1 row-cols-sm-2 g-2">
-                    <div class="col"><a class="quick-link" href="/usuario/config-perfil.php"><span class="menu-icon" aria-hidden="true">✏️</span> Editar perfil</a></div>
-                    <div class="col"><a class="quick-link" href="/dashboard/index.php"><span class="menu-icon" aria-hidden="true">📊</span> Voltar ao painel</a></div>
+                    <div class="col"><a class="quick-link" href="/usuario/config-perfil.php"><span class="menu-icon" aria-hidden="true"><i class="fa-solid fa-pen"></i></span> Editar perfil</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/index.php"><span class="menu-icon" aria-hidden="true"><i class="fa-solid fa-chart-bar"></i></span> Voltar ao painel</a></div>
                 </div>
                 <p class="text-muted small mb-0 mt-3">
                     Contas não podem ser excluídas. Para revogar o acesso de alguém, solicite ao RH ou ao administrador que desative a conta.

@@ -28,7 +28,7 @@ $dados = [
     'placa' => '', 'marca' => '', 'modelo' => '', 'ano_fabricacao' => '', 'ano_modelo' => '',
     'cor' => '', 'tipo' => 'carro', 'chassi' => '', 'combustivel' => 'flex',
     'capacidade' => '', 'quilometragem_inicial' => '0', 'quilometragemAtual' => '0',
-    'status' => 'disponivel', 'id_dep' => '', 'ativo' => 1,
+    'status' => 'disponivel', 'id_dep' => '', 'novo_departamento' => '', 'ativo' => 1,
 ];
 $erro = '';
 
@@ -54,11 +54,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dados['status'] = 'disponivel';
     }
 
-    if ($dados['placa'] === '') {
+    if ($dados['novo_departamento'] !== '') {
+        $nomeDepartamento = trim($dados['novo_departamento']);
+        $buscaDep = $pdo->prepare('SELECT id_departamento FROM departamento WHERE nome = :nome LIMIT 1');
+        $buscaDep->execute([':nome' => $nomeDepartamento]);
+        $depExistente = $buscaDep->fetch();
+
+        if ($depExistente) {
+            $dados['id_dep'] = (string) $depExistente['id_departamento'];
+        } else {
+            try {
+                $pdo->prepare('INSERT INTO departamento (nome, ativo) VALUES (:nome, 1)')->execute([':nome' => $nomeDepartamento]);
+                $novoId = (int) $pdo->lastInsertId();
+                $dados['id_dep'] = (string) $novoId;
+                $departamentos[] = ['id_departamento' => $novoId, 'nome' => $nomeDepartamento];
+            } catch (PDOException $exception) {
+                $erro = 'Não foi possível criar o departamento. Tente novamente.';
+            }
+        }
+    }
+
+    if ($erro === '' && $dados['placa'] === '') {
         $erro = 'Informe a placa do veículo.';
-    } elseif ($dados['id_dep'] === '' || !ctype_digit((string) $dados['id_dep'])) {
+    } elseif ($erro === '' && ($dados['id_dep'] === '' || !ctype_digit((string) $dados['id_dep']))) {
         $erro = 'Selecione o departamento do veículo.';
-    } else {
+    } elseif ($erro === '') {
         $check = $pdo->prepare('SELECT id_vei FROM veiculo WHERE placa = :placa LIMIT 1');
         $check->execute([':placa' => $dados['placa']]);
 
@@ -190,15 +210,20 @@ require __DIR__ . '/../../includes/header.php';
 
                         <div class="col-12 col-md-6">
                             <label for="id_dep" class="form-label fw-semibold small">Departamento *</label>
-                            <select class="form-select" id="id_dep" name="id_dep" required>
+                            <select class="form-select" id="id_dep" name="id_dep">
                                 <option value="">Selecione...</option>
                                 <?php foreach ($departamentos as $dep): ?>
                                     <option value="<?= (int) $dep['id_departamento'] ?>"<?= (string) $dados['id_dep'] === (string) $dep['id_departamento'] ? ' selected' : '' ?>><?= h($dep['nome']) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="col-12 col-md-6 d-flex align-items-end">
-                            <div class="form-check mb-2">
+                        <div class="col-12 col-md-6">
+                            <label for="novo_departamento" class="form-label fw-semibold small">Ou digite um novo departamento</label>
+                            <input type="text" class="form-control" id="novo_departamento" name="novo_departamento" value="<?= h($dados['novo_departamento']) ?>" maxlength="100" placeholder="Ex.: Operações">
+                            <small class="form-text text-muted">Ele é criado automaticamente junto com o veículo. <a href="/dashboard/departamentos/index.php">Gerenciar departamentos</a></small>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="ativo" value="1" id="ativo"<?= $dados['ativo'] ? ' checked' : '' ?>>
                                 <label class="form-check-label" for="ativo">Veículo ativo</label>
                             </div>

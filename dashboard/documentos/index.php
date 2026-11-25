@@ -78,7 +78,7 @@ require __DIR__ . '/../../includes/header.php';
         <h2 class="h5 mb-1">Documentos cadastrados</h2>
         <p class="text-muted small mb-0"><?= count($documentos) ?> documento(s) encontrado(s).</p>
     </div>
-    <a class="btn btn-brand" href="create.php">➕ Novo documento</a>
+    <a class="btn btn-brand" href="create.php"><i class="fa-solid fa-plus"></i> Novo documento</a>
 </div>
 
 <form class="row g-2 mb-3" method="get">
@@ -86,7 +86,7 @@ require __DIR__ . '/../../includes/header.php';
         <input type="search" class="form-control" name="q" value="<?= h($busca) ?>" placeholder="Buscar por placa, tipo, número ou descrição">
     </div>
     <div class="col-12 col-sm-auto">
-        <button type="submit" class="btn btn-outline-secondary w-100">🔎 Buscar</button>
+        <button type="submit" class="btn btn-outline-secondary w-100"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
     </div>
 </form>
 
@@ -120,8 +120,8 @@ require __DIR__ . '/../../includes/header.php';
                             <td class="small text-nowrap"><?= dataBr($documento['data_validade'] ?: null) ?></td>
                             <td><span class="badge rounded-pill <?= $classeValidade ?>"><?= h($rotuloValidade) ?></span></td>
                             <td class="text-end text-nowrap">
-                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $documento['id_doc'] ?>">👁️ Ver</a>
-                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $documento['id_doc'] ?>">✏️ Editar</a>
+                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $documento['id_doc'] ?>"><i class="fa-solid fa-eye"></i> Ver</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $documento['id_doc'] ?>"><i class="fa-solid fa-pen"></i> Editar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

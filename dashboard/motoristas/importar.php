@@ -142,8 +142,8 @@ require __DIR__ . '/../../includes/header.php';
 
 <?php if ($motoristaExistente): ?>
     <div class="alert alert-warning d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2" role="alert">
-        <span>✅ <strong><?= h($motoristaExistente['nome']) ?></strong> já está cadastrado como motorista.</span>
-        <a class="btn btn-sm btn-outline-primary" href="edit.php?id=<?= (int) $motoristaExistente['id_mot'] ?>">✏️ Editar cadastro</a>
+        <span><i class="fa-solid fa-check"></i> <strong><?= h($motoristaExistente['nome']) ?></strong> já está cadastrado como motorista.</span>
+        <a class="btn btn-sm btn-outline-primary" href="edit.php?id=<?= (int) $motoristaExistente['id_mot'] ?>"><i class="fa-solid fa-pen"></i> Editar cadastro</a>
     </div>
 <?php endif; ?>
 

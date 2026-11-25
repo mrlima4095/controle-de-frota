@@ -73,7 +73,7 @@ require __DIR__ . '/../../includes/header.php';
         <h2 class="h5 mb-1">Pneus cadastrados</h2>
         <p class="text-muted small mb-0"><?= count($pneus) ?> pneu(s) encontrado(s).</p>
     </div>
-    <a class="btn btn-brand" href="create.php">➕ Novo pneu</a>
+    <a class="btn btn-brand" href="create.php"><i class="fa-solid fa-plus"></i> Novo pneu</a>
 </div>
 
 <form class="row g-2 mb-3" method="get">
@@ -81,7 +81,7 @@ require __DIR__ . '/../../includes/header.php';
         <input type="search" class="form-control" name="q" value="<?= h($busca) ?>" placeholder="Buscar por placa, marca, modelo ou nº de série">
     </div>
     <div class="col-12 col-sm-auto">
-        <button type="submit" class="btn btn-outline-secondary w-100">🔎 Buscar</button>
+        <button type="submit" class="btn btn-outline-secondary w-100"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
     </div>
 </form>
 
@@ -124,8 +124,8 @@ require __DIR__ . '/../../includes/header.php';
                             </td>
                             <td><span class="badge rounded-pill <?= badgeStatus((string) ($pneu['status'] ?? '')) ?>"><?= h(ucfirst(str_replace('_', ' ', (string) ($pneu['status'] ?? 'outro')))) ?></span></td>
                             <td class="text-end text-nowrap">
-                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $pneu['id_pneu'] ?>">👁️ Ver</a>
-                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $pneu['id_pneu'] ?>">✏️ Editar</a>
+                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $pneu['id_pneu'] ?>"><i class="fa-solid fa-eye"></i> Ver</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $pneu['id_pneu'] ?>"><i class="fa-solid fa-pen"></i> Editar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

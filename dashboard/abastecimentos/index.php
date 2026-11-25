@@ -80,7 +80,7 @@ require __DIR__ . '/../../includes/header.php';
         <h2 class="h5 mb-1">Histórico de abastecimentos</h2>
         <p class="text-muted small mb-0"><?= count($abastecimentos) ?> abastecimento(s) encontrado(s).</p>
     </div>
-    <a class="btn btn-brand" href="create.php">➕ Novo abastecimento</a>
+    <a class="btn btn-brand" href="create.php"><i class="fa-solid fa-plus"></i> Novo abastecimento</a>
 </div>
 
 <form class="row g-2 mb-3" method="get">
@@ -98,7 +98,7 @@ require __DIR__ . '/../../includes/header.php';
         </select>
     </div>
     <div class="col-12 col-sm-auto">
-        <button type="submit" class="btn btn-outline-secondary w-100">🔎 Buscar</button>
+        <button type="submit" class="btn btn-outline-secondary w-100"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
     </div>
 </form>
 
@@ -132,7 +132,7 @@ require __DIR__ . '/../../includes/header.php';
                             </td>
                             <td class="small text-nowrap">
                                 <?= dataBr($item['data_aba']) ?>
-                                <span class="d-block text-muted">🕐 <?= h(substr((string) ($item['hora_aba'] ?? ''), 0, 5)) ?: '—' ?></span>
+                                <span class="d-block text-muted"><i class="fa-solid fa-clock"></i> <?= h(substr((string) ($item['hora_aba'] ?? ''), 0, 5)) ?: '—' ?></span>
                             </td>
                             <td class="small"><?= h((string) ($item['posto'] ?? '')) ?: '—' ?></td>
                             <td class="small text-end text-nowrap"><?= number_format((float) $item['litros'], 2, ',', '.') ?> L</td>
@@ -140,8 +140,8 @@ require __DIR__ . '/../../includes/header.php';
                             <td class="small text-end text-nowrap text-muted"><?= custoPorLitro($item) ?></td>
                             <td class="small text-end text-nowrap"><?= number_format((int) $item['quilometragem'], 0, ',', '.') ?></td>
                             <td class="text-end text-nowrap">
-                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $item['id_aba'] ?>">👁️ Ver</a>
-                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $item['id_aba'] ?>">✏️ Editar</a>
+                                <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $item['id_aba'] ?>"><i class="fa-solid fa-eye"></i> Ver</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $item['id_aba'] ?>"><i class="fa-solid fa-pen"></i> Editar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

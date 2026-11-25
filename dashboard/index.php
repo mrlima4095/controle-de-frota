@@ -65,12 +65,12 @@ function moeda(float $valor): string
 }
 
 $kpis = [
-    ['Veículos', $totalVeiculos, $veiculosEmUso . ' em uso · ' . $veiculosManutencao . ' em manutenção', '🚗', ''],
-    ['Motoristas', $totalMotoristas, 'Condutores ativos', '🧑', ''],
-    ['Viagens', $totalViagens, 'Percursos registrados', '🛣️', ''],
-    ['Abastecimentos no mês', $abastecimentosMes, 'Registros do mês', '⛽', ''],
-    ['Multas pendentes', $multasPendentes, 'Requerem atenção', '⚠️', $multasPendentes > 0 ? 'text-danger fw-bold' : ''],
-    ['Manutenções no mês', $manutencoesMes, 'Serviços registrados', '🔧', ''],
+    ['Veículos', $totalVeiculos, $veiculosEmUso . ' em uso · ' . $veiculosManutencao . ' em manutenção', '<i class="fa-solid fa-car"></i>', ''],
+    ['Motoristas', $totalMotoristas, 'Condutores ativos', '<i class="fa-solid fa-user"></i>', ''],
+    ['Viagens', $totalViagens, 'Percursos registrados', '<i class="fa-solid fa-road"></i>', ''],
+    ['Abastecimentos no mês', $abastecimentosMes, 'Registros do mês', '<i class="fa-solid fa-gas-pump"></i>', ''],
+    ['Multas pendentes', $multasPendentes, 'Requerem atenção', '<i class="fa-solid fa-triangle-exclamation"></i>', $multasPendentes > 0 ? 'text-danger fw-bold' : ''],
+    ['Manutenções no mês', $manutencoesMes, 'Serviços registrados', '<i class="fa-solid fa-wrench"></i>', ''],
 ];
 
 require __DIR__ . '/../includes/header.php';
@@ -173,13 +173,13 @@ require __DIR__ . '/../includes/header.php';
             </header>
             <div class="card-body">
                 <div class="row row-cols-1 row-cols-sm-2 g-2">
-                    <div class="col"><a class="quick-link" href="/dashboard/veiculos/create.php"><span class="menu-icon" aria-hidden="true">➕</span> Novo veículo</a></div>
-                    <div class="col"><a class="quick-link" href="/dashboard/motoristas/create.php"><span class="menu-icon" aria-hidden="true">➕</span> Novo motorista</a></div>
-                    <div class="col"><a class="quick-link" href="/dashboard/abastecimentos/create.php"><span class="menu-icon" aria-hidden="true">⛽</span> Abastecer</a></div>
-                    <div class="col"><a class="quick-link" href="/dashboard/manutencao/create.php"><span class="menu-icon" aria-hidden="true">🔧</span> Manutenção</a></div>
-                    <div class="col"><a class="quick-link" href="/dashboard/viagens/index.php"><span class="menu-icon" aria-hidden="true">🛣️</span> Viagens</a></div>
-                    <div class="col"><a class="quick-link" href="/dashboard/alertas/index.php"><span class="menu-icon" aria-hidden="true">🔔</span> Alertas</a></div>
-                    <div class="col"><a class="quick-link" href="/dashboard/relatorios/index.php"><span class="menu-icon" aria-hidden="true">📈</span> Relatórios</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/veiculos/create.php"><span class="menu-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span> Novo veículo</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/motoristas/create.php"><span class="menu-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span> Novo motorista</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/abastecimentos/create.php"><span class="menu-icon" aria-hidden="true"><i class="fa-solid fa-gas-pump"></i></span> Abastecer</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/manutencao/create.php"><span class="menu-icon" aria-hidden="true"><i class="fa-solid fa-wrench"></i></span> Manutenção</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/viagens/index.php"><span class="menu-icon" aria-hidden="true"><i class="fa-solid fa-road"></i></span> Viagens</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/alertas/index.php"><span class="menu-icon" aria-hidden="true"><i class="fa-solid fa-bell"></i></span> Alertas</a></div>
+                    <div class="col"><a class="quick-link" href="/dashboard/relatorios/index.php"><span class="menu-icon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span> Relatórios</a></div>
                 </div>
             </div>
         </section>
