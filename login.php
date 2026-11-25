@@ -49,7 +49,7 @@
         <div class="container-fluid min-vh-100">
             <div class="row min-vh-100 g-0">
                 <div class="col-lg-6 auth-intro d-none d-lg-flex flex-column p-5">
-                    <a class="brand" href="index.html"><span class="brand-mark">↗</span>DriveHub</a>
+                    <a class="brand" href="index.html"><span class="brand-mark"><i class="fa-solid fa-location-arrow" aria-hidden="true"></i></span>DriveHub</a>
                     <div class="my-auto py-5">
                         <p class="eyebrow">Controle de frota</p>
                         <h1 class="display-5 fw-bolder mt-3 mb-4">Sua operação em um só lugar.</h1>

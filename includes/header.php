@@ -75,7 +75,7 @@ $primeiraLetra = strtoupper(substr($usuarioLogado['nome'], 0, 1));
         <div class="app-shell">
             <aside class="app-sidebar d-none d-lg-flex flex-column" aria-label="Menu lateral">
                 <a class="brand" href="/dashboard/index.php">
-                    <span class="brand-mark">↗</span>
+                    <span class="brand-mark"><i class="fa-solid fa-location-arrow" aria-hidden="true"></i></span>
                     <span>DriveHub</span>
                 </a>
 
@@ -87,7 +87,7 @@ $primeiraLetra = strtoupper(substr($usuarioLogado['nome'], 0, 1));
             <div class="offcanvas offcanvas-start app-offcanvas" tabindex="-1" id="menuLateral" aria-labelledby="menuLateralLabel">
                 <div class="offcanvas-header border-bottom">
                     <h5 class="offcanvas-title brand" id="menuLateralLabel">
-                        <span class="brand-mark">↗</span>
+                        <span class="brand-mark"><i class="fa-solid fa-location-arrow" aria-hidden="true"></i></span>
                         <span>DriveHub</span>
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar menu"></button>

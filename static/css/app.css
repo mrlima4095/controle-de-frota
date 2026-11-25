@@ -68,6 +68,11 @@ body {
     background: var(--dh-lime);
     font-weight: 900;
 }
+.brand-mark svg.fa-solid {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+}
 
 .eyebrow {
     display: inline-flex;
