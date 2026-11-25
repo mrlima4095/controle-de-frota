@@ -1,0 +1,13 @@
+erDiagram
+    USUARIO ||--o{ SESSAO : "possui"
+    DEPARTAMENTO ||--o{ VEICULO : "possui"
+    DEPARTAMENTO |o--o{ RESERVA : "solicita"
+    CLIENTE |o--o{ RESERVA : "faz"
+    VEICULO ||--o{ RESERVA : "é reservado em"
+    RESERVA |o--o{ PERCURSO : "origina"
+    VEICULO ||--o{ PERCURSO : "é usado em"
+    MOTORISTA ||--o{ PERCURSO : "realiza"
+    VEICULO ||--o{ MANUTENCAO : "recebe"
+    VEICULO ||--o{ ABASTECIMENTO : "recebe"
+    VEICULO ||--o{ MULTA : "recebe"
+    MOTORISTA |o--o{ MULTA : "responde por"

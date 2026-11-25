@@ -1,0 +1,154 @@
+erDiagram
+    USUARIO ||--o{ SESSAO : "possui"
+    DEPARTAMENTO ||--o{ VEICULO : "possui"
+    DEPARTAMENTO |o--o{ RESERVA : "solicita"
+    CLIENTE |o--o{ RESERVA : "faz"
+    VEICULO ||--o{ RESERVA : "é reservado em"
+    RESERVA |o--o{ PERCURSO : "origina"
+    VEICULO ||--o{ PERCURSO : "é usado em"
+    MOTORISTA ||--o{ PERCURSO : "realiza"
+    VEICULO ||--o{ MANUTENCAO : "recebe"
+    VEICULO ||--o{ ABASTECIMENTO : "recebe"
+    VEICULO ||--o{ MULTA : "recebe"
+    MOTORISTA |o--o{ MULTA : "responde por"
+
+    DEPARTAMENTO {
+        int id_departamento PK
+        varchar nome
+        varchar responsavel
+        boolean ativo
+        timestamp data_criacao
+    }
+    USUARIO {
+        int id_usr PK
+        varchar nome
+        varchar email UK
+        varchar senha
+        enum perfil
+        boolean ativo
+        timestamp data_criacao
+        timestamp ultima_consessao
+    }
+    CLIENTE {
+        int id_cli PK
+        varchar nome
+        varchar cnpj_cpf
+        varchar ie_rg
+        varchar telefone
+        varchar email
+        char uf
+        varchar cidade
+        boolean ativo
+        timestamp data_criacao
+    }
+    MOTORISTA {
+        int id_mot PK
+        varchar nome
+        varchar cpf UK
+        varchar cnh
+        date validade_cnh
+        varchar telefone
+        varchar email
+        char uf
+        varchar cidade
+        boolean ativo
+        timestamp data_criacao
+    }
+    VEICULO {
+        int id_vei PK
+        varchar placa UK
+        varchar marca
+        varchar modelo
+        int ano_fabricacao
+        int ano_modelo
+        varchar cor
+        enum tipo
+        varchar chassi
+        enum combustivel
+        int capacidade
+        int quilometragem_inicial
+        int quilometragemAtual
+        enum status
+        int id_dep FK
+        boolean ativo
+        timestamp data_criacao
+    }
+    RESERVA {
+        int id_res PK
+        int id_vei FK
+        int id_cli FK
+        int id_dep FK
+        date data_reserva
+        time hora_ini
+        time hora_fim
+        varchar origem
+        varchar destino
+        text justificativa
+        enum status
+        timestamp data_criacao
+    }
+    PERCURSO {
+        int id_perc PK
+        int id_vei FK
+        int id_mot FK
+        int id_res FK
+        date data_per
+        time hora_ini
+        time hora_fim
+        varchar origem
+        varchar destino
+        int quilometragem
+        text observacoes
+        timestamp data_criacao
+    }
+    MANUTENCAO {
+        int id_man PK
+        int id_vei FK
+        enum tipo
+        date data_man
+        varchar oficina
+        text servico
+        decimal custo
+        int quilometragem
+        text observacoes
+        date proxima_data
+        timestamp data_criacao
+    }
+    ABASTECIMENTO {
+        int id_aba PK
+        int id_vei FK
+        date data_aba
+        time hora_aba
+        varchar posto
+        decimal litros
+        decimal valor
+        int quilometragem
+        enum tipo_combustivel
+        text observacoes
+        timestamp data_criacao
+    }
+    MULTA {
+        int id_mul PK
+        int id_vei FK
+        int id_mot FK
+        date data_infra
+        time hora_infra
+        varchar local
+        varchar infracao
+        decimal valor_multa
+        int pontos
+        enum status
+        date data_pagamento
+        text observacoes
+        timestamp data_criacao
+    }
+    SESSAO {
+        int id_sess PK
+        int id_usr FK
+        varchar token UK
+        timestamp data_ini
+        timestamp data_fim
+        varchar ip
+        varchar navigator
+        boolean ativo
+    }
