@@ -76,6 +76,10 @@ require __DIR__ . '/../../includes/header.php';
     <div class="alert alert-success" role="alert">Documento salvo com sucesso.</div>
 <?php endif; ?>
 
+<?php if (isset($_GET['excluido'])): ?>
+    <div class="alert alert-success" role="alert">Documento excluído com sucesso.</div>
+<?php endif; ?>
+
 <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-3">
     <div>
         <h2 class="h5 mb-1">Documentos cadastrados</h2>
@@ -125,6 +129,12 @@ require __DIR__ . '/../../includes/header.php';
                             <td class="text-end text-nowrap">
                                 <a class="btn btn-sm btn-outline-primary" href="view.php?id=<?= (int) $documento['id_doc'] ?>"><i class="fa-solid fa-eye"></i> Ver</a>
                                 <a class="btn btn-sm btn-outline-secondary" href="edit.php?id=<?= (int) $documento['id_doc'] ?>"><i class="fa-solid fa-pen"></i> Editar</a>
+                                <?php if (podeExcluirDocumentos($usuarioLogado['perfil'])): ?>
+                                    <form class="d-inline" method="post" action="excluir.php" onsubmit="return confirm('Excluir este documento?');">
+                                        <input type="hidden" name="id" value="<?= (int) $documento['id_doc'] ?>">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i> Excluir</button>
+                                    </form>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -74,8 +74,14 @@ require __DIR__ . '/../../includes/header.php';
         <p class="text-muted small mb-0"><?= h($documento['placa']) ?> · <?= h((string) ($documento['numero'] ?? '')) ?: 'Sem número informado' ?></p>
     </div>
     <div class="d-flex flex-wrap gap-2">
-        <a class="btn btn-outline-secondary" href="index.php">← Voltar</a>
+        <a class="btn btn-outline-secondary" href="index.php"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
         <a class="btn btn-brand" href="edit.php?id=<?= $id ?>"><i class="fa-solid fa-pen"></i> Editar</a>
+        <?php if (podeExcluirDocumentos($usuarioLogado['perfil'])): ?>
+            <form class="d-inline" method="post" action="excluir.php" onsubmit="return confirm('Excluir este documento?');">
+                <input type="hidden" name="id" value="<?= $id ?>">
+                <button type="submit" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> Excluir</button>
+            </form>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -89,7 +95,7 @@ require __DIR__ . '/../../includes/header.php';
     </div>
     <div class="col-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100"><div class="card-body">
-            <small class="text-muted d-block">⏳ Dias para vencimento</small>
+            <small class="text-muted d-block"><i class="fa-solid fa-hourglass-half"></i> Dias para vencimento</small>
             <strong class="fs-4"><?= $dias === null ? '—' : ($dias < 0 ? abs($dias) . ' vencido(s)' : $dias) ?></strong>
             <?php if ($dias !== null): ?><small class="text-muted"><?= $dias < 0 ? 'dias após o vencimento' : 'dias restantes' ?></small><?php endif; ?>
         </div></div>

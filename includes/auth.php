@@ -32,3 +32,8 @@ function podeGerenciarUsuarios(string $perfil): bool
 {
     return in_array($perfil, ['admin', 'gerente', 'rh'], true);
 }
+
+function podeExcluirDocumentos(string $perfil): bool
+{
+    return in_array($perfil, ['admin', 'gerente', 'rh'], true);
+}
